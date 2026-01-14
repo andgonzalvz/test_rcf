@@ -166,7 +166,16 @@ function correct(){
     labels.forEach(l => l.classList.remove('correct','incorrect'));
 
     const sel = box.querySelector('input[type=radio]:checked');
-    if(!sel) return; // si no se seleccionó nada, saltar
+    if(sel) {
+      const selIdx = parseInt(sel.value);       // índice del input seleccionado
+      const correctaIdx = q.opciones.findIndex(o => o.correcta); // índice correcto
+      if(selIdx === correctaIdx) {
+        ok++;
+        sel.parentElement.classList.add('correct');
+      } else {
+        sel.parentElement.classList.add('incorrect');
+      }
+    }
 
     const selIdx = parseInt(sel.value);
     const selectedOption = q._shuffle ? q._shuffledOptions[selIdx] : q.opciones[selIdx];
