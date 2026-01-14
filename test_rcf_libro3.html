@@ -116,7 +116,10 @@ function render(){
     optsDiv.className='opts';
 
     let opciones = q.opciones.map(o=>({...o}));
-    if(q._shuffle) shuffleInPlace(opciones);
+    if(q._shuffle){
+      shuffleInPlace(opciones);
+      q._shuffledOptions = opciones; // <-- guarda el orden barajado
+    }
 
     const letras = ['a','b','c','d'];
     opciones.forEach((o,i)=>{
@@ -151,24 +154,39 @@ function render(){
 }
   
 function correct(){
-  let ok=0,total=0;
-  const boxes=app.querySelectorAll('.q');
-  boxes.forEach((box,qi)=>{
-    const q=DATA[qi];
+  let ok = 0, total = 0;
+  const letras = ['a','b','c','d'];
+
+  const boxes = app.querySelectorAll('.q');
+  boxes.forEach((box, qi) => {
+    const q = DATA[qi];
     total++;
-    const labels=box.querySelectorAll('label');
-    labels.forEach(l=>l.classList.remove('correct','incorrect'));
-    const sel=box.querySelector('input[type=radio]:checked');
-    labels.forEach(l=>{
-      const v=l.querySelector('input').value;
-      if(v===q.correcta) l.classList.add('correct');
-    });
-    if(sel && sel.value===q.correcta) ok++;
-    else if(sel) sel.parentElement.classList.add('incorrect');
+
+    const labels = box.querySelectorAll('label');
+    labels.forEach(l => l.classList.remove('correct','incorrect'));
+
+    const sel = box.querySelector('input[type=radio]:checked');
+    if(!sel) return; // si no se seleccionó nada, saltar
+
+    const selIdx = parseInt(sel.value);
+    const selectedOption = q._shuffle ? q._shuffledOptions[selIdx] : q.opciones[selIdx];
+      
+      // marcar todas las correctas
+      labels.forEach((l, li) => {
+        const opt = q._shuffle ? q._shuffledOptions[li] : q.opciones[li];
+        if(opt.correcta) l.classList.add('correct');
+      });
+
+      if(selectedOption.correcta){
+        ok++;
+      } else {
+        sel.parentElement.classList.add('incorrect');
+      }
+    }
   });
+
   alert(`Puntuación: ${ok} / ${total}`);
 }
-
 const btnShuffle=document.getElementById('shuffle');
 const btnCheck=document.getElementById('check');
 const btnKey=document.getElementById('showKey');
