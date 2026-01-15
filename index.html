@@ -274,7 +274,7 @@ body{
     padding:16px;
   }
 }
-/* Efecto de partículas de fondo */
+/* Background particles effect */
 .particle{
   position:absolute;
   border-radius:50%;
@@ -300,7 +300,7 @@ body{
 </div>
 
 <div class="container">
-  <!-- Barra de estadísticas -->
+  <!-- Stats bar -->
   <div class="stats-bar">
     <div class="stat">
       <div class="stat-number" id="total-tests">-</div>
@@ -442,57 +442,6 @@ function createParticles() {
   }
 }
 
-// 🎉 EASTER EGG: Secret motivational messages
-/* function showEasterEgg() {
-  const messages = [
-    "💪 ¡Creado con amor para aprobar el ET!",
-    "☕ Desarrollado con café y código",
-    "🚂 Un test ferroviario para gobernarlos a todos",
-    "🎯 Keep calm y estudia RCF",
-    "⚡ Powered by trains & determination",
-    "🤖 Lucas + Copilot = Equipo imparable",
-    "📚 Estudia duro, aprueba más duro"
-  ]; */
-  
-  const msg = messages[Math.floor(Math.random() * messages.length)];
-  
-  // Create temporary modal
-  const modal = document.createElement('div');
-  modal.style.cssText = `
-    position:fixed;
-    top:50%;
-    left:50%;
-    transform:translate(-50%,-50%) scale(0);
-    background:linear-gradient(135deg,#1f2937,#374151);
-    color:#e5e7eb;
-    padding:30px 40px;
-    border-radius:20px;
-    box-shadow:0 20px 60px rgba(0,0,0,.6);
-    border:2px solid rgba(91,192,190,.3);
-    z-index:1000;
-    text-align:center;
-    font-size:18px;
-    font-weight:700;
-    animation:popIn 0.4s ease-out forwards;
-  `;
-  modal.textContent = msg;
-  document.body.appendChild(modal);
-  
-  // Add animation styles
-  const style = document.createElement('style');
-  style.textContent = `
-    @keyframes popIn {
-      to { transform:translate(-50%,-50%) scale(1) }
-    }
-  `;
-  document.head.appendChild(style);
-  
-  setTimeout(() => {
-    modal.style.animation = 'popIn 0.3s ease-out reverse forwards';
-    setTimeout(() => modal.remove(), 300);
-  }, 2500);
-}
-
 // Auto-count tests and categories
 function countTests() {
   const testCount = document.querySelectorAll('.test-btn').length;
@@ -510,16 +459,6 @@ window.addEventListener('load', () => {
   // Fade in animation
   document.body.style.opacity = '1';
   document.body.style.transition = 'opacity 0.5s ease';
-});
-
-// Title click easter egg (5 clicks trigger)
-/* let clickCount = 0;
-document.querySelector('#top .title').addEventListener('click', () => {
-  clickCount++;
-  if (clickCount === 5) {
-    showEasterEgg();
-    clickCount = 0;
-  } */
 });
 </script>
 </body>
