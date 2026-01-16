@@ -1639,12 +1639,13 @@ button.secondary:hover{background:rgba(255,255,255,.05)}
         {l: "D", t: "RID."}
       ]}
     }
-  };
+ };
 
   let currentPart = 1;
   let respuestasVisibles = false;
   const LS_PREFIX = 'rcf-libro1-part-';
 
+  // Load state from localStorage
   function loadState(part) {
     try {
       return JSON.parse(localStorage.getItem(LS_PREFIX + part)) || {};
@@ -1653,10 +1654,12 @@ button.secondary:hover{background:rgba(255,255,255,.05)}
     }
   }
 
+  // Save state to localStorage
   function saveState(part, state) {
     localStorage.setItem(LS_PREFIX + part, JSON.stringify(state));
   }
 
+  // Switch between parts
   function switchPart(part) {
     currentPart = part;
     document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
@@ -1665,6 +1668,7 @@ button.secondary:hover{background:rgba(255,255,255,.05)}
     window.scrollTo({top: 0, behavior: 'smooth'});
   }
 
+  // Generate test for current part
   function generarTest() {
     const container = document.getElementById('questionsContainer');
     container.innerHTML = '';
@@ -1705,13 +1709,14 @@ button.secondary:hover{background:rgba(255,255,255,.05)}
     bindRadios();
     updateProgress();
   }
-
+  
   function bindRadios() {
     document.querySelectorAll('input[type=radio]').forEach(radio => {
       radio.addEventListener('change', updateProgress);
     });
   }
   
+  // Update progress bar
   function updateProgress() {
     const partData = testData[currentPart];
     const total = Object.keys(partData).length;
@@ -1719,6 +1724,7 @@ button.secondary:hover{background:rgba(255,255,255,.05)}
     const percentage = (answered / total) * 100;
     document.getElementById('progressBar').style.width = percentage + '%';
     
+    // Save current answers
     const state = {};
     document.querySelectorAll('.question').forEach(card => {
       const qid = card.dataset.qid;
@@ -1730,7 +1736,7 @@ button.secondary:hover{background:rgba(255,255,255,.05)}
     saveState(currentPart, state);
   }
 
-  // ✅ ÚNICA declaración de calificar (eliminé la duplicada)
+  // Grade the test
   window.calificar = function() {
     const partData = testData[currentPart];
     let correctas = 0;
@@ -1780,6 +1786,7 @@ button.secondary:hover{background:rgba(255,255,255,.05)}
     window.scrollTo({top: 0, behavior: 'smooth'});
   };
 
+  // Reset the test
   window.reiniciar = function() {
     if (!confirm('¿Reiniciar respuestas de esta parte?')) return;
     
@@ -1794,6 +1801,7 @@ button.secondary:hover{background:rgba(255,255,255,.05)}
     window.scrollTo({top: 0, behavior: 'smooth'});
   };
 
+  // Toggle answer visibility
   window.toggleRespuestas = function(btn) {
     respuestasVisibles = !respuestasVisibles;
     document.body.classList.toggle('show-answers', respuestasVisibles);
@@ -1813,18 +1821,19 @@ button.secondary:hover{background:rgba(255,255,255,.05)}
     }
   };
 
+  // Initialize tabs
   document.querySelectorAll('.tab').forEach(tab => {
     tab.addEventListener('click', () => {
       switchPart(parseInt(tab.dataset.part));
     });
   });
 
+  // Initialize on load
   window.addEventListener('load', () => {
     document.getElementById('tab_1').classList.add('active');
     generarTest();
   });
-
-})(); // ✅ CIERRE DE LA IIFE (esto faltaba)
+})();
 </script>
 </body>
 </html>
