@@ -1,0 +1,458 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>RCF 5 - 01</title>
+<style>
+:root{--bg:#0b132b;--card:#1c2541;--accent:#5bc0be;--ok:#21c17a;--bad:#ff5d73;--text:#f5f7ff;--warning:#ffc107}
+*{box-sizing:border-box}
+body{margin:0;font-family:Segoe UI,system-ui,-apple-system,Roboto,Ubuntu,'Helvetica Neue',Arial,sans-serif;background:linear-gradient(135deg,var(--bg),#0f1a3a);color:var(--text);min-height:100vh;font-size:14px}
+.header{padding:12px 10px;text-align:center;border-bottom:1px solid rgba(255,255,255,.08);position:sticky;top:0;background:rgba(11,19,43,.98);backdrop-filter:blur(10px);z-index:100;position:relative}
+.header h1{margin:0 0 6px 0;font-size:1.2rem;font-weight:700}
+.back-btn{position:absolute;left:10px;top:50%;transform:translateY(-50%);width:36px;height:36px;padding:0;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.15);border-radius:50%;color:var(--text);text-decoration:none;font-size:18px;transition:all .2s;line-height:1;display:flex;align-items:center;justify-content:center}
+.back-btn:active{background:rgba(255,255,255,.15);transform:translateY(-50%) scale(.95)}
+.badge{display:inline-block;padding:3px 10px;border-radius:999px;background:rgba(255,255,255,.08);font-size:11px;margin-top:4px}
+.container{max-width:1000px;margin:0 auto;padding:10px 8px 100px}
+.progress-bar{background:rgba(255,255,255,.1);height:3px;border-radius:999px;margin:8px 0;overflow:hidden}
+.progress-fill{height:100%;background:linear-gradient(90deg,var(--accent),#3a9d9a);width:0%;transition:width .3s ease}
+.card{background:var(--card);border:1px solid rgba(255,255,255,.08);border-radius:12px;padding:12px;margin:8px 0;box-shadow:0 4px 12px rgba(0,0,0,.2)}
+.q-title{font-weight:600;margin-bottom:10px;line-height:1.4;font-size:14px}
+.q-number{color:var(--accent);font-size:11px;font-weight:700;margin-bottom:6px;display:block}
+.options{display:grid;grid-template-columns:1fr;gap:6px}
+.option{background:#121a34;border:2px solid rgba(255,255,255,.08);padding:8px;border-radius:8px;display:flex;align-items:flex-start;gap:8px;cursor:pointer;transition:all .2s;font-size:13px;line-height:1.3}
+.option:active{background:#1a2341;border-color:rgba(91,192,190,.3)}
+.option input{margin-top:2px;cursor:pointer;flex-shrink:0}
+.option div{flex:1}
+.answer-key{display:none;margin-top:8px;padding:8px;background:rgba(91,192,190,.1);border-radius:6px;font-size:12px}
+.answer-key b{color:var(--accent)}
+.show-answers .answer-key{display:block}
+.feedback{margin-top:6px;font-size:12px;font-weight:600;padding:6px;border-radius:4px}
+.correct{border-color:rgba(33,193,122,.6)!important;background:rgba(33,193,122,.05)!important}
+.incorrect{border-color:rgba(255,93,115,.75)!important;background:rgba(255,93,115,.05)!important}
+.actions{position:fixed;bottom:0;left:0;right:0;background:linear-gradient(180deg,rgba(15,26,58,0),rgba(15,26,58,.99));padding:10px 8px;padding-bottom:calc(10px + env(safe-area-inset-bottom));backdrop-filter:blur(10px);border-top:1px solid rgba(255,255,255,.08);z-index:99}
+.actions .bar{max-width:1000px;margin:0 auto;display:flex;gap:8px;align-items:center;justify-content:space-between;flex-wrap:wrap}
+button{background:var(--accent);border:none;color:#001018;font-weight:700;padding:10px 14px;border-radius:8px;cursor:pointer;transition:all .2s;font-size:13px;touch-action:manipulation}
+button:active{background:var(--accent);opacity:.9;transform:scale(.98)}
+button.secondary{background:transparent;border:1px solid rgba(255,255,255,.35);color:var(--text)}
+button.secondary:active{background:rgba(255,255,255,.05)}
+.score{font-weight:700;font-size:1rem}
+.score-details{font-size:11px;color:var(--text);opacity:.8;margin-top:2px}
+.footer{opacity:.8;font-size:11px;text-align:center;padding:15px;color:rgba(255,255,255,.5)}
+@media (min-width: 720px){
+  .options{grid-template-columns:1fr 1fr}
+  body{font-size:15px}
+  .card{padding:20px;margin:16px 0;border-radius:16px}
+  .q-title{font-size:15px;margin-bottom:12px}
+  .option{padding:12px;gap:10px;font-size:14px}
+  .header{padding:20px 16px}
+  .header h1{font-size:1.5rem;margin-bottom:8px}
+  .container{padding:20px 16px 120px}
+  button{padding:12px 18px;font-size:14px}
+}
+@media (max-width: 640px){
+  .actions .bar{flex-direction:column;gap:6px}
+  .score{text-align:center;width:100%;font-size:0.95rem}
+  .actions{padding:8px 6px;padding-bottom:calc(8px + env(safe-area-inset-bottom))}
+  button{width:100%;padding:11px 12px}
+}
+.scroll-top{position:fixed;bottom:20px;right:20px;width:40px;height:40px;background:var(--accent);color:#fff;border:none;border-radius:50%;cursor:pointer;box-shadow:0 4px 12px rgba(0,0,0,.2);display:flex;align-items:center;justify-content:center;font-size:20px;z-index:99;opacity:0;visibility:hidden;transition:all .3s;touch-action:manipulation}
+.scroll-top.visible{opacity:1;visibility:visible}
+.scroll-top:active{transform:scale(.95)}
+@media (max-width:640px){
+  .scroll-top{width:36px;height:36px;bottom:16px;right:16px;font-size:18px}
+}
+</style>
+</head>
+<body>
+  <div class="header">
+    <a href="index.html" class="back-btn">←</a>
+    <h1>RCF 5 - 01 - RESPUESTAS SIN COMPROBAR</h1>
+    <div class="badge">25 preguntas</div>
+    <div class="progress-bar">
+      <div class="progress-fill" id="progressBar"></div>
+    </div>
+  </div>
+  
+  <div class="container" id="questionsContainer">
+    <!-- Questions will be generated here -->
+  </div>
+
+  <div class="actions">
+    <div class="bar">
+      <div>
+        <div class="score">Puntuación: <span id="score">—</span></div>
+        <div class="score-details" id="scoreDetails"></div>
+      </div>
+      <div style="display:flex;gap:12px;flex-wrap:wrap">
+        <button onclick="calificar()">📊 Calificar</button>
+        <button class="secondary" onclick="reiniciar()">🔄 Reiniciar</button>
+        <button class="secondary" onclick="toggleRespuestas(this)">👁️ Ver respuestas</button>
+      </div>
+    </div>
+  </div>
+  <button id="scrollTopBtn" class="scroll-top">↑</button>
+  
+<script>
+// Test data with questions and answers
+// ????
+const testData = {
+  "1": {
+    "q": "El objeto del Libro 5 del RCF es:",
+    "a": "D",
+    "opts": [
+      {"l": "A", "t": "Definir el funcionamiento, tanto en situación normal como degradada, de distintas instalaciones de seguridad, incluidos los bloqueos, que son de uso común en la RFIG."},
+      {"l": "B", "t": "Definir el funcionamiento, tanto en situación normal como degradada, de distintas instalaciones de seguridad, incluidas las señales, que son de uso común en la RFIG."},
+      {"l": "C", "t": "Definir el funcionamiento, tanto en situación normal como degradada, de distintas instalaciones de seguridad que son de uso común en la RFIG."},
+      {"l": "D", "t": "Definir el funcionamiento, tanto en situación normal como degradada, de distintas instalaciones de seguridad, incluidas las señales y los bloqueos, que son de uso común en la RFIG."}
+    ]},
+  "2": {
+    "q": "Se entiende por instalación de seguridad:",
+    "a": "A",
+    "opts": [
+      {"l": "A", "t": "Los componentes, equipos y sistemas o conjunto de ellos, homologados, instalados en tierra y a bordo de los vehículos con el fin de aumentar el nivel de seguridad de la circulación."},
+      {"l": "B", "t": "Los componentes, equipos y sistemas o conjunto de ellos, homologados, instalados exclusivamente en tierra con el fin de aumentar el nivel de seguridad de la circulación."},
+      {"l": "C", "t": "Los componentes, equipos y sistemas o conjunto de ellos, homologados, instalados exclusivamente a bordo de los vehículos con el fin de aumentar el nivel de seguridad de la circulación."},
+      {"l": "D", "t": "Los componentes, equipos y sistemas o conjunto de ellos, homologados o no, instalados en tierra y a bordo de los vehículos con el fin de aumentar el nivel de seguridad de la circulación."}
+    ]},
+  "3": {
+    "q": "El software y los datos (de registro, calibración, etc.) de cada instalación de seguridad:",
+    "a": "A",
+    "opts": [
+      {"l": "A", "t": "Se consideran componentes de la instalación de seguridad."},
+      {"l": "B", "t": "No se consideran, a efectos del RCF, instalaciones de seguridad."},
+      {"l": "C", "t": "Se regulan por Consigna del AI."},
+      {"l": "D", "t": "Son actualizados por la empresa instaladora cuando lo determina la EF."}
+    ]},
+  "4": {
+    "q": "Señala que instalaciones de seguridad no son tratadas en el Libro Quinto del RCF:",
+    "a": "A",
+    "opts": [
+      {"l": "A", "t": "Sistemas de radiotelefonía."},
+      {"l": "B", "t": "Enclavamientos."},
+      {"l": "C", "t": "Señales ferroviarias."},
+      {"l": "D", "t": "Sistemas de protección de Pasos a Nivel."}
+    ]},
+  "5": {
+    "q": "Señala cual de los siguientes no es un sistema de protección de trenes:",
+    "a": "C",
+    "opts": [
+      {"l": "A", "t": "ASFA"},
+      {"l": "B", "t": "ERTMS."},
+      {"l": "C", "t": "BT."},
+      {"l": "D", "t": "EBICAB."}
+    ]},
+  "6": {
+    "q": "Dentro de las instalaciones de seguridad se incluyen dispositivos embarcados de (señala el erróneo):",
+    "a": "A",
+    "opts": [
+      {"l": "A", "t": "Detección de viento lateral."},
+      {"l": "B", "t": "Información de velocidad."},
+      {"l": "C", "t": "Vigilancia (hombre muerto)."},
+      {"l": "D", "t": "Detección de sobretemperatura en órganos de rodadura y freno."}
+    ]},
+  "7": {
+    "q": "Cuál de los siguientes no es un sistema auxiliar de detección en vía:",
+    "a": "C",
+    "opts": [
+      {"l": "A", "t": "Detectores de sobretemperatura en órganos de rodadura y freno."},
+      {"l": "B", "t": "Detectores de impacto en vía."},
+      {"l": "C", "t": "Detectores de viento lateral."},
+      {"l": "D", "t": "Detectores de cajas calientes y frenos agarrotados."}
+    ]},
+  "8": {
+    "q": "Un enclavamiento es:",
+    "a": "C",
+    "opts": [
+      {"l": "A", "t": "Un sistema que permite fijar itinerarios seguros para la circulación de los trenes entre dos estaciones."},
+      {"l": "B", "t": "Un sistema que establece relaciones de dependencia entre las posiciones de los aparatos de vía, excluidas las semibarreras de PN, y las órdenes que transmiten las señales."},
+      {"l": "C", "t": "Un sistema que permite fijar itinerarios seguros para la circulación de los trenes en el ámbito de las estaciones."},
+      {"l": "D", "t": "Un sistema que permite establecer itinerarios incompatibles para la circulación de trenes en el ámbito de las estaciones."}
+    ]},
+  "9": {
+    "q": "Es un principio básico de los enclavamientos:",
+    "a": "D",
+    "opts": [
+      {"l": "A", "t": "No se puede realizar la apertura de una señal que autorice un itinerario incompatible con otro ya autorizado."},
+      {"l": "B", "t": "Para efectuar la apertura de una señal que autorice un itinerario, es imprescindible que con anterioridad todos los aparatos del mismo se hallen dispuestos en la posición adecuada."},
+      {"l": "C", "t": "Mientras esté abierta la señal que autoriza un itinerario, no se puede cambiar la posición de ningún aparato relacionado con el mismo."},
+      {"l": "D", "t": "Todas las respuestas son correctas."}
+    ]},
+  "10": {
+    "q": "Cuando dos itinerarios no pueden ser realizados de forma simultánea:",
+    "a": "A",
+    "opts": [
+      {"l": "A", "t": "Se consideran incompatibles."},
+      {"l": "B", "t": "Se trata de una anormalidad del bloqueo."},
+      {"l": "C", "t": "Se trata de una anormalidad del enclavamiento."},
+      {"l": "D", "t": "Se cumplimentará el Aviso que regule su operatividad."}
+    ]},
+  "11": {
+    "q": "Las incompatibilidades de cada enclavamiento:",
+    "a": "C",
+    "opts": [
+      {"l": "A", "t": "Estarán contenidas en el Aviso que regule su operatividad."},
+      {"l": "B", "t": "Estarán contenidas en la Orden que regule su operatividad."},
+      {"l": "C", "t": "Estarán contenidas en la Consigna que regule su operatividad."},
+      {"l": "D", "t": "Estarán contenidas en la ICL que regule su operatividad."}
+    ]},
+  "12": {
+    "q": "Un PN enclavado es:",
+    "a": "A",
+    "opts": [
+      {"l": "A", "t": "El situado entre las señales de entrada de una estación cuya protección se activa mediante el establecimiento de los itinerarios que le afecten."},
+      {"l": "B", "t": "El situado en plena vía y cuya protección es activada automáticamente al aproximarse el tren al mismo."},
+      {"l": "C", "t": "El situado entre las señales de entrada de una estación cuya protección se activa automáticamente al aproximarse el tren al mismo."},
+      {"l": "D", "t": "El situado en plena vía y cuya protección es activada automáticamente por la señal de bloqueo anterior."}
+    ]},
+  "13": {
+    "q": "Un PN automático es:",
+    "a": "C",
+    "opts": [
+      {"l": "A", "t": "El situado en plena vía y cuya protección es activada automáticamente por la señal de bloqueo anterior."},
+      {"l": "B", "t": "El situado entre las señales de entrada de una estación cuya protección se activa mediante el establecimiento de los itinerarios que le afecten."},
+      {"l": "C", "t": "El situado en plena vía y cuya protección es activada automáticamente al aproximarse el tren al mismo."},
+      {"l": "D", "t": "El situado entre las señales de entrada de una estación cuya protección se activa automáticamente al aproximarse el tren al mismo."}
+    ]},
+  "14": {
+    "q": "La protección de los PN enclavados y automáticos estará asegurada:",
+    "a": "C",
+    "opts": [
+      {"l": "A", "t": "Permanentemente por las instalaciones que los equipan."},
+      {"l": "B", "t": "Cuando sea necesario, por las indicaciones de las señales fijas y por las instalaciones que los equipan."},
+      {"l": "C", "t": "Antes del paso de los trenes, por las indicaciones de las señales fijas y por las instalaciones que los equipan."},
+      {"l": "D", "t": "Permanentemente por las indicaciones de las señales fijas."}
+    ]
+  },
+  "15": {
+    "q": "Los PN provisionales:",
+    "a": "D",
+    "opts": [
+      {"l": "A", "t": "Sus sistemas de seguridad y señalización se regularán por Aviso de la EF."},
+      {"l": "B", "t": "El AI los establecerá según su criterio y por el tiempo que crea conveniente."},
+      {"l": "C", "t": "El AI efectuará su regulación por Aviso."},
+      {"l": "D", "t": "El AI efectuará su regulación por Consigna."}
+    ]},
+  "16": {
+    "q": "Respecto a averías en Paso a Nivel:",
+    "a": "A",
+    "opts": [
+      {"l": "A", "t": "Todas las respuestas son correctas."},
+      {"l": "B", "t": "El Responsable de Circulación de la Banda de Regulación o del CTC dispondrá el envío al PN de personal habilitado, con objeto de hacerse cargo del mismo."},
+      {"l": "C", "t": "Se notificará a los Maquinistas que el PN se encuentra sin protección hasta su reparación."},
+      {"l": "D", "t": "Se producen cuando un PN automático o enclavado quede sin tensión, tenga rotas las semibarreras o apagadas las señales destellantes a la carretera."}
+    ]},
+  "17": {
+    "q": "\"Paso a Nivel ______(estación, km)_____ sin protección\", lo notifica el RC al Maquinista:",
+    "a": "D",
+    "opts": [
+      {"l": "A", "t": "Cuando un PN automático tenga apagadas las señales destellantes a la carretera."},
+      {"l": "B", "t": "Cuando un PN automático quede sin tensión."},
+      {"l": "C", "t": "Cuando un PN enclavado tenga rotas las semibarreras."},
+      {"l": "D", "t": "Todas las respuestas son correctas."}
+    ]},
+  "18": {
+    "q": "En las Consignas del AI que regulan la operatividad de los enclavamientos, se describen:",
+    "a": "A",
+    "opts": [
+      {"l": "A", "t": "Todas las respuestas son correctas."},
+      {"l": "B", "t": "Las instalaciones."},
+      {"l": "C", "t": "La utilización."},
+      {"l": "D", "t": "La forma de proceder en caso de avería."}
+    ]},
+  "19": {
+    "q": "Cuando no sea posible efectuar la apertura de la señal de entrada se podrán establecer itinerarios para el estacionamiento de los trenes:",
+    "a": "D",
+    "opts": [
+      {"l": "A", "t": "Si la estación no dispone de señal de entrada, se detendrá el tren ante la primera aguja y se ordenará su estacionamiento con marcha a la vista."},
+      {"l": "B", "t": "Si la señal de entrada no dispone de indicación de rebase autorizado, se autorizará su rebase por telefonema, prescribiendo marcha de maniobras y cuantas comprobaciones precise realizar el tren."},
+      {"l": "C", "t": "Si la señal de entrada no dispone de indicación de movimiento autorizado, se autorizará su rebase por telefonema, prescribiendo marcha a la vista y cuantas comprobaciones precise realizar el tren."},
+      {"l": "D", "t": "Si la señal de entrada no dispone de indicación de rebase autorizado, se autorizará su rebase por telefonema, prescribiendo marcha a la vista y cuantas comprobaciones precise realizar el tren."}
+    ]},
+  "20": {
+    "q": "La entrada simultánea de dos trenes en sentido contrario, se considera itinerarios incompatibles:",
+    "a": "B",
+    "opts": [
+      {"l": "A", "t": "En una estación con enclavamiento."},
+      {"l": "B", "t": "En una estación sin enclavamiento, y salvo que la disposición de las vías o de los aparatos de vía impidan realizar itinerarios concurrentes."},
+      {"l": "C", "t": "Nunca será incompatible."},
+      {"l": "D", "t": "Siempre será incompatible."}
+    ]},
+  "21": {
+    "q": "Las agujas de las vías donde se encuentre material apartado:",
+    "a": "C",
+    "opts": [
+      {"l": "A", "t": "Estarán orientadas a vías de circulación, siempre que sea posible."},
+      {"l": "B", "t": "Se mantendrán inmovilizadas según se indique en el correspondiente Aviso del AI."},
+      {"l": "C", "t": "Estarán orientadas en la posición que evite la deriva a vías de circulación, siempre que sea posible."},
+      {"l": "D", "t": "Se mantendrán inmovilizadas durante todo el tiempo que esté apartado el material en la vía."}
+    ]},
+  "22": {
+    "q": "Las intersecciones de vías férreas con vías de comunicación en el interior de zonas portuarias:",
+    "a": "D",
+    "opts": [
+      {"l": "A", "t": "Tendrán la consideración de PN enclavado."},
+      {"l": "B", "t": "Tendrán la consideración de PN."},
+      {"l": "C", "t": "Tendrán la consideración de PN automático."},
+      {"l": "D", "t": "No tendrán la consideración de PN."}
+    ]},
+  "23": {
+    "q": "En caso de anormalidad en los enclavamientos:",
+    "a": "A",
+    "opts": [
+      {"l": "A", "t": "Podrá variarse un itinerario establecido cuando, previamente, el Responsable de Circulación se lo comunique al Maquinista y reciba de éste su enterado."},
+      {"l": "B", "t": "El Responsable de Circulación siempre podrá variar un itinerario establecido."},
+      {"l": "C", "t": "En casos de avería en las agujas no se podrá utilizar el enclavamiento."},
+      {"l": "D", "t": "En casos de avería en las agujas y otros equipos del enclavamiento, no se podrá utilizar éste."}
+    ]}
+};
+
+
+  let respuestasVisibles = false;
+let totalPreguntas = Object.keys(testData).length;
+
+// Generate all questions on page load
+function generarTest() {
+  const container = document.getElementById('questionsContainer');
+  
+  Object.keys(testData).forEach(qid => {
+    const q = testData[qid];
+    const card = document.createElement('div');
+    card.className = 'card question';
+    card.dataset.qid = qid;
+    
+    let opcionesHTML = '';
+    q.opts.forEach(opt => {
+      opcionesHTML += `
+        <label class="option">
+          <input type="radio" name="q${qid}" value="${opt.l}" onchange="updateProgress()" />
+          <div><b>${opt.l})</b> ${opt.t}</div>
+        </label>
+      `;
+    });
+
+    card.innerHTML = `
+      <span class="q-number">Pregunta ${qid} de ${totalPreguntas}</span>
+      <div class="q-title">${q.q}</div>
+      <div class="options">${opcionesHTML}</div>
+      <div class="answer-key">✓ Respuesta correcta: <b>${q.a}</b></div>
+      <div class="feedback"></div>
+    `;
+    
+    container.appendChild(card);
+  });
+}
+
+// Update progress bar
+function updateProgress() {
+  const respondidas = document.querySelectorAll('input[type=radio]:checked').length;
+  const porcentaje = (respondidas / totalPreguntas) * 100;
+  document.getElementById('progressBar').style.width = porcentaje + '%';
+}
+
+// Grade the test
+function calificar() {
+  let correctas = 0;
+  let incorrectas = 0;
+  let sinResponder = 0;
+  
+  document.querySelectorAll('.question').forEach(card => {
+    const qid = card.dataset.qid;
+    const correcta = testData[qid].a;
+    const seleccionada = card.querySelector('input[type=radio]:checked');
+    
+    card.querySelectorAll('.option').forEach(o => o.classList.remove('correct','incorrect'));
+    
+    if (seleccionada) {
+      const letra = seleccionada.value;
+      if (letra === correcta) {
+        correctas++;
+        seleccionada.closest('.option').classList.add('correct');
+        card.querySelector('.feedback').textContent = '✔ ¡Correcto!';
+        card.querySelector('.feedback').style.color = 'var(--ok)';
+      } else {
+        incorrectas++;
+        seleccionada.closest('.option').classList.add('incorrect');
+        card.querySelector('.feedback').innerHTML = `✖ Incorrecto · La correcta es: <b>${correcta}</b>`;
+        card.querySelector('.feedback').style.color = 'var(--bad)';
+        const corr = card.querySelector(`input[value="${correcta}"]`);
+        if (corr) corr.closest('.option').classList.add('correct');
+      }
+    } else {
+      sinResponder++;
+      card.querySelector('.feedback').textContent = '⚠ Sin responder';
+      card.querySelector('.feedback').style.color = 'var(--warning)';
+    }
+  });
+  
+  const porcentaje = Math.round((correctas / totalPreguntas) * 100);
+  const aprobado = porcentaje >= 50;
+  
+  document.getElementById('score').textContent = `${correctas} / ${totalPreguntas} (${porcentaje}%)`;
+  document.getElementById('score').style.color = aprobado ? 'var(--ok)' : 'var(--bad)';
+  
+  document.getElementById('scoreDetails').innerHTML = `
+    ✔ ${correctas} correctas · ✖ ${incorrectas} incorrectas · ⚠ ${sinResponder} sin responder
+  `;
+  
+  // Scroll to top to see results
+ // window.scrollTo({top: 0, behavior: 'smooth'});
+}
+
+// Reset the test
+function reiniciar() {
+  document.querySelectorAll('input[type=radio]').forEach(r => r.checked = false);
+  document.querySelectorAll('.option').forEach(o => o.classList.remove('correct','incorrect'));
+  document.querySelectorAll('.feedback').forEach(f => {f.textContent=''; f.removeAttribute('style')});
+  document.getElementById('score').textContent = '—';
+  document.getElementById('score').removeAttribute('style');
+  document.getElementById('scoreDetails').textContent = '';
+  document.getElementById('progressBar').style.width = '0%';
+  window.scrollTo({top: 0, behavior: 'smooth'});
+}
+
+// Toggle answer visibility
+function toggleRespuestas(btn) {
+  respuestasVisibles = !respuestasVisibles;
+  document.body.classList.toggle('show-answers', respuestasVisibles);
+  btn.textContent = respuestasVisibles ? '🙈 Ocultar respuestas' : '👁️ Ver respuestas';
+  
+  if (respuestasVisibles) {
+    document.querySelectorAll('.question').forEach(card => {
+      const qid = card.dataset.qid;
+      const correcta = testData[qid].a;
+      card.querySelectorAll('.option').forEach(o => o.classList.remove('correct'));
+      const corr = card.querySelector(`input[value="${correcta}"]`);
+      if (corr) corr.closest('.option').classList.add('correct');
+    });
+  } else {
+    document.querySelectorAll('.option').forEach(o => o.classList.remove('correct'));
+  }
+}
+
+// Initialize test on page load
+window.addEventListener('load', () => {
+  generarTest();
+});
+// Scroll to top button functionality
+const scrollTopBtn = document.getElementById('scrollTopBtn');
+
+// Show/hide button based on scroll position
+window.addEventListener('scroll', () => {
+  if (window.pageYOffset > 300) {
+    scrollTopBtn.classList.add('visible');
+  } else {
+    scrollTopBtn.classList.remove('visible');
+  }
+});
+
+// Smooth scroll to top on click
+scrollTopBtn.addEventListener('click', () => {
+  window.scrollTo({
+    top: 0,
+    behavior: 'smooth'
+  });
+});
+</script>
+</body>
+</html>
