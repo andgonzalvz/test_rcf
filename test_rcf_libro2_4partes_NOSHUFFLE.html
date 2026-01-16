@@ -100,6 +100,7 @@ button.secondary:hover{background:rgba(255,255,255,.05)}
 (function(){
     // Test data organized by parts (1-4)
   const testData = {
+  "1": {
      "1": {q: "¿Qué se describe en el Capítulo 1 (Señales ferroviarias)?", a: "D", opts: [
       {l: "A", t: "Se describen todas las señales de aplicación general en el RAM, independientemente del ancho de vía o del tipo de trenes que circulen por ella."},
       {l: "B", t: "Se describen todas las señales de aplicación general en el AI, independientemente del ancho de vía o del tipo de trenes que circulen por ella."},
@@ -460,369 +461,370 @@ button.secondary:hover{background:rgba(255,255,255,.05)}
       {l: "C", t: "Ordenar parada."},
       {l: "D", t: "Delimitar puntos de la vía o estación."}
     ]}
-  }, // hasta aqui estan
-      "61": {q: "¿Qué son los vagones?", a: "B", opts: [
-        {l: "A", t: "Vehículos ferroviarios sin tracción propia habilitados para el transporte de viajeros y mercancías."},
-        {l: "B", t: "Vehículos ferroviarios sin tracción propia habilitados para el transporte de mercancías."},
-        {l: "C", t: "Vehículos ferroviarios con tracción propia habilitados para el transporte de mercancías."},
-        {l: "D", t: "Vehículos ferroviarios para la liberación y mantenimiento de vía."}
-      ]},
-      "62": {q: "¿Qué es la velocidad límite?", a: "C", opts: [
-        {l: "A", t: "Circulando en BA, es la máxima permitida en cada momento por el sistema."},
-        {l: "B", t: "Circulando en BLA, es la máxima permitida en cada momento por el sistema."},
-        {l: "C", t: "Circulando en BCA, es la máxima permitida en cada momento por el sistema."},
-        {l: "D", t: "Circulando en BSL, es la máxima permitida en cada momento por el sistema."}
-      ]},
-      "63": {q: "¿Qué es una vía de ancho mixto?", a: "C", opts: [
-        {l: "A", t: "Es aquella que permite la circulación de trenes de, al menos, dos anchos distintos, con dos sistemas de bloqueo."},
-        {l: "B", t: "Es aquella que permite la circulación de trenes de ancho variable, con único sistema de bloqueo."},
-        {l: "C", t: "Es aquella que permite la circulación de trenes de, al menos, dos anchos distintos, con único sistema de bloqueo."},
-        {l: "D", t: "Es aquella que permite la circulación de trenes de viajeros y de mercancías."}
-      ]},
-      "64": {q: "¿Qué son las vías de circulación?", a: "A", opts: [
-        {l: "A", t: "Son las utilizadas en las estaciones para la entrada, salida o paso de los trenes. El resto de vías, si las hubiera, se denominan vías de servicio."},
-        {l: "B", t: "Son las utilizadas en las estaciones para la entrada y salida de los trenes. El resto de vías, si las hubiera, se denominan vías de servicio."},
-        {l: "C", t: "Son las utilizadas en las estaciones para la entrada, salida o paso de los trenes. El resto de vías, si las hubiera, se denominan vías generales."},
-        {l: "D", t: "Son las utilizadas en las estaciones para la entrada, salida o paso de los trenes. El resto de vías, si las hubiera, se denominan vías de apartado."}
-      ]}
-
-    "2": {
-      "65": {q: "¿Qué se entiende por zona de peligro eléctrico?", a: "D", opts: [
-        {l: "A", t: "Espacio alrededor del conductor eléctrico dentro del cual un trabajador o una máquina de trabajos podrían sufrir un arco eléctrico o un contacto directo con el elemento en tensión."},
-        {l: "B", t: "Espacio alrededor del conductor eléctrico dentro del cual un trabajador con herramienta o una máquina de trabajos podrían sufrir un arco eléctrico o un contacto directo con el elemento en tensión."},
-        {l: "C", t: "Espacio alrededor del conductor eléctrico dentro del cual un trabajador (con o sin herramienta) o una máquina de trabajos podría sufrir un arco eléctrico o un contacto indirecto con el elemento sin tensión."},
-        {l: "D", t: "Espacio alrededor del conductor eléctrico dentro del cual un trabajador (con o sin herramienta) o una máquina de trabajos podría sufrir un arco eléctrico o un contacto directo con el elemento en tensión."}
-      ]},
-      "66": {q: "¿Qué se entiende por zona de peligro para los trabajos?", a: "A", opts: [
-        {l: "A", t: "Espacio alrededor de la vía en el que una persona, material o equipo pueden ser arrollados por un vehículo ferroviario, o ser puestos en peligro por la corriente de aire que genera su circulación."},
-        {l: "B", t: "Espacio alrededor de la vía en el que una persona puede ser arrollada por un vehículo ferroviario, o ser puestos en peligro por la corriente de aire que genera su circulación."},
-        {l: "C", t: "Espacio alrededor del conductor eléctrico dentro del cual un trabajador (con o sin herramienta) o una máquina de trabajos podría sufrir un arco eléctrico o un contacto directo con el elemento en tensión."},
-        {l: "D", t: "Ninguna es correcta."}
-      ]},
-      "67": {q: "¿Qué se entiende por zona de riesgo para los trabajos?", a: "C", opts: [
-        {l: "A", t: "Es la comprendida entre la zona de peligro eléctrico y la zona de seguridad para los trabajos."},
-        {l: "B", t: "Es la comprendida entre la zona de riesgo eléctrico y la zona de seguridad para los trabajos."},
-        {l: "C", t: "Es la comprendida entre la zona de peligro para los trabajos y la zona de seguridad para los trabajos."},
-        {l: "D", t: "Ninguna es correcta."}
-      ]},
-      "68": {q: "¿Cuál es la zona de seguridad para los trabajos?", a: "A", opts: [
-        {l: "A", t: "Espacios situados a más de 3 metros de distancia del borde exterior de la cabeza del carril, a ambos lados de la vía."},
-        {l: "B", t: "Espacios situados a más de 5 metros de distancia del borde exterior de la cabeza del carril, a ambos lados de la vía."},
-        {l: "C", t: "Espacios situados a más de 8 metros de distancia del borde exterior de la cabeza del carril, a ambos lados de la vía."},
-        {l: "D", t: "Ninguna es correcta."}
-      ]},
-      "69": {q: "¿Qué significa CCR?", a: "A", opts: [
-        {l: "A", t: "Control de Circulación por Radio."},
-        {l: "B", t: "Circulación Centralizada por Radio."},
-        {l: "C", t: "Carta Circular de Reglamentación."},
-        {l: "D", t: "Control-Mando y Señalización."}
-      ]},
-      "70": {q: "¿Qué es el ep?", a: "A", opts: [
-        {l: "A", t: "Freno electroneumático."},
-        {l: "B", t: "Especificaciones prácticas."},
-        {l: "C", t: "Cambiador de potencia."},
-        {l: "D", t: "Cambiador de régimen."}
-      ]},
-      "71": {q: "¿Qué es el ERTMS?", a: "A", opts: [
-        {l: "A", t: "Sistema Europeo de Gestión de Tráfico Ferroviario."},
-        {l: "B", t: "Sistema de Control de Trenes Europeo."},
-        {l: "C", t: "Especificación Técnica de Interoperabilidad."},
-        {l: "D", t: "Sistema de Protección Automática de Trenes con Supervisión Continua."}
-      ]},
-      "72": {q: "¿Qué es el ETCS?", a: "B", opts: [
-        {l: "A", t: "Sistema Europeo de Gestión de Tráfico Ferroviario."},
-        {l: "B", t: "Sistema de Control de Trenes Europeo."},
-        {l: "C", t: "Especificación Técnica de Interoperabilidad."},
-        {l: "D", t: "Sistema de Protección Automática de Trenes con Supervisión Continua."}
-      ]},
-      "73": {q: "¿Qué es el GSM-R?", a: "A", opts: [
-        {l: "A", t: "Sistema de Comunicación Digital Específico para Ferrocarril."},
-        {l: "B", t: "Control de Circulación por Radio."},
-        {l: "C", t: "Registrador Jurídico."},
-        {l: "D", t: "Ninguna es correcta."}
-      ]},
-      "74": {q: "¿Qué es el JRU?", a: "C", opts: [
-        {l: "A", t: "Sistema de Comunicación Digital Específico para Ferrocarril."},
-        {l: "B", t: "Control de Circulación por Radio."},
-        {l: "C", t: "Registrador Jurídico."},
-        {l: "D", t: "Ninguna es correcta."}
-      ]},
-      "75": {q: "¿Qué es un MA?", a: "B", opts: [
-        {l: "A", t: "Movimiento autorizado en BCA."},
-        {l: "B", t: "Movimiento autorizado en ETCS."},
-        {l: "C", t: "Maniobra autorizada en ETCS."},
-        {l: "D", t: "Maniobra autorizada en BCA."}
-      ]},
-      "76": {q: "¿Qué es el RID?", a: "A", opts: [
-        {l: "A", t: "Reglamento Internacional sobre el Transporte de Mercancías Peligrosas por Ferrocarril."},
-        {l: "B", t: "Reglamento Nacional sobre el Transporte de Mercancías Peligrosas por Ferrocarril."},
-        {l: "C", t: "Reglamento Internacional sobre el Transporte de Mercancías Peligrosas por Transporte Terrestre."},
-        {l: "D", t: "Reglamento Nacional sobre el Transporte de Mercancías Peligrosas por Transporte Terrestre."}
-      ]},
-      "77": {q: "¿Qué significa la letra S?", a: "A", opts: [
-        {l: "A", t: "Identificación de los medios de socorro."},
-        {l: "B", t: "Identificación de los medios de salvamento."},
-        {l: "C", t: "Identificación de los medios de socorro y salvamento."},
-        {l: "D", t: "Ninguna es correcta."}
-      ]},
-      "78": {q: "¿Qué significan las siglas SGS?", a: "B", opts: [
-        {l: "A", t: "Sistema de Gestión del Socorro."},
-        {l: "B", t: "Sistema de Gestión de la Seguridad."},
-        {l: "C", t: "Sistema Global de Seguridad."},
-        {l: "D", t: "Ninguna es correcta."}
-      ]},
-      "79": {q: "¿Quién debe establecer en sus SGS las reglas internas y los procedimientos que garanticen un correcto relevo del personal?", a: "C", opts: [
-        {l: "A", t: "AESF."},
-        {l: "B", t: "EF."},
-        {l: "C", t: "AI y EF."},
-        {l: "D", t: "Ninguna es correcta."}
-      ]},
-      "80": {q: "¿Qué debe hacer el personal saliente?", a: "D", opts: [
-        {l: "A", t: "Entregar a su relevo la documentación, registros informáticos y útiles de servicio, para que éste pueda desarrollar plenamente su función desde el mismo momento de su incorporación."},
-        {l: "B", t: "Entregar a su relevo los impresos, registros informáticos, útiles de servicio y toda la información necesaria relacionada con la seguridad, para que éste pueda desarrollar plenamente su función desde el mismo momento de su incorporación."},
-        {l: "C", t: "Entregar a su relevo la documentación reglamentaria, impresos, registros informáticos y útiles de servicio."},
-        {l: "D", t: "Entregar a su relevo la documentación reglamentaria, impresos, registros informáticos, útiles de servicio y toda la información necesaria relacionada con la seguridad, para que éste pueda desarrollar plenamente su función desde el mismo momento de su incorporación."}
-      ]},
-      "81": {q: "¿Qué debe hacer el personal cuando toma el servicio?", a: "C", opts: [
-        {l: "A", t: "Hacerse cargo de la documentación reglamentaria, impresos, registros informáticos y útiles de servicio."},
-        {l: "B", t: "Tomar conocimiento de las informaciones relacionadas con la seguridad que le trasmita el personal saliente, y resolver con éste cuantas dudas le surjan."},
-        {l: "C", t: "Hacerse cargo de la documentación reglamentaria, impresos, registros informáticos y útiles de servicio. Además, deberá tomar conocimiento de las informaciones relacionadas con la seguridad que le trasmita el personal saliente, y resolver con éste cuantas dudas le surjan."},
-        {l: "D", t: "Hacerse cargo de la documentación reglamentaria, impresos, registros informáticos y útiles de servicio. Además, deberá tomar conocimiento de las informaciones relacionadas con la seguridad que le trasmita el personal saliente, y resolver con éste cuantas dudas le surjan. Por último, debe firmar un documento que certifique que se ha hecho efectiva la entrega de la documentación reglamentaria."}
-      ]},
-      "82": {q: "¿Qué equipamientos debe tener operativos el tren para poder iniciar el servicio?", a: "D", opts: [
-        {l: "A", t: "Sistema de protección de tren compatible con alguno de los instalados en la infraestructura."},
-        {l: "B", t: "Dispositivo de vigilancia."},
-        {l: "C", t: "Radiotelefonía."},
-        {l: "D", t: "Todas son correctas."}
-      ]},
-      "83": {q: "¿Cuál es la velocidad máxima de circulación de ERTMS N2 en servicio?", a: "A", opts: [
-        {l: "A", t: "350 km/h."},
-        {l: "B", t: "300 km/h."},
-        {l: "C", t: "220 km/h."},
-        {l: "D", t: "200 km/h."}
-      ]},
-      "84": {q: "¿Cuál es la velocidad máxima de circulación de ERTMS N1 en servicio?", a: "B", opts: [
-        {l: "A", t: "350 km/h."},
-        {l: "B", t: "300 km/h."},
-        {l: "C", t: "220 km/h."},
-        {l: "D", t: "200 km/h."}
-      ]},
-      "85": {q: "¿Cuál es la velocidad máxima de circulación del LZB en servicio?", a: "B", opts: [
-        {l: "A", t: "350 km/h."},
-        {l: "B", t: "300 km/h."},
-        {l: "C", t: "220 km/h."},
-        {l: "D", t: "200 km/h."}
-      ]},
-      "86": {q: "¿Cuál es la velocidad máxima de circulación con el EBICAB en servicio?", a: "C", opts: [
-        {l: "A", t: "350 km/h."},
-        {l: "B", t: "300 km/h."},
-        {l: "C", t: "220 km/h."},
-        {l: "D", t: "200 km/h."}
-      ]},
-      "87": {q: "¿Cuál es la velocidad máxima de circulación con el ASFA en servicio?", a: "D", opts: [
-        {l: "A", t: "350 km/h."},
-        {l: "B", t: "300 km/h."},
-        {l: "C", t: "220 km/h."},
-        {l: "D", t: "200 km/h."}
-      ]},
-      "88": {q: "¿Cuál será la velocidad máxima cuando los sistemas de protección del tren instalados en la infraestructura estén fuera de servicio?", a: "B", opts: [
-        {l: "A", t: "100 km/h."},
-        {l: "B", t: "120 km/h."},
-        {l: "C", t: "160 km/h."},
-        {l: "D", t: "200 km/h."}
-      ]},
-      "89": {q: "¿Cuál será la velocidad máxima en caso de ausencia o inoperatividad del sistema de protección del tren embarcado?", a: "B", opts: [
-        {l: "A", t: "100 km/h."},
-        {l: "B", t: "120 km/h."},
-        {l: "C", t: "160 km/h."},
-        {l: "D", t: "200 km/h."}
-      ]},
-      "90": {q: "¿Cuál será la dotación mínima de personal en la cabina de conducción del tren para que pueda circular?", a: "A", opts: [
-        {l: "A", t: "Un maquinista, cuando la infraestructura esté equipada con un sistema de protección del tren operativo."},
-        {l: "B", t: "Dos maquinistas, cuando la infraestructura esté equipada con un sistema de protección del tren operativo, y la cabina de conducción lleve simultáneamente en servicio el dispositivo de vigilancia y sistema embarcado de protección del tren compatible con el de infraestructura."},
-        {l: "C", t: "Un maquinista, cuando la infraestructura esté equipada con un sistema de protección del tren operativo, y la cabina de conducción lleve simultáneamente en servicio el dispositivo de vigilancia y sistema embarcado del tren."},
-        {l: "D", t: "Un maquinista y una segunda persona debidamente habilitada, salvo que la EF establezca en su SGS otro procedimiento."}
-      ]},
-      "91": {q: "¿Quién elaborará documentación reglamentaria complementaria al RCF para facilitar su aplicación?", a: "D", opts: [
-        {l: "A", t: "AESF."},
-        {l: "B", t: "AI."},
-        {l: "C", t: "EF."},
-        {l: "D", t: "Todas son correctas."}
-      ]},
-      "92": {q: "¿Qué documentos elaborará y aprobará la AESF?", a: "A", opts: [
-        {l: "A", t: "Especificaciones Técnicas de Circulación."},
-        {l: "B", t: "Consignas, Avisos y Horario de trenes."},
-        {l: "C", t: "Libro Normas del Maquinista y Libro de Itinerarios del Maquinista."},
-        {l: "D", t: "Todas son correctas."}
-      ]},
-      "93": {q: "¿Qué documentos elaborará y aprobará el AI?", a: "B", opts: [
-        {l: "A", t: "Especificaciones Técnicas de Circulación."},
-        {l: "B", t: "Consignas, Avisos y Horario de trenes."},
-        {l: "C", t: "Libro Normas del Maquinista y Libro de Itinerarios del Maquinista."},
-        {l: "D", t: "Todas son correctas."}
-      ]},
-      "94": {q: "¿Qué documentos elaborará y aprobará la EF?", a: "C", opts: [
-        {l: "A", t: "Especificaciones Técnicas de Circulación."},
-        {l: "B", t: "Consignas, Avisos y Horario de trenes."},
-        {l: "C", t: "Libro Normas del Maquinista y Libro de Itinerarios del Maquinista."},
-        {l: "D", t: "Todas son correctas."}
-      ]},
-      "95": {q: "En caso de discrepancia entre documentos en referencia a un mismo objeto, ¿cuál será el orden de prevalencia?", a: "C", opts: [
-        {l: "A", t: "AI, EF, AESF y normas europeas."},
-        {l: "B", t: "AI y normas europeas, AESF, EF."},
-        {l: "C", t: "AESF y normas europeas, AI, EF."},
-        {l: "D", t: "Ninguna es correcta."}
-      ]},
-      "96": {q: "¿Qué establecen las Especificaciones Técnicas de Circulación?", a: "A", opts: [
-        {l: "A", t: "Requisitos y condiciones generales que en materia de seguridad debe cumplir la infraestructura, material rodante y la operación, para permitir una explotación en condiciones seguras."},
-        {l: "B", t: "Condiciones de aplicación del RCF en casos específicos y en ámbitos concretos de la infraestructura."},
-        {l: "C", t: "Recopilación de información reglamentaria que afecte a los Maquinistas."},
-        {l: "D", t: "Ninguna es correcta."}
-      ]},
-      "97": {q: "¿Para qué se emiten las Consignas?", a: "B", opts: [
-        {l: "A", t: "Para establecer los requisitos y condiciones generales que en materia de seguridad debe cumplir la infraestructura, material rodante y permitir una explotación en condiciones seguras."},
-        {l: "B", t: "Para regular las condiciones de aplicación del RCF en casos específicos y en ámbitos concretos de la infraestructura."},
-        {l: "C", t: "Para fijar fechas de entrada en vigor o anulación de documentos, en los casos de apertura, cierre o modificación de líneas o dependencias, o cuando sea preciso recordar o aclarar normas de circulación."},
-        {l: "D", t: "Para dar a conocer la marcha de los trenes, las velocidades máximas de circulación, los Cambios Significativos de Velocidad máxima, las Limitaciones Temporales de Velocidad máxima y el resto de informaciones relevantes para la circulación de los trenes."}
-      ]},
-      "98": {q: "¿Qué documento regula la utilización de instalaciones de seguridad concretas por modificaciones temporales?", a: "A", opts: [
-        {l: "A", t: "Consignas."},
-        {l: "B", t: "Avisos."},
-        {l: "C", t: "Horario de trenes."},
-        {l: "D", t: "Libro de Itinerarios del Maquinista."}
-      ]},
-      "99": {q: "¿Qué documento garantiza la continuidad de la circulación en casos de perturbación prolongada en condiciones especiales de explotación?", a: "A", opts: [
-        {l: "A", t: "Consignas."},
-        {l: "B", t: "Avisos."},
-        {l: "C", t: "Horario de trenes."},
-        {l: "D", t: "Libro de Itinerarios del Maquinista."}
-      ]},
-      "100": {q: "¿Qué documento describe las características, el funcionamiento y la operación de toda clase de instalaciones de seguridad y comunicaciones?", a: "A", opts: [
-        {l: "A", t: "Consignas."},
-        {l: "B", t: "Avisos."},
-        {l: "C", t: "Horario de trenes."},
-        {l: "D", t: "Libro de Itinerarios del Maquinista."}
-      ]},
-      "101": {q: "¿Para qué se elaboran los Avisos?", a: "C", opts: [
-        {l: "A", t: "Para establecer los requisitos y condiciones generales que en materia de seguridad debe cumplir la infraestructura, material rodante y permitir una explotación en condiciones seguras."},
-        {l: "B", t: "Para regular las condiciones de aplicación del RCF en casos específicos y en ámbitos concretos de la infraestructura."},
-        {l: "C", t: "Para fijar fechas de entrada en vigor o anulación de documentos, en los casos de apertura, cierre o modificación de líneas o dependencias, o cuando sea preciso recordar o aclarar normas de circulación."},
-        {l: "D", t: "Para dar a conocer la marcha de los trenes, las velocidades máximas de circulación, los Cambios Significativos de Velocidad máxima, las Limitaciones Temporales de Velocidad máxima y el resto de informaciones relevantes para la circulación de los trenes."}
-      ]},
-      "102": {q: "¿Para qué se elaboran los Horarios de los trenes?", a: "D", opts: [
-        {l: "A", t: "Para establecer los requisitos y condiciones generales que en materia de seguridad debe cumplir la infraestructura, material rodante y permitir una explotación en condiciones seguras."},
-        {l: "B", t: "Para regular las condiciones de aplicación del RCF en casos específicos y en ámbitos concretos de la infraestructura."},
-        {l: "C", t: "Para fijar fechas de entrada en vigor o anulación de documentos, en los casos de apertura, cierre o modificación de líneas o dependencias, o cuando sea preciso recordar o aclarar normas de circulación."},
-        {l: "D", t: "Para dar a conocer la marcha de los trenes, las velocidades máximas de circulación, los Cambios Significativos de Velocidad máxima, las Limitaciones Temporales de Velocidad máxima y el resto de informaciones relevantes para la circulación de los trenes."}
-      ]},
-      "103": {q: "¿Qué contiene el Libro de Normas del Maquinista?", a: "A", opts: [
-        {l: "A", t: "Una recopilación de la información reglamentaria que afecte a los Maquinistas de una EF. Su contenido deberá particularizarse y adaptarse en cada caso."},
-        {l: "B", t: "Información que afecte a los Maquinistas de una EF en relación con las características de las líneas por las que circulen y la información horaria del tren."},
-        {l: "C", t: "Las condiciones de aplicación del RCF en casos específicos y en ámbitos concretos de la infraestructura."},
-        {l: "D", t: "La marcha de los trenes, las velocidades máximas de circulación, los Cambios Significativos de Velocidad máxima, las Limitaciones Temporales de Velocidad máxima y el resto de informaciones relevantes para la circulación de los trenes."}
-      ]},
-      "104": {q: "¿Qué contiene el Libro de Itinerarios del Maquinista?", a: "B", opts: [
-        {l: "A", t: "Una recopilación de la información reglamentaria que afecte a los Maquinistas de una EF. Su contenido deberá particularizarse y adaptarse en cada caso."},
-        {l: "B", t: "Información que afecte a los Maquinistas de una EF en relación con las características de las líneas por las que circulen y la información horaria del tren."},
-        {l: "C", t: "Las condiciones de aplicación del RCF en casos específicos y en ámbitos concretos de la infraestructura."},
-        {l: "D", t: "La marcha de los trenes, las velocidades máximas de circulación, los Cambios Significativos de Velocidad máxima, las Limitaciones Temporales de Velocidad máxima y el resto de informaciones relevantes para la circulación de los trenes."}
-      ]},
-      "105": {q: "La información horaria del tren contiene:", a: "A", opts: [
-        {l: "A", t: "Identificación del tren, días de circulación, puntos de parada y actividades asociadas a cada una de ellas, horario de llegada, salida y paso del tren por cada punto característico y velocidad máxima de circulación para cada tramo homogéneo."},
-        {l: "B", t: "Identificación del tren, régimen de composición y frenado, días de circulación, puntos de parada y actividades asociadas a cada una de ellas, horario de llegada, salida y paso del tren por cada punto característico y velocidad máxima de circulación para cada tramo homogéneo."},
-        {l: "C", t: "Identificación del tren, días de circulación, puntos de parada y actividades asociadas a cada una de ellas."},
-        {l: "D", t: "Horario de llegada, salida y paso del tren por cada punto característico y velocidad máxima de circulación para cada tramo homogéneo."}
-      ]},
-      "106": {q: "¿Quién debe garantizar la adecuada publicidad y difusión de un documento reglamentario?", a: "D", opts: [
-        {l: "A", t: "AI."},
-        {l: "B", t: "EF."},
-        {l: "C", t: "AESF."},
-        {l: "D", t: "Todas son correctas."}
-      ]},
-      "107": {q: "¿Quién debe asegurar la actualización y distribución de documentos al personal afectado?", a: "D", opts: [
-        {l: "A", t: "AI."},
-        {l: "B", t: "EF."},
-        {l: "C", t: "AESF."},
-        {l: "D", t: "Las respuestas a) y b) son correctas."}
-      ]},
-      "108": {q: "¿Qué debe hacer el personal que reciba una modificación de su documentación de seguridad a título personal?", a: "C", opts: [
-        {l: "A", t: "Acusar recibo."},
-        {l: "B", t: "Acreditar conocimiento de su contenido."},
-        {l: "C", t: "Acusar recibo y acreditar conocimiento de su contenido."},
-        {l: "D", t: "Ninguna es correcta."}
-      ]},
-      "109": {q: "¿Quién proporcionará al personal los útiles de servicio necesarios para desarrollar su función?", a: "D", opts: [
-        {l: "A", t: "AI."},
-        {l: "B", t: "EF."},
-        {l: "C", t: "AI, EF y AESF."},
-        {l: "D", t: "Las respuestas a) y b) son correctas."}
-      ]},
-      "110": {q: "Las comunicaciones podrán ser:", a: "C", opts: [
-        {l: "A", t: "Verbales o por telefonema."},
-        {l: "B", t: "Escritas o por telefonema."},
-        {l: "C", t: "Verbales o escritas."},
-        {l: "D", t: "Por telefonema o radiotelefonía."}
-      ]},
-      "111": {q: "Las comunicaciones verbales pueden realizarse:", a: "C", opts: [
-        {l: "A", t: "Por telefonema o radiotelefonía."},
-        {l: "B", t: "Por escrito, telefonema o medios informáticos."},
-        {l: "C", t: "De viva voz, por teléfono, por radio o cualquier medio disponible al efecto."},
-        {l: "D", t: "Solo por radiotelefonía."}
-      ]},
-      "112": {q: "Las comunicaciones verbales entre Maquinistas y Responsables de Circulación se realizarán preferentemente por:", a: "A", opts: [
-        {l: "A", t: "Radiotelefonía."},
-        {l: "B", t: "Telefonemas."},
-        {l: "C", t: "Telefonía fija."},
-        {l: "D", t: "Escrito."}
-      ]},
-      "113": {q: "Las comunicaciones verbales entre Responsables de Circulación se realizarán preferentemente por:", a: "C", opts: [
-        {l: "A", t: "Radiotelefonía."},
-        {l: "B", t: "Telefonemas."},
-        {l: "C", t: "Telefonía fija."},
-        {l: "D", t: "Escrito."}
-      ]},
-      "114": {q: "Las comunicaciones escritas deben realizarse:", a: "D", opts: [
-        {l: "A", t: "Mediante radiotelefonía."},
-        {l: "B", t: "Mediante notificación."},
-        {l: "C", t: "Mediante telefonema."},
-        {l: "D", t: "Mediante un impreso previsto al efecto o por medios informáticos."}
-      ]},
-      "115": {q: "¿En qué consisten las comunicaciones por telefonema?", a: "B", opts: [
-        {l: "A", t: "Consiste en la transmisión de un texto determinado mediante un impreso al efecto."},
-        {l: "B", t: "Consiste en la transmisión a distancia de un texto determinado."},
-        {l: "C", t: "Consiste en la transmisión a distancia de un texto cualquiera."},
-        {l: "D", t: "Consiste en la transmisión verbalmente por radiotelefonía."}
-      ]},
-      "116": {q: "¿Qué son las notificaciones?", a: "C", opts: [
-        {l: "A", t: "Comunicaciones al Maquinista realizadas mediante telefonema."},
-        {l: "B", t: "Comunicaciones entre el personal ferroviario realizadas mediante escrito, telefonema o medios informáticos."},
-        {l: "C", t: "Comunicaciones al Maquinista realizadas mediante escrito, telefonema o medios informáticos."},
-        {l: "D", t: "Comunicaciones escritas realizadas mediante un impreso previsto al efecto."}
-      ]},
-      "117": {q: "Cuando el Maquinista deba registrar un telefonema, ¿cómo lo hará?", a: "B", opts: [
-        {l: "A", t: "Con el tren en movimiento."},
-        {l: "B", t: "Con el tren parado."},
-        {l: "C", t: "Es indiferente."},
-        {l: "D", t: "Ninguna es correcta."}
-      ]},
-      "118": {q: "Cuando en el RCF o en la documentación reglamentaria no se indique expresamente la forma y clase de comunicación, se entenderá que es:", a: "A", opts: [
-        {l: "A", t: "Verbal."},
-        {l: "B", t: "Escrito."},
-        {l: "C", t: "Telefonema."},
-        {l: "D", t: "Notificación."}
-      ]},
-      "119": {q: "¿Quién debe desarrollar las normas para llevar a cabo las comunicaciones relacionadas con la circulación de trenes?", a: "D", opts: [
-        {l: "A", t: "AI."},
-        {l: "B", t: "EF."},
-        {l: "C", t: "AI, EF y AESF."},
-        {l: "D", t: "Las respuestas a) y b) son correctas."}
-      ]},
-      "120": {q: "¿Quién definirá en sus SGS el modelo general y el soporte de edición del Libro de telefonemas?", a: "A", opts: [
-        {l: "A", t: "AI."},
-        {l: "B", t: "EF."},
-        {l: "C", t: "AI, EF y AESF."},
-        {l: "D", t: "Las respuestas a) y b) son correctas."}
-      ]},
+  },
+  "2": {
+     "61": {q: "¿Qué ordena el rebase autorizado en el caso de un tren en el interior de una estación?", a: "C", opts: [
+      {l:"A",t:"Parar ante la señal y reanudar el avance con marcha de maniobras hasta el punto de estacionamiento."},
+      {l:"B",t:"Parar ante la señal y reanudar el avance con marcha de maniobras hasta el punto de estacionamiento."},
+      {l:"C",t:"Iniciar o continuar el avance con marcha de maniobras hasta la señal siguiente o el piquete de la vía de estacionamiento."},
+      {l:"D",t:"Esta señal no ordena, solo indica."}
+    ]},
+    "62": {q: "¿Qué ordena el rebase autorizado en el caso de una maniobra?", a: "A", opts: [
+      {l:"A",t:"Permite iniciar o continuar el movimiento cuando lo ordene el personal encargado, sin autorizar circular a la estación siguiente."},
+      {l:"B",t:"Ordena avanzar hasta el piquete de la vía de estacionamiento."},
+      {l:"C",t:"Mantener marcha de maniobras hasta rebasar agujas de salida."},
+      {l:"D",t:"Parar y continuar hasta el punto de estacionamiento."}
+    ]},
+    "63": {q: "¿Qué le ordena al Maquinista la señal de foco rojo y blanco dispuestos horizontalmente?", a: "B", opts: [
+      {l:"A",t:"Movimiento autorizado."},
+      {l:"B",t:"Rebase autorizado."},
+      {l:"C",t:"Vía desviada."},
+      {l:"D",t:"Señal inexistente."}
+    ]},
+    "64": {q: "¿Cómo procederá el Maquinista ante una señal de entrada en rebase autorizado con luz?", a: "B", opts: [
+      {l:"A",t:"Parará y continuará con marcha de maniobras hasta el punto de estacionamiento."},
+      {l:"B",t:"Continuará con marcha de maniobras hasta el punto de estacionamiento o la señal siguiente."},
+      {l:"C",t:"Parará y continuará con marcha a la vista."},
+      {l:"D",t:"Continuará con marcha a la vista."}
+    ]},
+    "65": {q: "Efectuando maniobras para encabezar una locomotora, una señal indica:", a: "A", opts: [
+      {l:"A",t:"Rebase autorizado."},
+      {l:"B",t:"Aspecto antirreglamentario."},
+      {l:"C",t:"Movimiento autorizado."},
+      {l:"D",t:"Caso imposible."}
+    ]},
+    "66": {q: "El rebase autorizado ordena al Maquinista de un tren en el interior de estaciones:", a: "D", opts: [
+      {l:"A",t:"Continuar hasta rebasar agujas de salida."},
+      {l:"B",t:"Circular cuando lo ordene un agente."},
+      {l:"C",t:"Continuar hasta la señal siguiente."},
+      {l:"D",t:"Iniciar o continuar con marcha de maniobras hasta señal siguiente o piquete, y hasta agujas si no hay señal de salida."}
+    ]},
+    "67": {q: "El rebase autorizado ordena al Maquinista de un tren a la entrada de estaciones:", a: "A", opts: [
+      {l:"A",t:"Parar y reanudar con marcha de maniobras hasta el punto de estacionamiento o señal siguiente."},
+      {l:"B",t:"Parar y continuar con marcha a la vista."},
+      {l:"C",t:"Parar y continuar hasta rebasar señal siguiente."},
+      {l:"D",t:"Parar y continuar sin llegar a la estación inmediata."}
+    ]},
+    "68": {q: "Forma de proceder ante una señal de entrada con foco rojo y blanco fijo:", a: "D", opts: [
+      {l:"A",t:"Rebasar sin detenerse."},
+      {l:"B",t:"Parar y pedir instrucciones."},
+      {l:"C",t:"Rebasar actuando sobre ASFA."},
+      {l:"D",t:"Parar y continuar con marcha de maniobras hasta el punto de estacionamiento."}
+    ]},
+    "69": {q: "¿Qué señal ordena circular con marcha de maniobras hasta el punto de estacionamiento?", a: "C", opts: [
+      {l:"A",t:"Parada diferida."},
+      {l:"B",t:"Indicadora de entrada."},
+      {l:"C",t:"Rebase autorizado."},
+      {l:"D",t:"Indicadora de salida."}
+    ]},
+    "70": {q: "¿Qué ordena una señal en rebase autorizado a la entrada de estaciones?", a: "D", opts: [
+      {l:"A",t:"Marcha a la vista."},
+      {l:"B",t:"Parar y marchar a estación siguiente."},
+      {l:"C",t:"Parar y comunicar con el agente."},
+      {l:"D",t:"Parar y continuar con marcha de maniobras, salvo foco blanco intermitente."}
+    ]},
+    "71": {q: "¿Cómo circulará un tren en el interior de una estación con señal de rebase autorizado?", a: "A", opts: [
+      {l:"A",t:"Con marcha de maniobras hasta señal siguiente o piquete."},
+      {l:"B",t:"Parando y continuando a la vista."},
+      {l:"C",t:"Hasta señal de salida."},
+      {l:"D",t:"Hasta orden de un agente."}
+    ]},
+    "72": {q: "Señal con foco rojo y blanco fijo en el mástil indica:", a: "A", opts: [
+      {l:"A",t:"Rebase autorizado."},
+      {l:"B",t:"Movimiento autorizado."},
+      {l:"C",t:"Parada diferida."},
+      {l:"D",t:"Anuncio de precaución."}
+    ]},
+    "73": {q: "Entrada a estación con foco rojo y blanco intermitente:", a: "B", opts: [
+      {l:"A",t:"Marcha a la vista."},
+      {l:"B",t:"Parar y continuar con marcha de maniobras hasta rebasar agujas."},
+      {l:"C",t:"Parar y continuar a la vista hasta estacionarse."},
+      {l:"D",t:"Parar y continuar a la vista hasta rebasar agujas."}
+    ]},
+    "74": {q: "¿Qué ordena una señal de entrada en indicación de rebase autorizado?", a: "C", opts: [
+      {l:"A",t:"Parar y reanudar con maniobras."},
+      {l:"B",t:"Continuar normalmente."},
+      {l:"C",t:"Marcha de maniobras hasta punto de estacionamiento o señal siguiente."},
+      {l:"D",t:"Parar y comunicar con el agente."}
+    ]},
+    "75": {q: "¿Qué ordena la señal de movimiento autorizado a un tren parado?", a: "C", opts: [
+      {l:"A",t:"Marcha a la vista con orden adicional."},
+      {l:"B",t:"Marcha a la vista."},
+      {l:"C",t:"Marcha de maniobras hasta la señal siguiente."},
+      {l:"D",t:"Comunicar y esperar."}
+    ]},
+    "76": {q: "¿Qué ordena la señal de movimiento autorizado a un tren en movimiento?", a: "D", opts: [
+      {l:"A",t:"Continuar a la vista."},
+      {l:"B",t:"Emprender marcha."},
+      {l:"C",t:"Marcha de maniobras."},
+      {l:"D",t:"Continuar normalmente."}
+    ]},
+    "77": {q: "¿Qué ordena la señal de movimiento autorizado en maniobras?", a: "B", opts: [
+      {l:"A",t:"Marcha a la vista."},
+      {l:"B",t:"Permite iniciar o continuar la maniobra."},
+      {l:"C",t:"Marcha de maniobras."},
+      {l:"D",t:"Continuar normalmente."}
+    ]},
+    "78": {q: "¿Cómo procederá un Maquinista parado ante señal de movimiento autorizado?", a: "B", opts: [
+      {l:"A",t:"Marcha a la vista."},
+      {l:"B",t:"Marcha de maniobras hasta la señal siguiente."},
+      {l:"C",t:"Marchar normalmente."},
+      {l:"D",t:"Comunicar y esperar."}
+    ]},
+    "79": {q: "¿Qué ordena la señal de movimiento autorizado?", a: "D", opts: [
+      {l:"A",t:"Marchar con maniobras si está parado."},
+      {l:"B",t:"Continuar normalmente si está en movimiento."},
+      {l:"C",t:"Permitir maniobras bajo orden."},
+      {l:"D",t:"Todas son correctas."}
+    ]},
+      "80": {q: "¿Qué indica al Maquinista la señal de paso a nivel protegido?", a: "D", opts: [
+      {l:"A",t:"Con luz blanca fija circular normalmente por el PN."},
+      {l:"B",t:"Con luz blanca a destellos circular normalmente e informar al PM o a la primera estación."},
+      {l:"C",t:"Con luz blanca a destellos circular normalmente e informar al PM."},
+      {l:"D",t:"Esta señal no indica, ordena."}
+    ]},
+    "81": {q: "¿Qué ordena al Maquinista la señal de paso a nivel protegido?", a: "B", opts: [
+      {l:"A",t:"Con luz blanca a destellos circular normalmente."},
+      {l:"B",t:"Circular normalmente e informar al PM o a la primera estación si no hay radiotelefonía."},
+      {l:"C",t:"Circular normalmente e informar siempre a la primera estación."},
+      {l:"D",t:"Esta señal no ordena, indica."}
+    ]},
+    "82": {q: "¿Qué ordena al Maquinista la señal de paso a nivel protegido blanco a destellos?", a: "C", opts: [
+      {l:"A",t:"Circular normalmente por el PN."},
+      {l:"B",t:"Circular normalmente e informar al PM."},
+      {l:"C",t:"Circular normalmente e informar al PM o a la primera estación si no hay radiotelefonía."},
+      {l:"D",t:"Esta señal no ordena, indica."}
+    ]},
+    "83": {q: "Tras rebasar una señal de PN protegido y circular a ≤ 40 km/h, el paso queda:", a: "C", opts: [
+      {l:"A",t:"Protegido."},
+      {l:"B",t:"Protegido avisando al PM."},
+      {l:"C",t:"Sin protección."},
+      {l:"D",t:"Sin protección avisando al responsable de circulación."}
+    ]},
+    "84": {q: "Tras rebasar una señal de PN protegido y circular a ≤ 50 km/h:", a: "A", opts: [
+      {l:"A",t:"Protegido, salvo que la velocidad sea ≤ 40 km/h."},
+      {l:"B",t:"Protegido avisando al PM."},
+      {l:"C",t:"Sin protección."},
+      {l:"D",t:"Sin protección avisando al responsable."}
+    ]},
+    "85": {q: "Tras rebasar la señal de PN protegido y realizar una detención accidental:", a: "C", opts: [
+      {l:"A",t:"Protegido."},
+      {l:"B",t:"Protegido avisando al PM."},
+      {l:"C",t:"Sin protección."},
+      {l:"D",t:"Sin protección avisando a la próxima estación."}
+    ]},
+    "86": {q: "Tras rebasar la señal de PN protegido y efectuar una parada prescrita:", a: "C", opts: [
+      {l:"A",t:"Protegido."},
+      {l:"B",t:"Protegido avisando al PM."},
+      {l:"C",t:"Sin protección si la parada supera dos minutos."},
+      {l:"D",t:"Sin protección si supera un minuto."}
+    ]},
+    "87": {q: "¿Qué ordena la señal de paso a nivel sin protección?", a: "B", opts: [
+      {l:"A",t:"Parar ante el PN y asegurarse."},
+      {l:"B",t:"Ponerse en condiciones de parar ante cada PN y asegurarse de que no está transitado."},
+      {l:"C",t:"Circular normalmente tras comunicar con el PM."},
+      {l:"D",t:"Ir dispuesto a parar adoptando medidas complementarias."}
+    ]},
+    "88": {q: "Tras pasar un PN habiendo encontrado la señal defectuosa, el Maquinista:", a: "A", opts: [
+      {l:"A",t:"Informará inmediatamente al responsable de circulación o a la primera estación abierta."},
+      {l:"B",t:"Continuará normalmente informando al PM."},
+      {l:"C",t:"Informará tras rebasar el último vehículo."},
+      {l:"D",t:"Informará tras asegurarse de que no está transitado."}
+    ]},
+    "89": {q: "¿En qué caso se procederá como si la señal de PN estuviera en indicación restrictiva?", a: "A", opts: [
+      {l:"A",t:"Si se efectúa una parada prescrita superior a dos minutos."},
+      {l:"B",t:"Si se circula a más de 40 km/h."},
+      {l:"C",t:"Si la distancia al PN es superior a 3 km."},
+      {l:"D",t:"Si se efectúa una parada superior a un minuto."}
+    ]},
+    "90": {q: "¿Qué indica la señal indicadora de entrada?", a: "C", opts: [
+      {l:"A",t:"Itinerario por vía directa."},
+      {l:"B",t:"Itinerario por vía desviada."},
+      {l:"C",t:"FI1A vía directa y FI1B vía desviada."},
+      {l:"D",t:"Ninguna es correcta."}
+    ]},
+    "91": {q: "Señal indicadora de entrada con solo un foco:", a: "C", opts: [
+      {l:"A",t:"Detención inmediata."},
+      {l:"B",t:"Circular normalmente."},
+      {l:"C",t:"Continuar hasta completar la entrada o paso."},
+      {l:"D",t:"Circular e informar al PM."}
+    ]},
+    "92": {q: "Señal indicadora de entrada apagada:", a: "C", opts: [
+      {l:"A",t:"Detención inmediata e informar al PM."},
+      {l:"B",t:"Circular normalmente."},
+      {l:"C",t:"Las maniobras seguirán instrucciones del personal."},
+      {l:"D",t:"Circular e informar al PM."}
+    ]},
+    "93": {q: "¿Dónde se instala la señal indicadora de entrada de la figura?", a: "C", opts: [
+      {l:"A",t:"Antes de la señal de entrada."},
+      {l:"B",t:"A la altura de la señal de entrada."},
+      {l:"C",t:"A continuación de la señal de entrada."},
+      {l:"D",t:"Sobre señales avanzadas y de entrada."}
+    ]},
+    "94": {q: "Maquinista ante señal indicadora de entrada apagada:", a: "A", opts: [
+      {l:"A",t:"Continuará hasta completar la entrada o paso."},
+      {l:"B",t:"Se detendrá y pedirá instrucciones."},
+      {l:"C",t:"Seguirá instrucciones del agente."},
+      {l:"D",t:"Aplicará la orden más restrictiva."}
+    ]},
+    "95": {q: "¿Dónde se instala la señal indicadora de salida?", a: "A", opts: [
+      {l:"A",t:"Cuando no es visible la señal de salida desde el punto normal de estacionamiento."},
+      {l:"B",t:"Cuando no es visible la señal de salida desde el punto normal."},
+      {l:"C",t:"Solo en ámbito CTC."},
+      {l:"D",t:"Solo en ámbito sin CTC."}
+    ]},
+    "96": {q: "Indicadora de salida con banda luminosa:", a: "D", opts: [
+      {l:"A",t:"Emprender la marcha hasta la señal de salida."},
+      {l:"B",t:"Circular normalmente."},
+      {l:"C",t:"Ambas anteriores."},
+      {l:"D",t:"Esta señal no indica, ordena."}
+    ]},
+    "97": {q: "Indicadora de salida con cuatro puntos:", a: "D", opts: [
+      {l:"A",t:"Marchar hasta señal de salida preparado para parar."},
+      {l:"B",t:"Circular preparado para parar."},
+      {l:"C",t:"Ambas anteriores."},
+      {l:"D",t:"Esta señal no indica, ordena."}
+    ]},
+    "98": {q: "¿Qué ordena la indicadora de salida con banda?", a: "C", opts: [
+      {l:"A",t:"Marchar hasta señal de salida."},
+      {l:"B",t:"Circular normalmente."},
+      {l:"C",t:"Ambas."},
+      {l:"D",t:"Circular preparado para parar."}
+    ]},
+    "99": {q: "¿Qué ordena la indicadora de salida con cuatro puntos?", a: "D", opts: [
+      {l:"A",t:"Marchar hasta señal de salida preparado para parar."},
+      {l:"B",t:"Circular preparado para parar."},
+      {l:"C",t:"Marchar y circular normalmente."},
+      {l:"D",t:"Las respuestas A y B son correctas."}
+    ]},
+    "100": {q: "Indicadora de salida apagada indica:", a: "D", opts: [
+      {l:"A",t:"Comunicar con el responsable."},
+      {l:"B",t:"Circular normalmente."},
+      {l:"C",t:"Ambas anteriores."},
+      {l:"D",t:"Esta señal no indica, ordena."}
+    ]},
+    "101": {q: "Indicadora de salida apagada ordena:", a: "C", opts: [
+      {l:"A",t:"Comunicar con el responsable."},
+      {l:"B",t:"Circular normalmente."},
+      {l:"C",t:"Ambas anteriores."},
+      {l:"D",t:"Esta señal no ordena, indica."}
+    ]},
+    "102": {q: "¿Dónde se instalan las señales indicadoras de dirección?", a: "C", opts: [
+      {l:"A",t:"Solo en estaciones."},
+      {l:"B",t:"Solo en plena vía."},
+      {l:"C",t:"En estaciones o plena vía, en mástil u aisladas."},
+      {l:"D",t:"Solo sobre la cabeza de señales."}
+    ]},
+    "103": {q: "¿Qué ordena la señal indicadora de dirección?", a: "D", opts: [
+      {l:"A",t:"Dirección de trenes."},
+      {l:"B",t:"Dirección de maniobras."},
+      {l:"C",t:"Dirección de trenes y maniobras."},
+      {l:"D",t:"No ordena, indica."}
+    ]},
+    "104": {q: "¿Qué indica la señal indicadora de dirección?", a: "C", opts: [
+      {l:"A",t:"Dirección de trenes."},
+      {l:"B",t:"Dirección de maniobras."},
+      {l:"C",t:"Dirección de trenes y maniobras."},
+      {l:"D",t:"Orden obligatoria."}
+    ]},
+    "105": {q: "Señal indicadora de dirección distinta a la prevista:", a: "A", opts: [
+      {l:"A",t:"No emprender la marcha o detenerse y comunicarlo al responsable."},
+      {l:"B",t:"Detención inmediata."},
+      {l:"C",t:"Detenerse y comunicarlo."},
+      {l:"D",t:"Solo en plena vía."}
+    ]},
+    "106": {q: "Señal avanzada de bifurcación indica vía incorrecta:", a: "D", opts: [
+      {l:"A",t:"Parar ante señal de entrada."},
+      {l:"B",t:"Parar ante agujas."},
+      {l:"C",t:"Esperar a señal correcta."},
+      {l:"D",t:"Detenerse y comunicarlo."}
+    ]},
+    "107": {q: "La señal mostrada corresponde a:", a: "C", opts: [
+      {l:"A",t:"Clasificación despacio."},
+      {l:"B",t:"Clasificación deprisa."},
+      {l:"C",t:"Indicadora de dirección."},
+      {l:"D",t:"Movimiento autorizado vía desviada."}
+    ]},
+    "108": {q: "Indicadora de posición de aguja en vía directa indica:", a: "A", opts: [
+      {l:"A",t:"Circular normalmente."},
+      {l:"B",t:"Iniciar o continuar la marcha."},
+      {l:"C",t:"Circular solo en vía libre."},
+      {l:"D",t:"Circular en sentido recto."}
+    ]},
+    "109": {q: "Indicadora de posición de aguja en vía desviada indica:", a: "A", opts: [
+      {l:"A",t:"No exceder la velocidad indicada al paso por las agujas, de punta o talón."},
+      {l:"B",t:"No exceder velocidad solo de punta."},
+      {l:"C",t:"No exceder velocidad solo de talón."},
+      {l:"D",t:"Ninguna es correcta."}
+    ]},
+    "110": {q: "Indicadora de aguja indica vía distinta a la prevista:", a: "B", opts: [
+      {l:"A",t:"Detención accidental."},
+      {l:"B",t:"Detención inmediata."},
+      {l:"C",t:"Detenerse y comunicarlo."},
+      {l:"D",t:"Comunicarlo al responsable."}
+    ]},
+    "111": {q: "Indicadora de posición de agujas ordena:", a: "C", opts: [
+      {l:"A",t:"Circular normalmente."},
+      {l:"B",t:"Detención inmediata."},
+      {l:"C",t:"No exceder la velocidad indicada al paso por las agujas."},
+      {l:"D",t:"No exceder 60 km/h."}
+    ]},
+    "112": {q: "La señal de la figura indica:", a: "D", opts: [
+      {l:"A",t:"No exceder 30 km/h."},
+      {l:"B",t:"Dirección en bifurcación."},
+      {l:"C",t:"Vía de servicio."},
+      {l:"D",t:"Circular normalmente."}
+    ]},
+    "113": {q: "Indicador de comprobación de acoplamiento de agujas:", a: "A", opts: [
+      {l:"A",t:"Encendido: circular normalmente."},
+      {l:"B",t:"Apagado: circular e informar."},
+      {l:"C",t:"Apagado en estaciones AC cerradas."},
+      {l:"D",t:"Encendido tras verificación."}
+    ]},
+    "114": {q: "¿Dónde se instalan las pantallas de proximidad?", a: "D", opts: [
+      {l:"A",t:"Delante de señales avanzadas."},
+      {l:"B",t:"Delante de señales de entrada."},
+      {l:"C",t:"Delante de PN con poca visibilidad."},
+      {l:"D",t:"Delante de señales avanzadas a distancia reglamentaria."}
+    ]},
+    "115": {q: "Distancia de instalación de pantallas de proximidad:", a: "D", opts: [
+      {l:"A",t:"150, 150 y 200 m."},
+      {l:"B",t:"200, 150 y 150 m."},
+      {l:"C",t:"500, 350 y 150 m."},
+      {l:"D",t:"150, 150 y 200 m con reducción posible."}
+    ]},
+    "116": {q: "Pantallas de proximidad naranjas se instalan:", a: "A", opts: [
+      {l:"A",t:"En cambios de sistema de bloqueo y bifurcaciones."},
+      {l:"B",t:"Solo en cambios de bloqueo no automático."},
+      {l:"C",t:"En bloqueo automático."},
+      {l:"D",t:"En cualquier estación."}
+    ]},
+    "117": {q: "¿Se instalan pantallas de proximidad en señales de salida o entrada?", a: "B", opts: [
+      {l:"A",t:"No."},
+      {l:"B",t:"Sí."},
+      {l:"C",t:"Solo salida."},
+      {l:"D",t:"Solo entrada."}
+    ]},
+    "118": {q: "Pantallas de proximidad ante señales de PN:", a: "B", opts: [
+      {l:"A",t:"Visibilidad < 400 m."},
+      {l:"B",t:"Visibilidad < 300 m."},
+      {l:"C",t:"Nunca se instalan."},
+      {l:"D",t:"Solo en señales avanzadas."}
+    ]},
+    "119": {q: "La distancia de frenado comienza a contarse:", a: "B", opts: [
+      {l:"A",t:"Desde la tercera pantalla."},
+      {l:"B",t:"Desde la baliza ASFA o tercera pantalla."},
+      {l:"C",t:"Siempre desde ASFA."},
+      {l:"D",t:"Siempre desde la tercera pantalla."}
+    ]},
+    "120": {q: "Color de las franjas de pantallas de proximidad en alta velocidad:", a: "B", opts: [
+      {l:"A",t:"Igual que ámbito convencional."},
+      {l:"B",t:"Azul o igual que convencional."},
+      {l:"C",t:"Blancas."},
+      {l:"D",t:"No existen en alta velocidad."}
+    ]}
+  },
+  "3": {
       "121": {q: "Las señales transmiten órdenes e informaciones desde:", a: "D", opts: [
         {l: "A", t: "Las estaciones."},
         {l: "B", t: "Los trenes."},
@@ -871,8 +873,6 @@ button.secondary:hover{background:rgba(255,255,255,.05)}
         {l: "C", t: "Las que estos llevan en cabeza y cola."},
         {l: "D", t: "Ninguna es correcta."}
       ]}
-    },
-    "3": {
       "129": {q: "¿Dónde se encuentra instalada la señal preavanzada?", a: "D", opts: [
         {l: "A", t: "Delante de la señal avanzada en todas las líneas con BA."},
         {l: "B", t: "Delante de la señal avanzada en líneas con BA en las que se circule a velocidades superiores a 160 km/h."},
