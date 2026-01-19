@@ -1659,6 +1659,11 @@ button.secondary:active{background:rgba(255,255,255,.05)}
     }
  };
 
+  // Calculate total questions across all parts
+const totalPreguntasGlobal = Object.values(testData).reduce((acc, part) => {
+  return acc + Object.keys(part).length;
+}, 0);
+
   let currentPart = 1;
   let respuestasVisibles = false;
   const LS_PREFIX = 'rcf-libro1-part-';
@@ -1714,11 +1719,9 @@ button.secondary:active{background:rgba(255,255,255,.05)}
           </label>
         `;
       });
-
-      const totalPreguntas = Object.keys(partData).length;
       
       card.innerHTML = `
-        <span class="q-number">Pregunta ${qid} de ${totalPreguntas}</span>
+        <span class="q-number">Pregunta ${qid} de ${totalPreguntasGlobal}</span>
         <div class="q-title">${q.q}</div>
         <div class="options">${opcionesHTML}</div>
         <div class="answer-key">✓ Respuesta correcta: <b>${q.a}</b></div>
