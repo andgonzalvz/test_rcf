@@ -1,0 +1,1181 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>RCF 5 - COMPLETO</title>
+<style>
+:root{--bg:#0b132b;--card:#1c2541;--accent:#5bc0be;--ok:#21c17a;--bad:#ff5d73;--text:#f5f7ff;--warning:#ffc107}
+*{box-sizing:border-box}
+body{margin:0;font-family:Segoe UI,system-ui,-apple-system,Roboto,Ubuntu,'Helvetica Neue',Arial,sans-serif;background:linear-gradient(135deg,var(--bg),#0f1a3a);color:var(--text);min-height:100vh;font-size:14px}
+.header{padding:12px 10px;text-align:center;border-bottom:1px solid rgba(255,255,255,.08);position:sticky;top:0;background:rgba(11,19,43,.98);backdrop-filter:blur(10px);z-index:100;position:relative}
+.header h1{margin:0 0 6px 0;font-size:1.2rem;font-weight:700}
+.back-btn{position:absolute;left:10px;top:50%;transform:translateY(-50%);width:36px;height:36px;padding:0;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.15);border-radius:50%;color:var(--text);text-decoration:none;font-size:18px;transition:all .2s;line-height:1;display:flex;align-items:center;justify-content:center}
+.back-btn:active{background:rgba(255,255,255,.15);transform:translateY(-50%) scale(.95)}
+.badge{display:inline-block;padding:3px 10px;border-radius:999px;background:rgba(255,255,255,.08);font-size:11px;margin-top:4px}
+.tabs{display:flex;gap:6px;flex-wrap:wrap;margin:8px 0;justify-content:center}
+.tab{border:1px solid rgba(255,255,255,.15);border-radius:50%;width:32px;height:32px;padding:0;background:rgba(255,255,255,.08);cursor:pointer;color:var(--text);transition:all .2s;font-size:13px;font-weight:700;display:flex;align-items:center;justify-content:center}
+.tab.active{background:var(--accent);border-color:var(--accent);color:#001018}
+.tab:active{background:rgba(91,192,190,.2);border-color:rgba(91,192,190,.3)}
+.container{max-width:1000px;margin:0 auto;padding:10px 8px 100px}
+.progress-bar{background:rgba(255,255,255,.1);height:3px;border-radius:999px;margin:8px 0;overflow:hidden}
+.progress-fill{height:100%;background:linear-gradient(90deg,var(--accent),#3a9d9a);width:0%;transition:width .3s ease}
+.card{background:var(--card);border:1px solid rgba(255,255,255,.08);border-radius:12px;padding:12px;margin:8px 0;box-shadow:0 4px 12px rgba(0,0,0,.2)}
+.q-title{font-weight:600;margin-bottom:10px;line-height:1.4;font-size:14px}
+.q-number{color:var(--accent);font-size:11px;font-weight:700;margin-bottom:6px;display:block}
+.options{display:grid;grid-template-columns:1fr;gap:6px}
+.option{background:#121a34;border:2px solid rgba(255,255,255,.08);padding:8px;border-radius:8px;display:flex;align-items:flex-start;gap:8px;cursor:pointer;transition:all .2s;font-size:13px;line-height:1.3}
+.option:active{background:#1a2341;border-color:rgba(91,192,190,.3)}
+.option input{margin-top:2px;cursor:pointer;flex-shrink:0}
+.option div{flex:1}
+.answer-key{display:none;margin-top:8px;padding:8px;background:rgba(91,192,190,.1);border-radius:6px;font-size:12px}
+.answer-key b{color:var(--accent)}
+.show-answers .answer-key{display:block}
+.feedback{margin-top:6px;font-size:12px;font-weight:600;padding:6px;border-radius:4px}
+.correct{border-color:rgba(33,193,122,.6)!important;background:rgba(33,193,122,.05)!important}
+.incorrect{border-color:rgba(255,93,115,.75)!important;background:rgba(255,93,115,.05)!important}
+.actions{position:fixed;bottom:0;left:0;right:0;background:linear-gradient(180deg,rgba(15,26,58,0),rgba(15,26,58,.99));padding:10px 8px;padding-bottom:calc(10px + env(safe-area-inset-bottom));backdrop-filter:blur(10px);border-top:1px solid rgba(255,255,255,.08);z-index:99}
+.actions .bar{max-width:1000px;margin:0 auto;display:flex;gap:12px;align-items:center;justify-content:space-between;flex-wrap:wrap}
+button{background:var(--accent);border:none;color:#001018;font-weight:700;padding:10px 14px;border-radius:8px;cursor:pointer;transition:all .2s;font-size:13px;touch-action:manipulation}
+button:active{background:var(--accent);opacity:.9;transform:scale(.98)}
+button.secondary{background:transparent;border:1px solid rgba(255,255,255,.35);color:var(--text)}
+button.secondary:active{background:rgba(255,255,255,.05)}
+.score{font-weight:700;font-size:1rem}
+.score-details{font-size:11px;color:var(--text);opacity:.8;margin-top:2px}
+.footer{opacity:.8;font-size:11px;text-align:center;padding:15px;color:rgba(255,255,255,.5)}
+@media (min-width: 720px){
+  .options{grid-template-columns:1fr 1fr}
+  body{font-size:15px}
+  .card{padding:20px;margin:16px 0;border-radius:16px}
+  .q-title{font-size:15px;margin-bottom:12px}
+  .option{padding:12px;gap:10px;font-size:14px}
+  .header{padding:20px 16px}
+  .header h1{font-size:1.5rem;margin-bottom:8px}
+  .container{padding:20px 16px 120px}
+  button{padding:12px 18px;font-size:14px}
+  .tab{width:40px;height:40px;font-size:15px}
+}
+@media (max-width: 640px){
+  .actions .bar{flex-direction:column;gap:6px}
+  .score{text-align:center;width:100%;font-size:0.95rem}
+  .actions{padding:8px 6px;padding-bottom:calc(8px + env(safe-area-inset-bottom))}
+  button{width:100%;padding:11px 12px}
+}
+.scroll-top{position:fixed;bottom:20px;right:20px;width:40px;height:40px;background:var(--accent);color:#fff;border:none;border-radius:50%;cursor:pointer;box-shadow:0 4px 12px rgba(0,0,0,.2);display:flex;align-items:center;justify-content:center;font-size:20px;z-index:99;opacity:0;visibility:hidden;transition:all .3s;touch-action:manipulation}
+.scroll-top.visible{opacity:1;visibility:visible}
+.scroll-top:active{transform:scale(.95)}
+@media (max-width:640px){
+  .scroll-top{width:36px;height:36px;bottom:16px;right:16px;font-size:18px}
+}
+</style>
+</head>
+<body>
+  <div class="header">
+    <a href="index.html" class="back-btn">←</a>
+    <h1>RCF 5 - COMPLETO</h1>
+    <div class="badge">136 preguntas</div>
+    <div class="tabs">
+      <button class="tab" id="tab_1" data-part="1">1</button>
+      <button class="tab" id="tab_2" data-part="2">2</button>
+      <button class="tab" id="tab_3" data-part="3">3</button>
+      <button class="tab" id="tab_4" data-part="4">4</button>
+    </div>
+    <div class="progress-bar">
+      <div class="progress-fill" id="progressBar"></div>
+    </div>
+  </div>
+  
+  <div class="container" id="questionsContainer">
+    <!-- Questions will be generated here -->
+  </div>
+
+  <div class="actions">
+    <div class="bar">
+      <div>
+        <div class="score">Puntuación: <span id="score">—</span></div>
+        <div class="score-details" id="scoreDetails"></div>
+      </div>
+      <div style="display:flex;gap:12px;flex-wrap:wrap">
+        <button onclick="calificar()">📊 Calificar</button>
+        <button class="secondary" onclick="reiniciar()">🔄 Reiniciar</button>
+        <button class="secondary" onclick="toggleRespuestas(this)">👁️ Ver respuestas</button>
+      </div>
+    </div>
+  </div>
+<button id="scrollTopBtn" class="scroll-top">↑</button>
+<script>
+(function () {
+  // Test data organized by parts (1-4)
+  const testData = {
+  "1": {
+    "q": "El objeto del Libro Quinto del RCF es:",
+    "a": "B",
+    "opts": [
+      {"l": "A", "t": "Establecer reglas operativas generales para que la circulación de los trenes y de las maniobras se realice de forma segura, eficiente y puntual."},
+      {"l": "B", "t": "Definir el funcionamiento, tanto en situación normal como degradada, de distintas instalaciones de seguridad que son de uso común en la RFIG."},
+      {"l": "C", "t": "Describir y regular todas las señales que son de aplicación general en la RFIG."},
+      {"l": "D", "t": "Las respuestas a) y b) son correctas."}
+    ]},
+  "2": {
+    "q": "¿Qué se entiende por instalación de seguridad?",
+    "a": "D",
+    "opts": [
+      {"l": "A", "t": "Los componentes, equipos y sistemas o conjunto de ellos, homologados, instalados en tierra con el fin de aumentar el nivel de seguridad de la circulación."},
+      {"l": "B", "t": "Los componentes, equipos y sistemas o conjunto de ellos, instalados en tierra y a bordo de los vehículos con el fin de aumentar el nivel de seguridad y regularidad de la circulación."},
+      {"l": "C", "t": "Los componentes, equipos y sistemas, homologados, instalados a bordo de los vehículos con el fin de aumentar el nivel de seguridad de la circulación."},
+      {"l": "D", "t": "Los componentes, equipos y sistemas o conjunto de ellos, homologados, instalados en tierra y a bordo de los vehiculos con el fin de aumentar el nivel de seguridad de la circulación."}
+    ]},
+  "3": {
+    "q": "¿Cuál de las siguientes no es una instalación de seguridad?",
+    "a": "D",
+    "opts": [
+      {"l": "A", "t": "Señales ferroviarias."},
+      {"l": "B", "t": "Bloqueos."},
+      {"l": "C", "t": "ASFA."},
+      {"l": "D", "t": "Ninguna de las anteriores, ya que todas son instalaciones de seguridad."}
+    ]},
+  "4": {
+    "q": "¿Cuál de las siguientes instalaciones de seguridad no forma parte de los dispositivos embarcados?",
+    "a": "B",
+    "opts": [
+      {"l": "A", "t": "Información de velocidad."},
+      {"l": "B", "t": "Detectores de cajas calientes y frenos agarrotados."},
+      {"l": "C", "t": "Vigilancia (hombre muerto)."},
+      {"l": "D", "t": "Detección de sobretemperatura en órganos de rodadura y freno."}
+    ]},
+  "5": {
+    "q": "¿Cuál de las siguientes instalaciones de seguridad no forma parte de los sistemas auxiliares de detección en vía?",
+    "a": "C",
+    "opts": [
+      {"l": "A", "t": "Detectores de cajas calientes y frenos agarrotados."},
+      {"l": "B", "t": "Detectores de caída de objetos a la vía."},
+      {"l": "C", "t": "Detección de sobretemperatura en órganos de rodadura y freno."},
+      {"l": "D", "t": "Detectores de impacto en vía."}
+    ]},
+  "6": {
+    "q": "Al sistema que permite fijar itinerarios seguros para la circulación de los trenes en el ámbito de las estaciones, estableciendo una relación de dependencia entre las posiciones de los distintos aparatos de via del itinerario, las semibarreras de PN (en su caso) y las órdenes que transmiten las señales se le denomina:",
+    "a": "B",
+    "opts": [
+      {"l": "A", "t": "Bloqueo."},
+      {"l": "B", "t": "Enclavamiento."},
+      {"l": "C", "t": "Sistema de protección de vía."},
+      {"l": "D", "t": "Aparato de seguridad."}
+    ]},
+  "7": {
+    "q": "Al sistema que establece relaciones de incompatibilidad con posiciones o configuraciones de otros aparatos o señales, impidiendo establecer itinerarios incompatibles que al interferir con los primeros afecten a su seguridad se le denomina:",
+    "a": "A",
+    "opts": [
+      {"l": "A", "t": "Enclavamiento."},
+      {"l": "B", "t": "Aparato de seguridad."},
+      {"l": "C", "t": "Bloqueo."},
+      {"l": "D", "t": "Ruta de deslizamiento."}
+    ]},
+  "8": {
+    "q": "Para efectuar la apertura de una señal que autorice un itinerario, es imprescindible que con anterioridad todos los aparatos del mismo se hallen dispuestos en la posición adecuada.\" Este es un principio básico de:",
+    "a": "B",
+    "opts": [
+      {"l": "A", "t": "Los bloqueos."},
+      {"l": "B", "t": "Los enclavamientos."},
+      {"l": "C", "t": "Las dos respuestas anteriores son correctas."},
+      {"l": "D", "t": "Las instalaciones de seguridad."}
+    ]},
+  "9": {
+    "q": "\"Mientras esté abierta la señal que autoriza un itinerario, no se puede cambiar la posición de ningún aparato relacionado con el mismo.\" Este es un principio básico de:",
+    "a": "C",
+    "opts": [
+      {"l": "A", "t": "Los bloqueos."},
+      {"l": "B", "t": "Las instalaciones de seguridad."},
+      {"l": "C", "t": "Los enclavamientos."},
+      {"l": "D", "t": "Las dos respuestas anteriores son correctas."}
+    ]},
+  "10": {
+    "q": "\"No se puede realizar la apertura de una señal que autorice un itinerario incompatible con otro ya autorizado.\" Este es un principio básico de:",
+    "a": "A",
+    "opts": [
+      {"l": "A", "t": "Los enclavamientos."},
+      {"l": "B", "t": "Las instalaciones de seguridad."},
+      {"l": "C", "t": "Los bloqueos."},
+      {"l": "D", "t": "Las rutas de deslizamiento."}
+    ]},
+  "11": {
+    "q": "¿Cuál de los siguientes NO es un principio básico de los enclavamientos?",
+    "a": "D",
+    "opts": [
+      {"l": "A", "t": "Para efectuar la apertura de una señal que autorice un itinerario, es imprescindible que con anterioridad todos los aparatos del mismo se hallen dispuestos en la posición adecuada."},
+      {"l": "B", "t": "Mientras esté abierta la señal que autoriza un itinerario, no se puede cambiar la posición de ningún aparato relacionado con el mismo."},
+      {"l": "C", "t": "No se puede realizar la apertura de una señal que autorice un itinerario incompatible con otro ya autorizado."},
+      {"l": "D", "t": "Ninguna de las anteriores respuestas es correcta, ya que todos son principios básicos de los enclavamientos."}
+    ]},
+  "12": {
+    "q": "¿Cuál de los siguientes NO es un principio básico de los enclavamientos?",
+    "a": "D",
+    "opts": [
+      {"l": "A", "t": "Los trenes que circulen por la misma vía y en el mismo sentido, lo hagan a la distancia que ofrezca la seguridad de que no se va a producir un alcance."},
+      {"l": "B", "t": "No se puede realizar la apertura de una señal que autorice un itinerario incompatible con otro autorizado."},
+      {"l": "C", "t": "Ha de ofrecer la seguridad necesaria para que puedan ser compatibles las maniobras que se realicen por la banda de una estación con la llegada de un tren por esa banda procedente de su colateral."},
+      {"l": "D", "t": "Las respuestas a) y c) son correctas."}
+    ]},
+  "13": {
+    "q": "Cuando dos o más itinerarios no pueden ser realizados de forma simultánea se consideran:",
+    "a": "C",
+    "opts": [
+      {"l": "A", "t": "Inseguros."},
+      {"l": "B", "t": "No reglamentarios."},
+      {"l": "C", "t": "Incompatibles."},
+      {"l": "D", "t": "Compatibles."}
+    ]},
+  "14": {
+    "q": "¿Mediante qué documento estarán contenidas las incompatibilidades de cada enclavamiento?",
+    "a": "B",
+    "opts": [
+      {"l": "A", "t": "En la Tira de Bloqueo que regule su operatividad."},
+      {"l": "B", "t": "En la Consigna que regule su operatividad."},
+      {"l": "C", "t": "En el Aviso que regule su operatividad."},
+      {"l": "D", "t": "En el Reglamento de Circulación Ferroviaria."}
+    ]},
+  "15": {
+    "q": "En el manejo de los enclavamientos y de los elementos que gestionan se cumplirá estrictamente con lo prescrito en:",
+    "a": "B",
+    "opts": [
+      {"l": "A", "t": "EI RID."},
+      {"l": "B", "t": "En las Consignas del Al que regulen su operatividad."},
+      {"l": "C", "t": "El Libro de Itinerarios que regula su operatividad."},
+      {"l": "D", "t": "La primera y la segunda respuesta son correctas."}
+    ]},
+  "16": {
+    "q": "¿Qué se describe en los documentos relativos al manejo de los enclavamientos y de los elementos que gestionan?",
+    "a": "B",
+    "opts": [
+      {"l": "A", "t": "Las instalaciones y la forma de proceder en caso de avería."},
+      {"l": "B", "t": "Las instalaciones, su utilización y la forma de proceder en caso de avería."},
+      {"l": "C", "t": "La su amplitud de movimientos y la forma de proceder en caso de avería."},
+      {"l": "D", "t": "Las instalaciones y la forma de proceder."}
+    ]},
+  "17": {
+    "q": "Cuando excepcionalmente, sea preciso maniobrar agujas a distancia en un itinerario no disuelto por un tren, una vez desenclavado éste, se deberá comprobar previamente:",
+    "a": "C",
+    "opts": [
+      {"l": "A", "t": "La liberación del circuito de via correspondiente a la aguja."},
+      {"l": "B", "t": "La apertura mediante la orden de rebase autorizado de la señal asociada a la aguja."},
+      {"l": "C", "t": "La detención y posición del tren en relación a la aguja que se pretende mover."},
+      {"l": "D", "t": "La compatibilidad del movimiento a realizar."}
+    ]},
+  "18": {
+    "q": "Cuando no sea posible efectuar la apertura de la señal de entrada como establezca la correspondiente Consigna del Al, se podrán establecer itinerarios para el estacionamiento de los trenes en condiciones especiales. Para efectuarlo se tendrá en cuenta los siguientes criterios:",
+    "a": "D",
+    "opts": [
+      {"l": "A", "t": "Mediante la orden de rebase autorizado cuando la señal de entrada disponga de dicha indicación."},
+      {"l": "B", "t": "Si la señal de entrada no dispone de la indicación de rebase autorizado, se autorizará su rebase."},
+      {"l": "C", "t": "Si la estación no dispone de señal de entrada, se detendrá el tren ante la primera aguja y se ordenará su estacionamiento con marcha de maniobras."},
+      {"l": "D", "t": "Todas son correctas."}
+    ]},
+  "19": {
+    "q": "Si una señal de entrada no dispone de la indicación de rebase autorizado, y no es posible efectuar la apertura de esta señal como establezca la correspondiente Consigna del Al:",
+    "a": "D",
+    "opts": [
+      {"l": "A", "t": "Se autorizará su rebase por telefonema, prescribiendo cuantas comprobaciones precise realizar el tren."},
+      {"l": "B", "t": "Se autorizará su rebase por escrito, prescribiendo marcha de maniobras."},
+      {"l": "C", "t": "Se autorizará su rebase por medios informáticos, prescribiendo marcha de maniobras y cuantas comprobaciones precise realizar el tren."},
+      {"l": "D", "t": "Se autorizará su rebase por telefonema, prescribiendo marcha de maniobras y cuantas comprobaciones precise realizar el tren."}
+    ]},
+  "20": {
+    "q": "¿Cuál de los siguientes es un itinerario incompatible?",
+    "a": "C",
+    "opts": [
+      {"l": "A", "t": "La entrada de un tren mientras está saliendo otro del mismo sentido por el lado opuesto, si la estación dispone de enclavamiento, pero el movimiento no es presenciado por el Responsable de Circulación."},
+      {"l": "B", "t": "En una estación sin enclavamiento, la salida simultánea de dos trenes en sentido contrario cuando la disposición de las vías o de los aparatos de vía impiden realizar itinerarios concurrentes."},
+      {"l": "C", "t": "La entrada simultánea de dos trenes en sentido contrario en una estación sin enclavamiento."},
+      {"l": "D", "t": "Dos itinerarios que pueden ser realizados de forma simultánea en una estación con enclavamiento."}
+    ]},
+  "21": {
+    "q": "Para la entrada, salida y paso de los trenes, las agujas se hallarán en todos los casos inmovilizadas como se indique:",
+    "a": "D",
+    "opts": [
+      {"l": "A", "t": "En el correspondiente Libro de Itinerarios."},
+      {"l": "B", "t": "En la correspondiente ETI CMS."},
+      {"l": "C", "t": "En las correspondientes Especificaciones Técnicas de Circulación."},
+      {"l": "D", "t": "En la correspondiente Consigna del Al."}
+    ]},
+  "22": {
+    "q": "Una aguja inmovilizada mecánica o eléctricamente en la posición correspondiente a un itinerario no precisa comprobación para otros itinerarios posteriores siempre que:",
+    "a": "A",
+    "opts": [
+      {"l": "A", "t": "Dicha posición se mantenga inalterable."},
+      {"l": "B", "t": "La secuencia de señales no sea la adecuada para el enclavamiento."},
+      {"l": "C", "t": "Se permita la apertura de la señal asociada a la aguja."},
+      {"l": "D", "t": "Ninguna de las respuestas anteriores es correcta."}
+    ]},
+  "23": {
+    "q": "Siempre que sea posible, las agujas de las vías donde se encuentre material apartado estarán orientadas:",
+    "a": "C",
+    "opts": [
+      {"l": "A", "t": "A vía directa."},
+      {"l": "B", "t": "En la posición que evite la deriva a vías de servicio."},
+      {"l": "C", "t": "En la posición que evite la deriva a vías de circulación."},
+      {"l": "D", "t": "En la posición que permita tomarlas de talón."}
+    ]},
+  "24": {
+    "q": "¿Cuál de las siguientes no es una función de los sistemas de protección del tren?",
+    "a": "D",
+    "opts": [
+      {"l": "A", "t": "Información de las señales en cabina."},
+      {"l": "B", "t": "Frenado del tren al realizar un movimiento no autorizado o al superar la velocidad limite."},
+      {"l": "C", "t": "Frenado del tren en caso de mal funcionamiento del sistema."},
+      {"l": "D", "t": "Supervisión puntual de la velocidad del tren, con aplicación de rectas de frenado acordes con el estado de la señalización y con la velocidad máxima permitida en cada punto."}
+    ]},
+  "25": {
+    "q": "¿Cuál de los siguientes sistemas de protección del tren proporciona información y supervisión continua?",
+    "a": "B",
+    "opts": [
+      {"l": "A", "t": "ASFA."},
+      {"l": "B", "t": "LZB."},
+      {"l": "C", "t": "EBICAB."},
+      {"l": "D", "t": "ERTMS Nivel 1."}
+    ]},
+  "26": {
+    "q": "¿Cuál de los siguientes sistemas de protección del tren proporciona información y supervisión continua?",
+    "a": "B",
+    "opts": [
+      {"l": "A", "t": "ASFA."},
+      {"l": "B", "t": "ERTMS Nivel 2."},
+      {"l": "C", "t": "EBICAB."},
+      {"l": "D", "t": "ERTMS Nivel 1."}
+    ]},
+  "27": {
+    "q": "¿Cuál de los siguientes sistemas de protección del tren proporciona información puntual y supervisión continua?",
+    "a": "D",
+    "opts": [
+      {"l": "A", "t": "ASFA."},
+      {"l": "B", "t": "EBICAB."},
+      {"l": "C", "t": "ERTMS Nivel 1."},
+      {"l": "D", "t": "Las respuestas b) y c) son correctas."}
+    ]},
+  "28": {
+    "q": "¿Cuál de los siguientes sistemas de protección del tren proporciona información puntual y supervisión puntual o semicontinua?",
+    "a": "A",
+    "opts": [
+      {"l": "A", "t": "ASFA."},
+      {"l": "B", "t": "ERTMS Nivel 2."},
+      {"l": "C", "t": "EBICAB."},
+      {"l": "D", "t": "ERTMS Nivel 1."}
+    ]},
+  "29": {
+    "q": "¿Cuál de las siguientes no es una funcionalidad del equipo embarcado de los sistemas de protección del tren?",
+    "a": "B",
+    "opts": [
+      {"l": "A", "t": "Presentar al Maquinista permanently en el panel de información del sistema, las indicaciones necesarias para regular la marcha del tren, de modo que en caso de una actuación no acorde con aquellas, el sistema actúe provocando una orden de freno."},
+      {"l": "B", "t": "Presentar al Maquinista el estado de las circulaciones que hay alrededor, de modo que regule la marcha del tren."},
+      {"l": "C", "t": "Presentar al Maquinista órdenes, indicaciones y el modo de operación del sistema de señalización para las actuaciones concretas que deba realizar."},
+      {"l": "D", "t": "Las respuestas a) y c) son correctas."}
+    ]},
+  "30": {
+    "q": "En los sistemas de protección del tren, las operaciones de conexión y desconexión del equipo embarcado se realizarán conforme a lo indicado en:",
+    "a": "C",
+    "opts": [
+      {"l": "A", "t": "El Manual de Circulación de cada vehículo."},
+      {"l": "B", "t": "El Libro de Normas del Maquinista."},
+      {"l": "C", "t": "El Manual de Conducción de cada vehiculo."},
+      {"l": "D", "t": "La Consigna del Al que regula el sistema de protección del tren."}
+    ]},
+  "31": {
+    "q": "¿En qué caso el Maquinista llevará conectado el sistema embarcado de protección del tren compatible con el trayecto a recorrer?",
+    "a": "D",
+    "opts": [
+      {"l": "A", "t": "En función de la línea que vaya a recorrer."},
+      {"l": "B", "t": "Cuando circule por un trayecto incompatible con el sistema embarcado."},
+      {"l": "C", "t": "Nunca."},
+      {"l": "D", "t": "Siempre, salvo en los casos especificados en este Reglamento."}
+    ]},
+  "32": {
+    "q": "En los sistemas de protección del tren, la introducción de datos al sistema embarcado de protección del tren compatible con el trayecto a recorrer la realizará el maquinista:",
+    "a": "A",
+    "opts": [
+      {"l": "A", "t": "A tren parado."},
+      {"l": "B", "t": "Con el equipo embarcado anulado."},
+      {"l": "C", "t": "A tren en movimiento."},
+      {"l": "D", "t": "A tren parado, previa autorización del Responsable de Circulación de la Banda de Regulación del PM."}
+    ]}
+  },
+  "2": {
+  "33": {
+    "q": "En los sistemas de protección del tren, la introducción de datos en el equipo embarcado se realizará de acuerdo con lo indicado en:",
+    "a": "D",
+    "opts": [
+      {"l": "A", "t": "Los Manuales de conducción y del equipo."},
+      {"l": "B", "t": "El Manual de Circulación y la Consigna del Al que lo regula."},
+      {"l": "C", "t": "Con los datos que figuran en el \"Libro de Itinerarios del Maquinista\"."},
+      {"l": "D", "t": "Las respuestas a) y c) son correctas."}
+    ]},
+  "34": {
+    "q": "Si el Maquinista debe considerar inexistentes las señales intermedias en BA, ¿en qué caso o casos no será necesario desconectar el equipo ASFA?",
+    "a": "D",
+    "opts": [
+      {"l": "A", "t": "Cuando se le notifique o se regule por Consigna que las balizas de las señales que deba considerar inexistentes han sido retiradas o tapadas con chapas cubrebalizas."},
+      {"l": "B", "t": "Cuando el sistema ASFA permita circular en modo BTS."},
+      {"l": "C", "t": "Se desconectará en cualquier caso."},
+      {"l": "D", "t": "Las respuestas a) y b) son correctas."}
+    ]},
+  "35": {
+    "q": "Cuando el Maquinista, circulando a contravía, deba considerar inexistente la señal de salida, llevará el sistema ASFA:",
+    "a": "C",
+    "opts": [
+      {"l": "A", "t": "Desconectado."},
+      {"l": "B", "t": "Conectado en modo BTS."},
+      {"l": "C", "t": "Conectado."},
+      {"l": "D", "t": "Conectado solo en los trayectos donde haya señales de entrada a contravía."}
+    ]},
+  "36": {
+    "q": "Cuando las señales estén apagadas o muestren órdenes o informaciones discordantes con las del equipo ASFA, el Maquinista:",
+    "a": "B",
+    "opts": [
+      {"l": "A", "t": "Desconectará el equipo e informará al Responsable de Circulación de la Banda de Regulación del PM o al Responsable de Circulación del CTC."},
+      {"l": "B", "t": "Actuará siempre cumpliendo la indicación más restrictiva."},
+      {"l": "C", "t": "Seleccionará el modo BTS, si el sistema lo permite."},
+      {"l": "D", "t": "Efectuará detención inmediata."}
+    ]},
+  "37": {
+    "q": "El sistema para el control de presencia activa del Maquinista, que actúa sobre el freno de emergencia del tren en caso de falta de reconocimiento cuando el sistema lo requiere se denomina:",
+    "a": "D",
+    "opts": [
+      {"l": "A", "t": "Dispositivo de vigilancia."},
+      {"l": "B", "t": "Dispositivo de información de velocidad."},
+      {"l": "C", "t": "Dispositivo de detección de sobretemperatura en elementos de rodadura y freno."},
+      {"l": "D", "t": "Ninguna es correcta."}
+    ]},
+  "38": {
+    "q": "El sistema que informa de manera continua al Maquinista de la velocidad real del tren, la cual es grabada en los elementos de registro del vehiculo se denomina:",
+    "a": "B",
+    "opts": [
+      {"l": "A", "t": "Dispositivo de vigilancia."},
+      {"l": "B", "t": "Dispositivo de información de velocidad."},
+      {"l": "C", "t": "Dispositivo de detección de sobretemperatura en elementos de rodadura y freno."},
+      {"l": "D", "t": "Ninguna de las anteriores respuestas es correcta."}
+    ]},
+  "39": {
+    "q": "El sistema que informa al Maquinista de la existencia de alarmas por temperaturas en elementos de rodadura y de freno se denomina:",
+    "a": "C",
+    "opts": [
+      {"l": "A", "t": "Dispositivo de vigilancia."},
+      {"l": "B", "t": "Dispositivo de información de velocidad."},
+      {"l": "C", "t": "Dispositivo de detección de sobretemperatura en elementos de rodadura y freno."},
+      {"l": "D", "t": "Ninguna es correcta."}
+    ]},
+  "40": {
+    "q": "En los dispositivos embarcados de vigilancia, de información de velocidad y de detección de sobretemperatura en elementos de rodadura y freno, la información de estos equipos:",
+    "a": "B",
+    "opts": [
+      {"l": "A", "t": "Estará condicionada por la información transmitida a través de los equipos en vía."},
+      {"l": "B", "t": "Prevalece sobre la de los equipos en vía."},
+      {"l": "C", "t": "No prevalece en caso de mostrar una alarma no detectada por los equipos en vía."},
+      {"l": "D", "t": "Todas las respuestas anteriores son correctas."}
+    ]},
+  "41": {
+    "q": "En la estación de origen de cada servicio, las cabinas de conducción deberán tener en perfectas condiciones de funcionamiento:",
+    "a": "D",
+    "opts": [
+      {"l": "A", "t": "Los dispositivos de vigilancia e información de velocidad."},
+      {"l": "B", "t": "EI TELOC y los dispositivos de información y supervisión del vehículo motor."},
+      {"l": "C", "t": "En los vehículos equipados, el dispositivo de detección de sobretemperatura en elementos de rodadura y freno."},
+      {"l": "D", "t": "Las respuestas a) y c) son correctas."}
+    ]},
+  "42": {
+    "q": "Para trenes sin dispositivo embarcado de detección de sobretemperatura en elementos de rodadura y de freno, cuando un Responsable de Circulación reciba una alarma instalada en el registrador:",
+    "a": "D",
+    "opts": [
+      {"l": "A", "t": "Procederá a comunicárselo al Maquinista y asegurará la parada del tren ante la primera señal."},
+      {"l": "B", "t": "Asegurará la parada del tren ante la primera señal."},
+      {"l": "C", "t": "En función del componente afectado y del tipo de alarma, procederá a comunicárselo al Maquinista, asegurando la parada del tren ante la primera señal u ordenándole detención inmediata."},
+      {"l": "D", "t": "En función del componente afectado y del tipo de alarma, procederá a comunicárselo al Encargado de los trabajos, o asegurará la parada del tren ante la primera señal o pantalla de cantonamiento."}
+    ]},
+  "43": {
+    "q": "En cuanto a los sistemas auxiliares de detección instalados en la via, en los detectores de sobretemperatura en cajas de grasa, ruedas y discos de freno, cuando un Responsable de Circulación reciba una alarma en el registrador, indicará al Maquinista:",
+    "a": "D",
+    "opts": [
+      {"l": "A", "t": "Lado al que afecta la alarma: derecho o izquierdo en el sentido de circulación del tren."},
+      {"l": "B", "t": "Tipo de alarma y temperatura medida."},
+      {"l": "C", "t": "Lugar que ocupa el eje o rueda con indicios de caldeo, contado desde cabeza a cola incluida la locomotora o locomotoras."},
+      {"l": "D", "t": "Todas son correctas."}
+    ]},
+  "44": {
+    "q": "Los detectores de impacto en vía:",
+    "a": "C",
+    "opts": [
+      {"l": "A", "t": "Son sistemas que permiten detectar la relación de dependencia entre las instalaciones de seguridad de una línea."},
+      {"l": "B", "t": "Son sistemas que permiten detectar deformaciones o descarrilamientos en los elementos de rodadura de los trenes, así como sobrepesos en ejes."},
+      {"l": "C", "t": "Son sistemas que permiten detectar defectos o deformaciones en los elementos de rodadura de los trenes, así como sobrepesos en ejes."},
+      {"l": "D", "t": "Son sistemas que permiten detectar defectos o deformaciones en los ejes de los trenes, así como sobrepesos en los elementos de rodadura."}
+    ]},
+  "45": {
+    "q": "Los detectores de viento lateral:",
+    "a": "D",
+    "opts": [
+      {"l": "A", "t": "Son sistemas que permiten conocer la existencia de obstáculos en los puntos de la vía en los que se instalan desde el momento de su caída."},
+      {"l": "B", "t": "Son sistemas encargados de controlar la velocidad del viento que incide lateralmente sobre la vía. Están compuestos por un número determinado de estaciones meteorológicas instaladas entre las señales de entrada de dos estaciones, que permiten dividir el cantón de viento."},
+      {"l": "C", "t": "Son sistemas encargados de controlar la velocidad del viento que incide perpendicularmente sobre la vía. Están compuestos por un número determinado de estaciones meteorológicas instaladas en la línea, que permiten dividirla en sectores de control de viento."},
+      {"l": "D", "t": "Son sistemas encargados de controlar la velocidad del viento que incide lateralmente sobre la vía. Están compuestos por un número determinado de estaciones meteorológicas instaladas en la línea, que permiten dividirla en sectores de control de viento."}
+    ]},
+  "46": {
+    "q": "En los detectores de viento lateral, cada estación meteorológica predice el comportamiento del viento (detector predictivo) en su sector o sectores de control, con una antelación de:",
+    "a": "B",
+    "opts": [
+      {"l": "A", "t": "5 minutos."},
+      {"l": "B", "t": "10 minutos."},
+      {"l": "C", "t": "20 minutos."},
+      {"l": "D", "t": "30 minutos."}
+    ]},
+  "47": {
+    "q": "En los detectores de viento lateral, cuando se desconoce el estado de viento del sector de control asociado a la estación meteorológica, siendo la situación más desfavorable para la operación, se produce la siguiente alarma:",
+    "a": "B",
+    "opts": [
+      {"l": "A", "t": "Alarma de viento."},
+      {"l": "B", "t": "Alarma de operatividad."},
+      {"l": "C", "t": "Alarma de desactivación."},
+      {"l": "D", "t": "Alarma de operación."}
+    ]},
+  "48": {
+    "q": "En los detectores de viento lateral, cuando se predice un viento incompatible con la circulación normal de los trenes, se produce la siguiente alarma:",
+    "a": "A",
+    "opts": [
+      {"l": "A", "t": "Alarma de viento."},
+      {"l": "B", "t": "Alarma de operatividad."},
+      {"l": "C", "t": "Alarma de desactivación."},
+      {"l": "D", "t": "Alarma de anulación."}
+    ]},
+  "49": {
+    "q": "En los detectores de viento lateral, cuando una alarma de viento o de operatividad desaparece, se produce la siguiente alarma:",
+    "a": "B",
+    "opts": [
+      {"l": "A", "t": "Alarma de anulación."},
+      {"l": "B", "t": "Alarma de desactivación."},
+      {"l": "C", "t": "Alarma de desaparición."},
+      {"l": "D", "t": "Alarma de operatividad."}
+    ]},
+  "50": {
+    "q": "En los detectores de viento lateral, cuando se produce una alarma de viento:",
+    "a": "C",
+    "opts": [
+      {"l": "A", "t": "Se considerará que la vía o vías afectadas están interceptadas en el punto correspondiente."},
+      {"l": "B", "t": "El Responsable de Circulación prohibe la circulación de los trenes y maniobras en el sector de control de viento afectado."},
+      {"l": "C", "t": "Se determinará una \"Limitación Temporal de la Velocidad Máxima a implantar en el sector de control de viento afectado, que se deberán notificar al Maquinista."},
+      {"l": "D", "t": "Se notificará al Maquinista marcha a la vista en el punto correspondiente."}
+    ]},
+  "51": {
+    "q": "En los detectores de viento lateral, ¿cuál de los siguientes motivos puede producir una alarma de operatividad?",
+    "a": "D",
+    "opts": [
+      {"l": "A", "t": "Pérdida de comunicación con la estación meteorológica."},
+      {"l": "B", "t": "Estado de \"habilitación\" de la estación meteorológica."},
+      {"l": "C", "t": "Activación del \"modo de mantenimiento\" de la estación meteorológica."},
+      {"l": "D", "t": "Las respuestas a) y b) son correctas."}
+    ]},
+  "52": {
+    "q": "En los detectores de viento lateral, ¿cuándo desaparecerá una alarma de viento?",
+    "a": "A",
+    "opts": [
+      {"l": "A", "t": "Cuando se predice que el viento será compatible con la circulación normal de trenes en el sector de control correspondiente."},
+      {"l": "B", "t": "Cuando desaparece el motivo que impide conocer el estado operativo de un sector de control de viento."},
+      {"l": "C", "t": "La primera respuesta es correcta, y además, al recuperarse la comunicación o la \"habilitación\" de la estación meteorológica, pueden pasar algunos minutos hasta que se realice la predicción y, por tanto, se indique el estado por viento del sector. Durante este tiempo perdurará el estado de \"inhabilitación\"."},
+      {"l": "D", "t": "La segunda respuesta es correcta, y además, al recuperarse la comunicación o la \"habilitación\" de la estación meteorológica, pueden pasar algunos minutos hasta que se realice la predicción y, por tanto, se indique el estado por viento del sector. Durante este tiempo perdurará el estado de \"inhabilitación\"."}
+    ]},
+  "53": {
+    "q": "En los detectores de viento lateral, ¿cuándo desaparecerá una alarma de operatividad?",
+    "a": "B",
+    "opts": [
+      {"l": "A", "t": "Cuando se predice que el viento será compatible con la circulación normal de trenes en el sector de control correspondiente."},
+      {"l": "B", "t": "Cuando desaparece el motivo que impide conocer el estado operativo de un sector de control de viento."},
+      {"l": "C", "t": "La primera respuesta es correcta, y además, al recuperarse la comunicación o la \"habilitación\" de la estación meteorológica, pueden pasar algunos minutos hasta que se realice la predicción y, por tanto, se indique el estado por viento del sector. Durante este tiempo perdurará el estado de \"inhabilitación\"."},
+      {"l": "D", "t": "Ninguna es correcta."}
+    ]},
+  "54": {
+    "q": "En los detectores de viento lateral, ¿Cómo se notificarán al Maquinista las \"limitaciones temporales de velocidad máxima\" establecidas?",
+    "a": "D",
+    "opts": [
+      {"l": "A", "t": "Incluyéndolas en el \"Libro de itinerarios del Maquinista\"."},
+      {"l": "B", "t": "Por escrito en la estación de origen o en la primera donde efectúe parada."},
+      {"l": "C", "t": "Por medio de la radiotelefonía, cuando no sea posible establecerlas a través del sistema de regulación del tráfico."},
+      {"l": "D", "t": "Las respuestas a) y c) son correctas."}
+    ]},
+  "55": {
+    "q": "¿Dónde se sitúa un PN enclavado?",
+    "a": "B",
+    "opts": [
+      {"l": "A", "t": "Entre las señales de salida de una estación y su protección se activa mediante el establecimiento de los itinerarios que le afecten, y se desactiva con la progresiva disolución del itinerario al avance del tren."},
+      {"l": "B", "t": "Entre las señales de entrada de una estación y su protección se activa mediante el establecimiento de los itinerarios que le afecten, y se desactiva con la progresiva disolución del itinerario al avance del tren."},
+      {"l": "C", "t": "En plena vía y su protección es activada automáticamente al aproximarse el tren al mismo."},
+      {"l": "D", "t": "En plena vía y su protección es activada a utomáticamente al aproximarse el tren al paso por las señales intermedias que lo protegen."}
+    ]},
+  "56": {
+    "q": "¿Dónde se sitúa un PN automático?",
+    "a": "B",
+    "opts": [
+      {"l": "A", "t": "Entre las señales de salida de una estación y su protección se activa mediante el establecimiento de los itinerarios que le afecte n, y se desactiva con la progresiva disolución del itinerario al avance del tren."},
+      {"l": "B", "t": "En plena vía y su protección es activada automáticamente al aproximarse el tren al mismo."},
+      {"l": "C", "t": "Entre las señales de entrada de una estación y su protección se activa mediante el establecimiento de los itinerarios que le afecten, y se desactiva con la progresiva disolución del itinerario al avance del tren."},
+      {"l": "D", "t": "En plena vía y su protección es activada automáticamente al aproximarse el tren al paso por las señales intermedias que lo pr otegen."}
+    ]},
+  "57": {
+    "q": "¿En qué caso la protección de los PN estará asegurada antes del paso de los trenes, por las indicaciones de las señales fijas y por las instalaciones que los equipan?",
+    "a": "D",
+    "opts": [
+      {"l": "A", "t": "En los PN enclavados."},
+      {"l": "B", "t": "En los PN automáticos."},
+      {"l": "C", "t": "En ningún caso."},
+      {"l": "D", "t": "Las respuestas a) y b) son correctas."}
+    ]},
+  "58": {
+    "q": "¿Cuándo podrán establecerse Pasos a Nivel provisionales por obras?",
+    "a": "C",
+    "opts": [
+      {"l": "A", "t": "Siempre que la magnitud de las obras lo requiera, previa autorización del Responsable de Circulación de la Banda de Regulación del PM."},
+      {"l": "B", "t": "En ningún caso."},
+      {"l": "C", "t": "Con carácter excepcional y por causas absolutamente justificadas y deberán contar con la autorización expresa de la AESF."},
+      {"l": "D", "t": "La respuesta anterior es correcta, y además el AI efectuará su regulación por Consigna indicando en la misma los sistemas de seguridad y señalización que afecten al PN."}
+    ]},
+  "59": {
+    "q": "No tendrán la consideración de PN las intersecciones de caminos o vías de comunicación con líneas férreas cuando éstas se produzcan en:",
+    "a": "C",
+    "opts": [
+      {"l": "A", "t": "El interior de las terminales logísticas."},
+      {"l": "B", "t": "En el exterior de las zonas portuarias."},
+      {"l": "C", "t": "En el interior de las zonas portuarias."},
+      {"l": "D", "t": "Las respuestas a) y b) son correctas."}
+    ]},
+  "60": {
+    "q": "¿En qué documento deberá quedar establecida la protección y regulación de las intersecciones de caminos o vías de comunicación con líneas férreas cuando éstas no tengan la consideración de PN?",
+    "a": "A",
+    "opts": [
+      {"l": "A", "t": "En el SGS de cada AI."},
+      {"l": "B", "t": "En una Consigna del AI."},
+      {"l": "C", "t": "En el SGS de cada EF."},
+      {"l": "D", "t": "En el Libro de Itinerarios del Maquinista."}
+    ]},
+  "61": {
+    "q": "El Responsable de Circulación que tenga a su cargo una señal y excepcionalmente, debiendo ordenar parada, no lo hiciera:",
+    "a": "C",
+    "opts": [
+      {"l": "A", "t": "Lo comunicará urgentemente por telefonema a los Responsables de Circulación afectados. A continuación, esa estación dejará de intervenir en el bloqueo."},
+      {"l": "B", "t": "Evitará el establecimiento de secuencias anormales de señales en relación a la señal afectada y lo comunicará inmediatamente al Responsable de Circulación de la primera estación abierta y al de la Banda de Regulación con objeto de que adopten las medidas correspondientes."},
+      {"l": "C", "t": "Asegurará la detención de los trenes afectados con los medios a su alcance (señales portátiles de parada, etc.) y lo comunicará inmediatamente al Responsable de Circulación de la estación colateral que proceda y al de la Banda de Regulación con objeto de que adopten las medidas correspondientes."},
+      {"l": "D", "t": "Ninguna es correcta."}
+    ]},
+  "62": {
+    "q": "Cuando el Responsable de Circulación a cargo de la señal no pueda comprobar por sí mismo o por una persona a su cargo la posición de ciertas agujas, piquetes, ocupación de vías, barreras, etc., ¿Podrá pedir al Maquinista que realice estas comprobaciones visuales?",
+    "a": "B",
+    "opts": [
+      {"l": "A", "t": "Sí, verbalmente."},
+      {"l": "B", "t": "Sí, prescribiéndolo en la autorización de rebase de la señal."},
+      {"l": "C", "t": "No, en ningún caso."},
+      {"l": "D", "t": "Solo si la estación está en Mando Local."}
+    ]},
+  "63": {
+    "q": "Esté o no libre el trayecto a recorrer el rebase de una señal de Salida de Bloqueo Automático (BA) se autorizará:",
+    "a": "D",
+    "opts": [
+      {"l": "A", "t": "Siempre con marcha de maniobras."},
+      {"l": "B", "t": "Siempre con marcha normal."},
+      {"l": "C", "t": "Marcha a la vista en BA con CTC y marcha normal en BA sin CTC."},
+      {"l": "D", "t": "Siempre con marcha a la vista."}
+    ]}
+  },
+  
+  "3": {
+  "64": {
+    "q": "En líneas con BLA y BSL, el rebase de las señales de salida y de los PCA, en su caso, se autorizará:",
+    "a": "D",
+    "opts": [
+      {"l": "A", "t": "Con marcha a la vista, esté o no libre el trayecto a recorrer."},
+      {"l": "B", "t": "Con marcha normal en BSL y con marcha a la vista en BLA."},
+      {"l": "C", "t": "Con marcha normal en BLA y con marcha a la vista en BSL."},
+      {"l": "D", "t": "Con marcha normal en BSL y BLA, cuando el trayecto a recorrer esté libre de trenes."}
+    ]},
+  "65": {
+    "q": "Cuando el Responsable de Circulación no pueda autorizar al Maquinista el rebase de una señal mediante telefonema:",
+    "a": "C",
+    "opts": [
+      {"l": "A", "t": "No se podrá autorizar el rebase de la señal."},
+      {"l": "B", "t": "Se establecerá el BT por anormalidad."},
+      {"l": "C", "t": "El rebase se hará mediante la entrega al Maquinista del Boletín de autorización de rebase."},
+      {"l": "D", "t": "Ninguna es correcta."}
+    ]},
+  "66": {
+    "q": "En la autorización de rebase de una señal, ¿Podrá autorizarse simultáneamente el rebase de dos o más señales?",
+    "a": "C",
+    "opts": [
+      {"l": "A", "t": "No, el rebase de señales se hará de una en una."},
+      {"l": "B", "t": "Sí, en líneas sin CTC, dotadas de radiotelefonía."},
+      {"l": "C", "t": "Sí, cuando éstas estén directamente relacionadas."},
+      {"l": "D", "t": "No podrá autorizarse simultáneamente el rebase de dos o más señales, excepto cuando se trate de bloqueos unidireccionales."}
+    ]},
+  "67": {
+    "q": "En líneas sin CTC, dotadas de radiotelefonía, el rebase de varias señales sucesivas:",
+    "a": "C",
+    "opts": [
+      {"l": "A", "t": "Podrá autorizarse por su Responsable de Circulación."},
+      {"l": "B", "t": "Podrá autorizarse por su Responsable de Circulación cuando se trate del BA."},
+      {"l": "C", "t": "No podrá autorizarse."},
+      {"l": "D", "t": "Se realizará con marcha a la vista, sin exceder de 10 km/h al paso por las agujas."}
+    ]},
+  "68": {
+    "q": "¿En qué caso se podrá autorizar el rebase de varias señales sucesivas?",
+    "a": "B",
+    "opts": [
+      {"l": "A", "t": "En líneas de BA y siempre que lo autorice el Responsable de Circulación de la Banda de Regulación del PM."},
+      {"l": "B", "t": "En líneas con CTC, dotadas de radiotelefonía, cuando lo autorice el Responsable de Circulación del mismo."},
+      {"l": "C", "t": "No se puede autorizar e n ningún caso."},
+      {"l": "D", "t": "Cuando se circule al amparo del BT por anormalidad en el BA o BLA."}
+    ]},
+  "69": {
+    "q": "En el rebase de varias señales sucesivas, ¿cuándo será prescrita al Maquinista la comprobación de la posición de las agujas?",
+    "a": "A",
+    "opts": [
+      {"l": "A", "t": "Cuando el Responsable de Circulación del CTC no pueda realizarla por sí mismo, o por una persona a su cargo."},
+      {"l": "B", "t": "En cualquier case."},
+      {"l": "C", "t": "Cuando el rebase lo prescriba un Responsable de Circulación que no esté ubicado en la dependencia asociada a esas señales."},
+      {"l": "D", "t": "Cuando ésta sea la primera circulación a la que se le haya autorizado el rebase."}
+    ]},
+  "70": {
+    "q": "En líneas de CTC, dotadas de radiotelefonía, en el telefonema de rebase de varias señales sucesivas se prescribirá una velocidad de paso por las agujas sin exceder de:",
+    "a": "B",
+    "opts": [
+      {"l": "A", "t": "10 km/h si las toma de punta y 5 km/h si las toma de talón."},
+      {"l": "B", "t": "10 km/h."},
+      {"l": "C", "t": "30 km/h."},
+      {"l": "D", "t": "No se prescribirá ninguna velocidad."}
+    ]},
+  "71": {
+    "q": "Cuando un tren rebase una señal que estaba en Vía Libre y por un cambio intempestivo pasa a ordenar parada, el Maquinista:",
+    "a": "B",
+    "opts": [
+      {"l": "A", "t": "Efectuará detención accidental."},
+      {"l": "B", "t": "Reanudará la marcha, con marcha a la vista hasta llegar a la señal siguiente, sin exceder de 40 km/h."},
+      {"l": "C", "t": "Informará del rebase al Responsable de Circulación que la tenga a su cargo y se atendrá a sus instrucciones."},
+      {"l": "D", "t": "Todas son correctas."}
+    ]},
+  "72": {
+    "q": "La utilización de los enclavamientos en casos de avería en las agujas y otros equipos del mismo se hará rigurosamente de acuerdo con lo prescrito:",
+    "a": "D",
+    "opts": [
+      {"l": "A", "t": "En el Reglamento."},
+      {"l": "B", "t": "En los SGS de los AI."},
+      {"l": "C", "t": "En la consigna correspondiente que regule en cada caso, su funcionalidad."},
+      {"l": "D", "t": "Las respuestas a) y c) son correctas."}
+    ]},
+  "73": {
+    "q": "¿En qué casos podrá, excepcionalmente, variarse un itinerario establecido?",
+    "a": "C",
+    "opts": [
+      {"l": "A", "t": "Antes de que el Responsable de Circulación se lo comunique al Maquinista."},
+      {"l": "B", "t": "Siempre que el Responsable de Circulación así lo requiera."},
+      {"l": "C", "t": "Cuando, previamente, el Responsable de Circulación se lo comunique al Maquinista y reciba de éste su enterado. Excepcionalmente, solo para evitar un peligro inminente, podrá variarse un itinerario establecido, aunque previamente no se haya realizado la comunicación entre Responsable de Circulación y Maquinista."},
+      {"l": "D", "t": "Las respuestas b) y c) son correctas."}
+    ]},
+  "74": {
+    "q": "Cuando en la estación de origen, o en la primera de la RFIG para trenes internacionales, un vehículo motor vaya a circular por una línea equipada con algún sistema de protección del tren, y no pueda hacerlo por inutilidad o deficiencia en el equipo embarcado:",
+    "a": "B",
+    "opts": [
+      {"l": "A", "t": "Circulará con una segunda persona habilitada en la cabina de conducción."},
+      {"l": "B", "t": "Será considerado inútil para circular con dicho sistema, pudiendo ser trasladado hasta la siguiente estación o base de mantenimiento."},
+      {"l": "C", "t": "Podrá circular normalmente hasta su destino bajo supervisión del Responsable de Circulación."},
+      {"l": "D", "t": "Ninguna es correcta."}
+    ]},
+  "75": {
+    "q": "Las señales de un PN, ¿estarán relacionadas con las señales de las estaciones colaterales?",
+    "a": "D",
+    "opts": [
+      {"l": "A", "t": "No, nunca."},
+      {"l": "B", "t": "Solo en el caso de PN automáticos."},
+      {"l": "C", "t": "Solo en el caso de PN enclavados."},
+      {"l": "D", "t": "En el case de PN enclavados y, según se determine, en los automáticos."}
+    ]},
+  "76": {
+    "q": "¿Qué indica la señal de \"Protección de Paso a Nivel\" con luz amarilla fija?",
+    "a": "A",
+    "opts": [
+      {"l": "A", "t": "Que el PN está protegido."},
+      {"l": "B", "t": "Que el PN no está protegido."},
+      {"l": "C", "t": "Que el tren debe detenerse ante el PN."},
+      {"l": "D", "t": "Ninguna es correcta."}
+    ]},
+  "77": {
+    "q": "Ante una señal de \"Protección de Paso a Nivel\" con luz amarilla de destellos, el Maquinista deberá:",
+    "a": "B",
+    "opts": [
+      {"l": "A", "t": "Circular con marcha normal."},
+      {"l": "B", "t": "Circular con precaución, sin exceder la velocidad que se indique."},
+      {"l": "C", "t": "Detenerse ante el PN y no reanudar la marcha hasta comprobar que las barreras están bajadas."},
+      {"l": "D", "t": "Detenerse ante la señal."}
+    ]},
+  "78": {
+    "q": "Los detectores de caída de objetos a la vía son sistemas que permiten:",
+    "a": "D",
+    "opts": [
+      {"l": "A", "t": "Detectar la presencia de personas en la vía."},
+      {"l": "B", "t": "Detectar el exceso de velocidad de los trenes."},
+      {"l": "C", "t": "Detectar la temperatura de los ejes."},
+      {"l": "D", "t": "Conocer la existencia de obstáculos en los puntos de la vía en los que se instalan desde el momento de su caída."}
+    ]},
+  "79": {
+    "q": "Cuando se produce una alarma por caída de objetos a la vía, el sistema:",
+    "a": "C",
+    "opts": [
+      {"l": "A", "t": "Informa solo al Responsable de Circulación."},
+      {"l": "B", "t": "Provoca el frenado de emergencia de todos los trenes en la zona."},
+      {"l": "C", "t": "Pone en fase de parada las señales que protegen el punto afectado."},
+      {"l": "D", "t": "Envía un mensaje de texto al Maquinista."}
+    ]},
+  "80": {
+    "q": "El sistema ASFA (Anuncio de Señales y Frenado Automático) es un sistema de protección:",
+    "a": "B",
+    "opts": [
+      {"l": "A", "t": "De supervisión continua."},
+      {"l": "B", "t": "De supervisión puntual."},
+      {"l": "C", "t": "Que solo funciona en líneas de alta velocidad."},
+      {"l": "D", "t": "Que sustituye a las señales fijas."}
+    ]},
+  "81": {
+    "q": "En el sistema ASFA, la transmisión de información entre la vía y el tren se realiza mediante:",
+    "a": "D",
+    "opts": [
+      {"l": "A", "t": "Balizas instaladas en la vía."},
+      {"l": "B", "t": "Cable de vía (lazo)."},
+      {"l": "C", "t": "Ondas de radio."},
+      {"l": "D", "t": "Satélite."}
+    ]},
+  "82": {
+    "q": "¿Qué ocurre si un Maquinista no reconoce una señal de \"Anuncio de Parada\" en el equipo ASFA?",
+    "a": "D",
+    "opts": [
+      {"l": "A", "t": "El equipo emite un pitido constante."},
+      {"l": "B", "t": "No ocurre nada si la velocidad es baja."},
+      {"l": "C", "t": "Se enciende una luz roja en el panel."},
+      {"l": "D", "t": "Se produce la aplicación del freno de emergencia."}
+    ]},
+  "83": {
+    "q": "El sistema ERTMS Nivel 2 utiliza para la transmisión de datos tren-tierra:",
+    "a": "A",
+    "opts": [
+      {"l": "A", "t": "El sistema de radio GSM-R."},
+      {"l": "B", "t": "Eurobalizas exclusivamente."},
+      {"l": "C", "t": "El carril como conductor."},
+      {"l": "D", "t": "Señales luminosas laterales."}
+    ]},
+  "84": {
+    "q": "En el nivel 2 de ERTMS, ¿es necesaria la existencia de señales luminosas laterales para la circulación normal?",
+    "a": "A",
+    "opts": [
+      {"l": "A", "t": "No, la información se recibe directamente en la cabina."},
+      {"l": "B", "t": "Sí, son obligatorias siempre."},
+      {"l": "C", "t": "Solo en las estaciones."},
+      {"l": "D", "t": "Solo si falla el sistema de radio."}
+    ]},
+  "85": {
+    "q": "El dispositivo de vigilancia (\"Hombre Muerto\") tiene como función:",
+    "a": "D",
+    "opts": [
+      {"l": "A", "t": "Controlar la velocidad del tren."},
+      {"l": "B", "t": "Detectar obstáculos en la vía."},
+      {"l": "C", "t": "Controlar el consumo de energía."},
+      {"l": "D", "t": "Detener el tren si el Maquinista pierde la capacidad de control."}
+    ]},
+  "86": {
+    "q": "Si el dispositivo de vigilancia detecta falta de actividad, primero emite:",
+    "a": "C",
+    "opts": [
+      {"l": "A", "t": "Una orden de freno de servicio."},
+      {"l": "B", "t": "Una orden de freno de emergencia."},
+      {"l": "C", "t": "Una señal acústica y/o luminosa de aviso."},
+      {"l": "D", "t": "Un mensaje por radiotelefonía al PM."}
+    ]},
+  "87": {
+    "q": "Los detectores de cajas calientes (DCC) se instalan generalmente:",
+    "a": "D",
+    "opts": [
+      {"l": "A", "t": "En las estaciones de origen."},
+      {"l": "B", "t": "En los túneles."},
+      {"l": "C", "t": "En las curvas de radio reducido."},
+      {"l": "D", "t": "En la plena vía, para supervisar los trenes en marcha."}
+    ]},
+  "88": {
+    "q": "Ante una alarma de \"Caja Caliente\" de nivel crítico, el Maquinista debe:",
+    "a": "C",
+    "opts": [
+      {"l": "A", "t": "Continuar hasta la siguiente estación a velocidad normal."},
+      {"l": "B", "t": "Reducir la velocidad a 30 km/h."},
+      {"l": "C", "t": "Detener el tren inmediatamente en condiciones de seguridad."},
+      {"l": "D", "t": "Ignorar la alarma si no percibe olor a quemado."}
+    ]},
+  "89": {
+    "q": "El registrador de eventos (teloc) graba, entre otros datos:",
+    "a": "C",
+    "opts": [
+      {"l": "A", "t": "La temperatura exterior."},
+      {"l": "B", "t": "La música que escucha el Maquinista."},
+      {"l": "C", "t": "La velocidad, el espacio recorrido y el estado de las señales/controles."},
+      {"l": "D", "t": "El número de viajeros."}
+    ]},
+  "90": {
+    "q": "En caso de avería de un enclavamiento que afecte a una aguja, esta deberá ser:",
+    "a": "A",
+    "opts": [
+      {"l": "A", "t": "Asegurada mecánicamente (con cerrojo o calce) si se va a circular sobre ella."},
+      {"l": "B", "t": "Ignorada si el tren circula por vía directa."},
+      {"l": "C", "t": "Desmontada inmediatamente."},
+      {"l": "D", "t": "Engrasada antes del paso del tren."}
+    ]},
+  "91": {
+    "q": "¿Qué es un \"itinerario de seguridad\"?",
+    "a": "A",
+    "opts": [
+      {"l": "A", "t": "El camino establecido para un tren donde todos los elementos están enclavados y protegidos."},
+      {"l": "B", "t": "Cualquier vía por la que pueda circular un tren."},
+      {"l": "C", "t": "El trayecto entre dos estaciones colaterales."},
+      {"l": "D", "t": "Una vía de apartado."}
+    ]},
+  "92": {
+    "q": "La disolución de un itinerario en un enclavamiento electrónico suele ser:",
+    "a": "C",
+    "opts": [
+      {"l": "A", "t": "Manual, siempre por el Responsable de Circulación."},
+      {"l": "B", "t": "Por tiempo, siempre 5 minutos después."},
+      {"l": "C", "t": "Automática, al paso del tren por los diferentes circuitos de vía."},
+      {"l": "D", "t": "Mediante una llamada telefónica."}
+    ]},
+  "93": {
+    "q": "¿En qué caso se notificará a los Maquinistas que un PN automático o enclavado se encuentra sin protección?",
+    "a": "D",
+    "opts": [
+      {"l": "A", "t": "Cuando se quede sin tensión."},
+      {"l": "B", "t": "Cuando tenga rotas las semibarreras."},
+      {"l": "C", "t": "Cuando tenga apagadas las señales destellantes a la carretera."},
+      {"l": "D", "t": "Todas son correctas."}
+    ]},
+  "94": {
+    "q": "Para poder autorizar el retroceso de un tren en un trayecto en el que exista algún PN de protección automática y no funcionen los dispositivos de protección:",
+    "a": "B",
+    "opts": [
+      {"l": "A", "t": "No se podrá autorizar el retroceso de un tren en este caso."},
+      {"l": "B", "t": "Es necesario situar en cabeza del tren en el sentido del movimiento a una persona habilitada para realizar maniobras y, en su caso, actuar sobre los elementos de protección del PN."},
+      {"l": "C", "t": "Se hará a velocidad normal."},
+      {"l": "D", "t": "Solo se puede hacer si es de día."}
+    ]}
+ };
+
+  const totalPreguntasGlobal = Object.values(testData).reduce((acc, part) => {
+  return acc + Object.keys(part).length;
+}, 0);
+
+  let currentPart = 1;
+  let respuestasVisibles = false;
+  const LS_PREFIX = 'rcf-libro1-part-';
+
+  // Load state from localStorage
+  function loadState(part) {
+    try {
+      return JSON.parse(localStorage.getItem(LS_PREFIX + part)) || {};
+    } catch {
+      return {};
+    }
+  }
+
+  // Save state to localStorage
+  function saveState(part, state) {
+    localStorage.setItem(LS_PREFIX + part, JSON.stringify(state));
+  }
+
+  // Switch between parts
+  function switchPart(part) {
+    currentPart = part;
+    document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+    document.getElementById('tab_' + part).classList.add('active');
+    generarTest();
+    // window.scrollTo({top: 0, behavior: 'smooth'});
+  }
+
+  // Generate test for current part
+  function generarTest() {
+    const container = document.getElementById('questionsContainer');
+    container.innerHTML = '';
+    
+    const partData = testData[currentPart];
+    if (!partData) return;
+    
+    const state = loadState(currentPart);
+    
+    Object.keys(partData).forEach(qid => {
+      const q = partData[qid];
+      const card = document.createElement('div');
+      card.className = 'card question';
+      card.dataset.qid = qid;
+      
+      let opcionesHTML = '';
+      q.opts.forEach(opt => {
+        const checked = state[qid] === opt.l ? 'checked' : '';
+        opcionesHTML += `
+          <label class="option">
+            <input type="radio" name="q${qid}" value="${opt.l}" ${checked} />
+            <div><b>${opt.l})</b> ${opt.t}</div>
+          </label>
+        `;
+      });
+
+      card.innerHTML = `
+        <span class="q-number">Pregunta ${qid} de ${totalPreguntasGlobal}</span>
+        <div class="q-title">${q.q}</div>
+        <div class="options">${opcionesHTML}</div>
+        <div class="answer-key">✓ Respuesta correcta: <b>${q.a}</b></div>
+        <div class="feedback"></div>
+      `;
+      
+      container.appendChild(card);
+    });
+
+    bindRadios();
+    updateProgress();
+  }
+  
+  function bindRadios() {
+    document.querySelectorAll('input[type=radio]').forEach(radio => {
+      radio.addEventListener('change', updateProgress);
+    });
+  }
+  
+    // Update progress bar
+  function updateProgress() {
+    const partData = testData[currentPart];
+    const total = Object.keys(partData).length;
+    const answered = document.querySelectorAll('input[type=radio]:checked').length;
+    const percentage = (answered / total) * 100;
+    document.getElementById('progressBar').style.width = percentage + '%';
+    
+    // Save current answers
+    const state = {};
+    document.querySelectorAll('.question').forEach(card => {
+      const qid = card.dataset.qid;
+      const selected = card.querySelector('input[type=radio]:checked');
+      if (selected) {
+        state[qid] = selected.value;
+      }
+    });
+    saveState(currentPart, state);
+  }
+
+  // Grade the test
+  window.calificar = function() {
+    const partData = testData[currentPart];
+    let correctas = 0;
+    let incorrectas = 0;
+    let sinResponder = 0;
+    const total = Object.keys(partData).length;
+    
+    document.querySelectorAll('.question').forEach(card => {
+      const qid = card.dataset.qid;
+      const correcta = partData[qid].a;
+      const seleccionada = card.querySelector('input[type=radio]:checked');
+      
+      card.querySelectorAll('.option').forEach(o => o.classList.remove('correct','incorrect'));
+      
+      if (seleccionada) {
+        const letra = seleccionada.value;
+        if (letra === correcta) {
+          correctas++;
+          seleccionada.closest('.option').classList.add('correct');
+          card.querySelector('.feedback').textContent = '✔ ¡Correcto!';
+          card.querySelector('.feedback').style.color = 'var(--ok)';
+        } else {
+          incorrectas++;
+          seleccionada.closest('.option').classList.add('incorrect');
+          card.querySelector('.feedback').innerHTML = `✖ Incorrecto · La correcta es: <b>${correcta}</b>`;
+          card.querySelector('.feedback').style.color = 'var(--bad)';
+          const corr = card.querySelector(`input[value="${correcta}"]`);
+          if (corr) corr.closest('.option').classList.add('correct');
+        }
+      } else {
+        sinResponder++;
+        card.querySelector('.feedback').textContent = '⚠ Sin responder';
+        card.querySelector('.feedback').style.color = 'var(--warning)';
+      }
+    });
+    
+    const porcentaje = Math.round((correctas / total) * 100);
+    const aprobado = porcentaje >= 50;
+    
+    document.getElementById('score').textContent = `${correctas} / ${total} (${porcentaje}%)`;
+    document.getElementById('score').style.color = aprobado ? 'var(--ok)' : 'var(--bad)';
+    
+    document.getElementById('scoreDetails').innerHTML = `
+      ✔ ${correctas} correctas · ✖ ${incorrectas} incorrectas · ⚠ ${sinResponder} sin responder
+    `;
+    
+   // window.scrollTo({top: 0, behavior: 'smooth'});
+  };
+
+  // Reset the test
+  window.reiniciar = function() {
+    if (!confirm('¿Reiniciar respuestas de esta parte?')) return;
+    
+    document.querySelectorAll('input[type=radio]').forEach(r => r.checked = false);
+    document.querySelectorAll('.option').forEach(o => o.classList.remove('correct','incorrect'));
+    document.querySelectorAll('.feedback').forEach(f => {f.textContent=''; f.removeAttribute('style')});
+    document.getElementById('score').textContent = '—';
+    document.getElementById('score').removeAttribute('style');
+    document.getElementById('scoreDetails').textContent = '';
+    document.getElementById('progressBar').style.width = '0%';
+    saveState(currentPart, {});
+    window.scrollTo({top: 0, behavior: 'smooth'});
+  };
+
+  // Toggle answer visibility
+  window.toggleRespuestas = function(btn) {
+    respuestasVisibles = !respuestasVisibles;
+    document.body.classList.toggle('show-answers', respuestasVisibles);
+    btn.textContent = respuestasVisibles ? '🙈 Ocultar respuestas' : '👁️ Ver respuestas';
+    
+    if (respuestasVisibles) {
+      const partData = testData[currentPart];
+      document.querySelectorAll('.question').forEach(card => {
+        const qid = card.dataset.qid;
+        const correcta = partData[qid].a;
+        card.querySelectorAll('.option').forEach(o => o.classList.remove('correct'));
+        const corr = card.querySelector(`input[value="${correcta}"]`);
+        if (corr) corr.closest('.option').classList.add('correct');
+      });
+    } else {
+      document.querySelectorAll('.option').forEach(o => o.classList.remove('correct'));
+    }
+  };
+
+  // Initialize tabs
+  document.querySelectorAll('.tab').forEach(tab => {
+    tab.addEventListener('click', () => {
+      switchPart(parseInt(tab.dataset.part));
+    });
+  });
+
+  // Initialize on load
+  window.addEventListener('load', () => {
+    document.getElementById('tab_1').classList.add('active');
+    generarTest();
+  });
+// Scroll to top button functionality
+const scrollTopBtn = document.getElementById('scrollTopBtn');
+
+// Show/hide button based on scroll position
+window.addEventListener('scroll', () => {
+  if (window.pageYOffset > 300) {
+    scrollTopBtn.classList.add('visible');
+  } else {
+    scrollTopBtn.classList.remove('visible');
+  }
+});
+
+// Smooth scroll to top on click
+scrollTopBtn.addEventListener('click', () => {
+  window.scrollTo({
+    top: 0,
+    behavior: 'smooth'
+  });
+});
+})();
+</script>
+</body>
+</html>
