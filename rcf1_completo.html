@@ -1661,6 +1661,7 @@ button.secondary:active{background:rgba(255,255,255,.05)}
 
   let currentPart = 1;
   let respuestasVisibles = false;
+  let totalPreguntas = Object.keys(testData).length;
   const LS_PREFIX = 'rcf-libro1-part-';
 
   // Load state from localStorage
@@ -1693,6 +1694,8 @@ button.secondary:active{background:rgba(255,255,255,.05)}
     
     const partData = testData[currentPart];
     if (!partData) return;
+
+    totalPreguntas = Object.keys(partData).length;
     
     const state = loadState(currentPart);
     
@@ -1714,7 +1717,7 @@ button.secondary:active{background:rgba(255,255,255,.05)}
       });
 
       card.innerHTML = `
-        <span class="q-number">Pregunta ${qid}</span>
+        <span class="q-number">Pregunta ${qid} de ${totalPreguntas}</span>
         <div class="q-title">${q.q}</div>
         <div class="options">${opcionesHTML}</div>
         <div class="answer-key">✓ Respuesta correcta: <b>${q.a}</b></div>
