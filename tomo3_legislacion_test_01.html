@@ -97,7 +97,141 @@ button.secondary:active{background:rgba(255,255,255,.05)}
 <script>
 // Test data with questions and answers
 const testData = {
-
+  "1": {
+      "q": "Según la Directiva 2004/49/CE (Seguridad de los ferrocarriles comunitarios), ¿qué funciones corresponden al Ministerio de Fomento?",
+      "a": "C",
+      "opts": [
+        {"l": "A", "t": "Prestar servicios de transporte de viajeros o de mercancías por ferrocarril."},
+        {"l": "B", "t": "La administración de las infraestructuras ferroviarias tanto propias como las del Estado."},
+        {"l": "C", "t": "Planificación estratégica, ordenación general y regulación del sistema y entrega de licencias."},
+        {"l": "D", "t": "Prestar servicios adicionales, complementarios y auxiliares, fijar las tarifas y cobrarlas."}
+      ]},
+    "2": {
+      "q": "Según la Directiva 2004/49/CE (Seguridad de los ferrocarriles comunitarios), ¿qué se entiende por licencia ferroviaria?",
+      "a": "D",
+      "opts": [
+        {"l": "A", "t": "Entidad cuya actividad principal consiste en prestar servicios de transporte de viajeros o de mercancías por ferrocarril."},
+        {"l": "B", "t": "Única e intransmisible y específica de las actividades que puede realizar la empresa."},
+        {"l": "C", "t": "Aquella que específica las actividades que puede realizar la empresa."},
+        {"l": "D", "t": "Única e intransmisible, específica de las actividades que puede realizar la empresa y otorgada por la autoridad nacional de seguridad ferroviaria."}
+      ]},
+    "3": {
+      "q": "Un accidente, ¿puede ser un suceso repentino, no deseado ni intencionado a la vez?",
+      "a": "B",
+      "opts": [
+        {"l": "A", "t": "Los accidentes son intencionados siempre."},
+        {"l": "B", "t": "Sí."},
+        {"l": "C", "t": "Un accidente puede ser solamente repentino."},
+        {"l": "D", "t": "Los accidentes suelen ser siempre intencionados."}
+      ]},
+    "4": {
+      "q": "Según el RD 810/2007 (Reglamento sobre la seguridad en la circulación de la RFIG), son competencias de la AESF, entre otras…",
+      "a": "A",
+      "opts": [
+        {"l": "A", "t": "Otorgar las autorizaciones de puesta en servicio de los subsistemas, supervisar el cumplimiento de los requisitos esenciales de interoperabilidad y aprobar los métodos de seguridad (MS) y los objetivos de seguridad (OS)."},
+        {"l": "B", "t": "Dirigir los trabajos en la infraestructura ferroviaria o en sus proximidades, controlando a los pilotos de seguridad."},
+        {"l": "C", "t": "Vigilancia de la infraestructura y protección de los trabajos, así como la vigilancia de los PN."},
+        {"l": "D", "t": "Investigación de accidentes ferroviarios."}
+      ]},
+    "5": {
+      "q": "En la Orden FOM 2872/2010 de 5 de noviembre, ¿se determinan las condiciones para la obtención de los títulos habilitantes del personal ferroviario relacionado con la seguridad en la circulación?",
+      "a": "C",
+      "opts": [
+        {"l": "A", "t": "No."},
+        {"l": "B", "t": "Sí."},
+        {"l": "C", "t": "Sí, y además el régimen de los centros homologados de formación y de los de reconocimiento médico de dicho personal."},
+        {"l": "D", "t": "Varía anualmente."}
+      ]},
+    "6": {
+      "q": "Entre las definiciones del RD 810/2007, ¿cuál es la diferencia entre accidente e incidente?",
+      "a": "A",
+      "opts": [
+        {"l": "A", "t": "Accidente: suceso repentino, no intencionado ni deseado, de consecuencias perjudiciales. Incidente: no llega a tener consecuencias perjudiciales pero sí afecta a la seguridad de la circulación."},
+        {"l": "B", "t": "Accidente: suceso de consecuencias perjudiciales, intencionado o no. Incidente: no llega a tener consecuencias perjudiciales."},
+        {"l": "C", "t": "Accidente: al menos una víctima mortal o cinco o más heridos graves o grandes daños. Incidente: suceso por error, sin consecuencias."},
+        {"l": "D", "t": "El incidente puede ser grave y el accidente no."}
+      ]},
+    "7": {
+      "q": "¿En qué documento figuran los criterios de requisitos, obtención, validez, suspensión y renovación de todas las habilitaciones ferroviarias?",
+      "a": "B",
+      "opts": [
+        {"l": "A", "t": "Ley 38/2015 del Sector Ferroviario."},
+        {"l": "B", "t": "Orden FOM 2872/2010 de 5 de noviembre."},
+        {"l": "C", "t": "RD 810/2007 (Reglamento sobre la seguridad en la circulación de la RFIG)."},
+        {"l": "D", "t": "Directiva 2004/49/CE."}
+      ]},
+    "8": {
+      "q": "¿Qué órgano ejecutivo de la UE elabora propuestas de nueva legislación y aplica las decisiones del Parlamento Europeo y del Consejo?",
+      "a": "C",
+      "opts": [
+        {"l": "A", "t": "MCS."},
+        {"l": "B", "t": "Agencia Estatal de Seguridad Ferroviaria (AESF)."},
+        {"l": "C", "t": "Comisión Europea."},
+        {"l": "D", "t": "Agencia Ferroviaria Europea (ERA)."}
+      ]},
+    "9": {
+      "q": "¿Cuál es un objeto de la Orden FOM 2872/2010 de 5 de noviembre?",
+      "a": "A",
+      "opts": [
+        {"l": "A", "t": "Regular las competencias profesionales vinculadas a la actividad ferroviaria."},
+        {"l": "B", "t": "Establecer condiciones y procedimientos para la obtención de las autorizaciones de seguridad."},
+        {"l": "C", "t": "Regular las condiciones de investigación de accidentes ferroviarios."},
+        {"l": "D", "t": "Ninguna de las anteriores."}
+      ]},
+    "10": {
+      "q": "Según la Directiva 2004/49/CE, ¿qué se entiende por capacidad?",
+      "a": "A",
+      "opts": [
+        {"l": "A", "t": "Número de franjas horarias disponibles en un tramo de infraestructura en un periodo determinado, según la tipología del tráfico."},
+        {"l": "B", "t": "Niveles mínimos de seguridad exigidos a las partes del sistema ferroviario, expresados en criterios de aceptación de riesgo."},
+        {"l": "C", "t": "Organización y medidas de un administrador o EF para gestionar con seguridad sus operaciones."},
+        {"l": "D", "t": "Esta Directiva no contempla tal definición."}
+      ]},
+    "11": {
+      "q": "Señala la respuesta incorrecta sobre los requisitos para obtener la licencia de empresa ferroviaria:",
+      "a": "B",
+      "opts": [
+        {"l": "A", "t": "Capacidad financiera para hacer frente a sus obligaciones."},
+        {"l": "B", "t": "Revestir la forma de sociedad limitada."},
+        {"l": "C", "t": "Tener cubiertas las responsabilidades civiles."},
+        {"l": "D", "t": "Garantizar la competencia profesional de su personal."}
+      ]},
+    "12": {
+      "q": "¿A qué personal afecta la Orden FOM 2872/2010 de 5 de noviembre?",
+      "a": "A",
+      "opts": [
+        {"l": "A", "t": "Personal de circulación, infraestructura, operaciones de tren, conducción y personal responsable de control de mantenimiento de material rodante."},
+        {"l": "B", "t": "Personal responsable de control de mantenimiento de material rodante."},
+        {"l": "C", "t": "Personal de circulación y de infraestructura."},
+        {"l": "D", "t": "Personal de operaciones de tren y de conducción."}
+      ]},
+    "13": {
+      "q": "¿Qué organismo investiga los accidentes e incidentes de la RFIG?",
+      "a": "C",
+      "opts": [
+        {"l": "A", "t": "AESF"},
+        {"l": "B", "t": "CNIAF"},
+        {"l": "C", "t": "CIAF"},
+        {"l": "D", "t": "Guardia Civil"}
+      ]},
+    "14": {
+      "q": "¿Qué título habilita para el desplazamiento, manejo y guiado del material rodante auxiliar para trabajos en infraestructura (maquinaria de vía, vehículos de socorro, vehículos automóviles adaptados)?",
+      "a": "C",
+      "opts": [
+        {"l": "A", "t": "Operador de maquinaria de vía."},
+        {"l": "B", "t": "Operador de vehículos de maniobra."},
+        {"l": "C", "t": "Operador de maquinaria de infraestructura."},
+        {"l": "D", "t": "Operador de maquinaria de vía y de maniobras."}
+      ]},
+    "15": {
+      "q": "Según la disposición final primera del RD 623/2004, los índices máximos de alcoholemia para maquinistas y personal relacionado con la seguridad en la circulación son:",
+      "a": "B",
+      "opts": [
+        {"l": "A", "t": "0,10 mg/l en sangre y 0,05 g/l en aire espirado."},
+        {"l": "B", "t": "0,10 g/l en sangre y 0,05 mg/l en aire espirado."},
+        {"l": "C", "t": "0,05 g/l en sangre y 0,10 mg/l en aire espirado."},
+        {"l": "D", "t": "0,05 mg/l en sangre y 0,10 g/l en aire espirado."}
+      ]}
 };
 
 let respuestasVisibles = false;
