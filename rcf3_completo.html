@@ -1,0 +1,399 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>LIBRO 3 - CEEF</title>
+<style>
+:root{--bg:#0b132b;--card:#1c2541;--accent:#5bc0be;--ok:#21c17a;--bad:#ff5d73;--text:#f5f7ff;--warning:#ffc107}
+*{box-sizing:border-box}
+body{margin:0;font-family:Segoe UI,system-ui,-apple-system,Roboto,Ubuntu,'Helvetica Neue',Arial,sans-serif;background:linear-gradient(135deg,var(--bg),#0f1a3a);color:var(--text);min-height:100vh;font-size:14px}
+.header{padding:12px 10px;text-align:center;border-bottom:1px solid rgba(255,255,255,.08);position:sticky;top:0;background:rgba(11,19,43,.98);backdrop-filter:blur(10px);z-index:100;position:relative}
+.header h1{margin:0 0 6px 0;font-size:1.2rem;font-weight:700}
+.back-btn{position:absolute;left:10px;top:50%;transform:translateY(-50%);width:36px;height:36px;padding:0;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.15);border-radius:50%;color:var(--text);text-decoration:none;font-size:18px;transition:all .2s;line-height:1;display:flex;align-items:center;justify-content:center}
+.back-btn:active{background:rgba(255,255,255,.15);transform:translateY(-50%) scale(.95)}
+.badge{display:inline-block;padding:3px 10px;border-radius:999px;background:rgba(255,255,255,.08);font-size:11px;margin-top:4px}
+.container{max-width:1000px;margin:0 auto;padding:10px 8px 100px}
+.progress-bar{background:rgba(255,255,255,.1);height:3px;border-radius:999px;margin:8px 0;overflow:hidden}
+.progress-fill{height:100%;background:linear-gradient(90deg,var(--accent),#3a9d9a);width:0%;transition:width .3s ease}
+.card{background:var(--card);border:1px solid rgba(255,255,255,.08);border-radius:12px;padding:12px;margin:8px 0;box-shadow:0 4px 12px rgba(0,0,0,.2)}
+.q-title{font-weight:600;margin-bottom:10px;line-height:1.4;font-size:14px}
+.q-number{color:var(--accent);font-size:11px;font-weight:700;margin-bottom:6px;display:block}
+.options{display:grid;grid-template-columns:1fr;gap:6px}
+.option{background:#121a34;border:2px solid rgba(255,255,255,.08);padding:8px;border-radius:8px;display:flex;align-items:flex-start;gap:8px;cursor:pointer;transition:all .2s;font-size:13px;line-height:1.3}
+.option:active{background:#1a2341;border-color:rgba(91,192,190,.3)}
+.option input{margin-top:2px;cursor:pointer;flex-shrink:0}
+.option div{flex:1}
+.answer-key{display:none;margin-top:8px;padding:8px;background:rgba(91,192,190,.1);border-radius:6px;font-size:12px}
+.answer-key b{color:var(--accent)}
+.show-answers .answer-key{display:block}
+.feedback{margin-top:6px;font-size:12px;font-weight:600;padding:6px;border-radius:4px}
+.correct{border-color:rgba(33,193,122,.6)!important;background:rgba(33,193,122,.05)!important}
+.incorrect{border-color:rgba(255,93,115,.75)!important;background:rgba(255,93,115,.05)!important}
+.actions{position:fixed;bottom:0;left:0;right:0;background:linear-gradient(180deg,rgba(15,26,58,0),rgba(15,26,58,.99));padding:10px 8px;padding-bottom:calc(10px + env(safe-area-inset-bottom));backdrop-filter:blur(10px);border-top:1px solid rgba(255,255,255,.08);z-index:99}
+.actions .bar{max-width:1000px;margin:0 auto;display:flex;gap:8px;align-items:center;justify-content:space-between;flex-wrap:wrap}
+button{background:var(--accent);border:none;color:#001018;font-weight:700;padding:10px 14px;border-radius:8px;cursor:pointer;transition:all .2s;font-size:13px;touch-action:manipulation}
+button:active{background:var(--accent);opacity:.9;transform:scale(.98)}
+button.secondary{background:transparent;border:1px solid rgba(255,255,255,.35);color:var(--text)}
+button.secondary:active{background:rgba(255,255,255,.05)}
+.score{font-weight:700;font-size:1rem}
+.score-details{font-size:11px;color:var(--text);opacity:.8;margin-top:2px}
+.footer{opacity:.8;font-size:11px;text-align:center;padding:15px;color:rgba(255,255,255,.5)}
+@media (min-width: 720px){
+  .options{grid-template-columns:1fr 1fr}
+  body{font-size:15px}
+  .card{padding:20px;margin:16px 0;border-radius:16px}
+  .q-title{font-size:15px;margin-bottom:12px}
+  .option{padding:12px;gap:10px;font-size:14px}
+  .header{padding:20px 16px}
+  .header h1{font-size:1.5rem;margin-bottom:8px}
+  .container{padding:20px 16px 120px}
+  button{padding:12px 18px;font-size:14px}
+}
+@media (max-width: 640px){
+  .actions .bar{flex-direction:column;gap:6px}
+  .score{text-align:center;width:100%;font-size:0.95rem}
+  .actions{padding:8px 6px;padding-bottom:calc(8px + env(safe-area-inset-bottom))}
+  button{width:100%;padding:11px 12px}
+}
+.scroll-top{position:fixed;bottom:20px;right:20px;width:40px;height:40px;background:var(--accent);color:#fff;border:none;border-radius:50%;cursor:pointer;box-shadow:0 4px 12px rgba(0,0,0,.2);display:flex;align-items:center;justify-content:center;font-size:20px;z-index:99;opacity:0;visibility:hidden;transition:all .3s;touch-action:manipulation}
+.scroll-top.visible{opacity:1;visibility:visible}
+.scroll-top:active{transform:scale(.95)}
+@media (max-width:640px){
+  .scroll-top{width:36px;height:36px;bottom:16px;right:16px;font-size:18px}
+}
+</style>
+</head>
+<body>
+  <div class="header">
+    <a href="index.html" class="back-btn">←</a>
+    <h1>LIBRO 3 - CEEF</h1>
+    <div class="badge">35 preguntas</div>
+    <div class="progress-bar">
+      <div class="progress-fill" id="progressBar"></div>
+    </div>
+  </div>
+  
+  <div class="container" id="questionsContainer">
+    <!-- Questions will be generated here -->
+  </div>
+
+  <div class="actions">
+    <div class="bar">
+      <div>
+        <div class="score">Puntuación: <span id="score">—</span></div>
+        <div class="score-details" id="scoreDetails"></div>
+      </div>
+      <div style="display:flex;gap:12px;flex-wrap:wrap">
+        <button onclick="calificar()">📊 Calificar</button>
+        <button class="secondary" onclick="reiniciar()">🔄 Reiniciar</button>
+        <button class="secondary" onclick="toggleRespuestas(this)">👁️ Ver respuestas</button>
+      </div>
+    </div>
+  </div>
+
+  <button id="scrollTopBtn" class="scroll-top">↑</button>
+
+<script>
+// Test data with questions and answers
+const testData = {
+  "1": {q: "¿Cuál es el objeto del Reglamento?", a: "D", opts: [
+    {l: "A", t: "El objeto de este Reglamento es establecer reglas operativas generales para que la circulación de los trenes se realice de forma segura, eficiente y puntual."},
+    {l: "B", t: "El objeto de este Reglamento es establecer reglas operativas generales para que la circulación de las maniobras se realice de forma segura, eficiente y puntual."},
+    {l: "C", t: "El objeto de este Reglamento es establecer reglas operativas generales para que la circulación de los trenes y de las maniobras se realice de forma segura y eficiente."},
+    {l: "D", t: "El objeto de este Reglamento es establecer reglas operativas generales para que la circulación de los trenes y de las maniobras se realice de forma segura, eficiente y puntual."}
+  ]},
+  "2": {q: "¿Cuál es el objetivo del RCF?", a: "B", opts: [
+    {l: "A", t: "...unificando los criterios de operación de los distintos AI en ancho convencional."},
+    {l: "B", t: "...unificando los criterios de operación de los distintos AI en los distintos anchos de la Red."},
+    {l: "C", t: "...unificando los criterios de operación de los distintos AI en ancho internacional."},
+    {l: "D", t: "...unificando los criterios de operación de los distintos AI y el responsable de circulación..."}
+  ]},
+  "3": {q: "¿De quién es la responsabilidad de la explotación segura del sistema ferroviario?", a: "A", opts: [
+    {l: "A", t: "Corresponde a los AI y a las EF."},
+    {l: "B", t: "Corresponde al CTC."},
+    {l: "C", t: "Corresponde al CTC y PM."},
+    {l: "D", t: "Corresponde al responsable de circulación."}
+  ]},
+  "4": {q: "¿Quién tiene que establecer las reglas internas, conforme con la normativa vigente?", a: "A", opts: [
+    {l: "A", t: "AI y EF."},
+    {l: "B", t: "EF y AESF."},
+    {l: "C", t: "AESF y AI."},
+    {l: "D", t: "AESF."}
+  ]},
+  "5": {q: "El Reglamento es conforme con lo prescrito:", a: "C", opts: [
+    {l: "A", t: "En las ETI, LSF."},
+    {l: "B", t: "En las normas de desarrollo."},
+    {l: "C", t: "En las ETI, LSF y sus normas de desarrollo."},
+    {l: "D", t: "En la LSF y sus normas de desarrollo."}
+  ]},
+  "6": {q: "¿Cuál es el ámbito territorial de aplicación de este Reglamento?", a: "C", opts: [
+    {l: "A", t: "Convencional."},
+    {l: "B", t: "Alta velocidad."},
+    {l: "C", t: "Red Ferroviaria de Interés General."},
+    {l: "D", t: "Convencional y Alta velocidad."}
+  ]},
+  "7": {q: "¿Cuál es el ámbito subjetivo de aplicación de este Reglamento?", a: "D", opts: [
+    {l: "A", t: "Todo el personal de las EF y los AI."},
+    {l: "B", t: "Parte del personal de las EF y los AI y de otras empresas..."},
+    {l: "C", t: "Todo el personal de las EF, de los AI y de otras empresas, que interviene directamente..."},
+    {l: "D", t: "Todo el personal de las EF, de los AI y de otras empresas, que interviene, directa o indirectamente, en los procesos de circulación de trenes y maniobras."}
+  ]},
+  "8": {q: "¿Cuál es el ámbito técnico de aplicación de este Reglamento?", a: "A", opts: [
+    {l: "A", t: "Todas las actividades relevantes... desde la puesta a disposición por parte de la EF, hasta destino."},
+    {l: "B", t: "...por parte de la AI..."},
+    {l: "C", t: "Todas las actividades relevantes desde alguna interfaz..."},
+    {l: "D", t: "...entre las EF y PM, desde la puesta a disposición del tren por parte de la AI..."}
+  ]},
+  "9": {q: "¿Qué es un Apeadero?", a: "D", opts: [
+    {l: "A", t: "Instalación de vías para la carga y descarga... con agujas en plena vía."},
+    {l: "B", t: "Instalación de vías para la carga y descarga en plena vía."},
+    {l: "C", t: "Infraestructura ferroviaria para la bajada de viajeros."},
+    {l: "D", t: "Infraestructura ferroviaria para la subida y bajada de viajeros."}
+  ]},
+  "10": {q: "¿Qué es un Automotor?", a: "B", opts: [
+    {l: "A", t: "Tren formado por dos o más vehículos..."},
+    {l: "B", t: "Tren formado por uno o más vehículos ferroviarios que no precisa de locomotora para su tracción ya que dispone de motor propio."},
+    {l: "C", t: "Tren formado por dos o más locomotoras."},
+    {l: "D", t: "Compuesto exclusivamente por una o varias locomotoras no remolcadas."}
+  ]},
+  "11": {q: "¿Qué se entiende por banda de regulación?", a: "C", opts: [
+    {l: "A", t: "Es un trayecto que comprende varias estaciones."},
+    {l: "B", t: "Es un tramo regulado por un responsable de circulación."},
+    {l: "C", t: "Tramo de línea, línea o conjunto de líneas a cargo de un mismo Responsable de circulación de un PM."},
+    {l: "D", t: "Tramo de línea, línea o conjunto de trayectos a cargo de un mismo Responsable de circulación de un PM."}
+  ]},
+  "12": {q: "¿Qué es una bifurcación?", a: "A", opts: [
+    {l: "A", t: "Punto de una línea, donde comienza otra o confluyen varias."},
+    {l: "B", t: "Punto de varias líneas, donde comienza otra o confluyen dos o más."},
+    {l: "C", t: "Punto de una línea, donde termina otra o confluyen varias."},
+    {l: "D", t: "Varias líneas a partir de un punto."}
+  ]},
+  "13": {q: "¿Qué se entiende por bloqueo?", a: "A", opts: [
+    {l: "A", t: "Sistema o proceso cuyo objetivo es garantizar separación suficiente... y evitar cruces en sentido contrario en la misma vía."},
+    {l: "B", t: "Proceso... separación... y que no circule un tren por la vía contigua en sentido contrario."},
+    {l: "C", t: "Sistema o proceso cuyo objetivo es evitar el alcance y choque de trenes."},
+    {l: "D", t: "Sistema o proceso cuyo objetivo es evitar que dos trenes en vía doble se expidan simultáneamente."}
+  ]},
+  "14": {q: "¿Qué se entiende por cambiador de ancho?", a: "A", opts: [
+    {l: "A", t: "Instalación ferroviaria que facilita el cambio del ancho de la rodadura, a los trenes cuya tecnología lo permite."},
+    {l: "B", t: "...a los trenes y automotores cuya tecnología lo permite."},
+    {l: "C", t: "Instalación... que facilita el cambio del ancho de los trenes y automotores..."},
+    {l: "D", t: "Instalación... que facilita el cambio del ancho de los trenes, con la rodadura..."}
+  ]},
+  "15": {q: "¿Qué se entiende por cantón de bloqueo?", a: "B", opts: [
+    {l: "A", t: "Parte de la vía en la que normalmente solo puede haber un tren."},
+    {l: "B", t: "Tramo de vía en el que, en condiciones normales de circulación, no puede haber más de un tren de forma simultánea."},
+    {l: "C", t: "Tramo de vía en el que, en condiciones anormales..."},
+    {l: "D", t: "Tramo de vía en el que... puede haber más de un tren... en el mismo sentido."}
+  ]},
+  "16": {q: "¿Qué se entiende por coches?", a: "C", opts: [
+    {l: "A", t: "Son aquellos que sólo pueden variar su composición mediante operaciones en taller."},
+    {l: "B", t: "Vehículo diseñado para viajeros transportando mercancías."},
+    {l: "C", t: "Vehículos ferroviarios sin tracción propia habilitados para el transporte de viajeros, así como los vehículos complementarios para su servicio."},
+    {l: "D", t: "Vehículos sin tracción propia para viajeros y mercancías."}
+  ]},
+  "17": {q: "¿Qué es una composición indeformable?", a: "C", opts: [
+    {l: "A", t: "La que no se puede deformar de ninguna manera técnica."},
+    {l: "B", t: "La que no se puede deformar pero sí en talleres."},
+    {l: "C", t: "Aquella que sólo puede variar su composición mediante operaciones realizadas en un taller o centro de mantenimiento."},
+    {l: "D", t: "Aquella que sólo puede variar su composición mediante operaciones realizadas en un taller."}
+  ]},
+  "18": {q: "¿Qué se entiende por derivación particular?", a: "B", opts: [
+    {l: "A", t: "Infraestructura ferroviaria conectada a la RFIG."},
+    {l: "B", t: "Infraestructura ferroviaria ajena a la RFIG pero conectada con ésta."},
+    {l: "C", t: "Infraestructura para carga y descarga de vagones."},
+    {l: "D", t: "Sistema que permite establecer itinerarios seguros ajenos al RFIG."}
+  ]},
+  "19": {q: "¿Qué es la documentación de seguridad?", a: "A", opts: [
+    {l: "A", t: "Conjunto de documentos reglamentarios definidos en el capítulo 2 del libro 1."},
+    {l: "B", t: "Conjunto de documentos reglamentarios definidos en el libro 2 del capítulo 1."},
+    {l: "C", t: "Documentos reglamentarios para la circulación en la RFIG."},
+    {l: "D", t: "Documentos reglamentarios de la EF y AI."}
+  ]},
+  "20": {q: "¿Qué se entiende por EF?", a: "B", opts: [
+    {l: "A", t: "Es la entidad que expide trenes de mercancías y viajeros."},
+    {l: "B", t: "La titular de una licencia... cuya actividad principal consista en prestar servicios de transporte de mercancías o viajeros por ferrocarril, debiendo aportar en todo caso la tracción."},
+    {l: "C", t: "La titular de una licencia... para mercancías... debiendo aportar en todo caso la tracción."},
+    {l: "D", t: "La titular de una licencia... para mercancías o viajeros por ferrocarril."}
+  ]},
+  "21": {q: "¿Qué se entiende por enclavamiento?", a: "A", opts: [
+    {l: "A", t: "Sistema que permite establecer itinerarios seguros... en el ámbito de estaciones... relacionando aparatos de vía, semibarreras de PN y órdenes de señales."},
+    {l: "B", t: "... pero en plena vía."},
+    {l: "C", t: "... pero solo en estaciones."},
+    {l: "D", t: "... tanto en plena vía como en estaciones."}
+  ]},
+  "22": {q: "¿Qué es la ETI?", a: "D", opts: [
+    {l: "A", t: "Especialista en trabajos de inspección."},
+    {l: "B", t: "Especificaciones técnicas internacionales."},
+    {l: "C", t: "Especificaciones técnicas interoperables de ámbito nacional."},
+    {l: "D", t: "Especificación técnica de interoperabilidad."}
+  ]},
+  "23": {q: "¿Qué se entiende por estación?", a: "D", opts: [
+    {l: "A", t: "Dependencia utilizada para la subida y bajada de viajeros."},
+    {l: "B", t: "Dependencia utilizada para funciones de circulación de trenes y maniobras."},
+    {l: "C", t: "Instalación de agujas en plena vía."},
+    {l: "D", t: "Infraestructura ferroviaria consistente en una instalación de vías y sus aparatos asociados, protegida por señales, y que tiene por objeto coordinar los procesos de la circulación."}
+  ]},
+  "24": {q: "¿Qué se considera estación a efectos de este reglamento?", a: "C", opts: [
+    {l: "A", t: "Los PB, PBA, PAET y las bifurcaciones cuando afluyan como mínimo 3 líneas."},
+    {l: "B", t: "Los PB, PBA, PCA, PAET."},
+    {l: "C", t: "Los PB, PCA, PBA, PAET y bifurcaciones."},
+    {l: "D", t: "Las bifurcaciones cuando confluyan 3 líneas y los PCA, PB con agujas, junto con los PAET y PBA."}
+  ]},
+  "25": {q: "¿Qué se entiende por estación telemandada?", a: "C", opts: [
+    {l: "A", t: "Es aquella cuyo control y accionamiento de sus instalaciones se realiza a distancia, pero desde su inmediata."},
+    {l: "B", t: "Es aquella cuyo control y accionamiento de sus instalaciones se realiza a distancia, pero desde su colateral."},
+    {l: "C", t: "Es aquella cuyo control y accionamiento de sus instalaciones se realiza a distancia."},
+    {l: "D", t: "Es aquella cuyo control y accionamiento de sus instalaciones se realiza a distancia, cuando sea ámbito CTC."}
+  ]}
+};
+
+let respuestasVisibles = false;
+let totalPreguntas = Object.keys(testData).length;
+
+// Generate all questions on page load
+function generarTest() {
+  const container = document.getElementById('questionsContainer');
+  
+  Object.keys(testData).forEach(qid => {
+    const q = testData[qid];
+    const card = document.createElement('div');
+    card.className = 'card question';
+    card.dataset.qid = qid;
+    
+    let opcionesHTML = '';
+    q.opts.forEach(opt => {
+      opcionesHTML += `
+        <label class="option">
+          <input type="radio" name="q${qid}" value="${opt.l}" onchange="updateProgress()" />
+          <div><b>${opt.l})</b> ${opt.t}</div>
+        </label>
+      `;
+    });
+
+    card.innerHTML = `
+      <span class="q-number">Pregunta ${qid} de ${totalPreguntas}</span>
+      <div class="q-title">${q.q}</div>
+      <div class="options">${opcionesHTML}</div>
+      <div class="answer-key">✓ Respuesta correcta: <b>${q.a}</b></div>
+      <div class="feedback"></div>
+    `;
+    
+    container.appendChild(card);
+  });
+}
+
+// Update progress bar
+function updateProgress() {
+  const respondidas = document.querySelectorAll('input[type=radio]:checked').length;
+  const porcentaje = (respondidas / totalPreguntas) * 100;
+  document.getElementById('progressBar').style.width = porcentaje + '%';
+}
+
+// Grade the test
+function calificar() {
+  let correctas = 0;
+  let incorrectas = 0;
+  let sinResponder = 0;
+  
+  document.querySelectorAll('.question').forEach(card => {
+    const qid = card.dataset.qid;
+    const correcta = testData[qid].a;
+    const seleccionada = card.querySelector('input[type=radio]:checked');
+    
+    card.querySelectorAll('.option').forEach(o => o.classList.remove('correct','incorrect'));
+    
+    if (seleccionada) {
+      const letra = seleccionada.value;
+      if (letra === correcta) {
+        correctas++;
+        seleccionada.closest('.option').classList.add('correct');
+        card.querySelector('.feedback').textContent = '✔ ¡Correcto!';
+        card.querySelector('.feedback').style.color = 'var(--ok)';
+      } else {
+        incorrectas++;
+        seleccionada.closest('.option').classList.add('incorrect');
+        card.querySelector('.feedback').innerHTML = `✖ Incorrecto · La correcta es: <b>${correcta}</b>`;
+        card.querySelector('.feedback').style.color = 'var(--bad)';
+        const corr = card.querySelector(`input[value="${correcta}"]`);
+        if (corr) corr.closest('.option').classList.add('correct');
+      }
+    } else {
+      sinResponder++;
+      card.querySelector('.feedback').textContent = '⚠ Sin responder';
+      card.querySelector('.feedback').style.color = 'var(--warning)';
+    }
+  });
+  
+  const porcentaje = Math.round((correctas / totalPreguntas) * 100);
+  const aprobado = porcentaje >= 50;
+  
+  document.getElementById('score').textContent = `${correctas} / ${totalPreguntas} (${porcentaje}%)`;
+  document.getElementById('score').style.color = aprobado ? 'var(--ok)' : 'var(--bad)';
+  
+  document.getElementById('scoreDetails').innerHTML = `
+    ✔ ${correctas} correctas · ✖ ${incorrectas} incorrectas · ⚠ ${sinResponder} sin responder
+  `;
+  
+  // Scroll to top to see results
+ // window.scrollTo({top: 0, behavior: 'smooth'});
+}
+
+// Reset the test
+function reiniciar() {
+  document.querySelectorAll('input[type=radio]').forEach(r => r.checked = false);
+  document.querySelectorAll('.option').forEach(o => o.classList.remove('correct','incorrect'));
+  document.querySelectorAll('.feedback').forEach(f => {f.textContent=''; f.removeAttribute('style')});
+  document.getElementById('score').textContent = '—';
+  document.getElementById('score').removeAttribute('style');
+  document.getElementById('scoreDetails').textContent = '';
+  document.getElementById('progressBar').style.width = '0%';
+  window.scrollTo({top: 0, behavior: 'smooth'});
+}
+
+// Toggle answer visibility
+function toggleRespuestas(btn) {
+  respuestasVisibles = !respuestasVisibles;
+  document.body.classList.toggle('show-answers', respuestasVisibles);
+  btn.textContent = respuestasVisibles ? '🙈 Ocultar respuestas' : '👁️ Ver respuestas';
+  
+  if (respuestasVisibles) {
+    document.querySelectorAll('.question').forEach(card => {
+      const qid = card.dataset.qid;
+      const correcta = testData[qid].a;
+      card.querySelectorAll('.option').forEach(o => o.classList.remove('correct'));
+      const corr = card.querySelector(`input[value="${correcta}"]`);
+      if (corr) corr.closest('.option').classList.add('correct');
+    });
+  } else {
+    document.querySelectorAll('.option').forEach(o => o.classList.remove('correct'));
+  }
+}
+
+// Initialize test on page load
+window.addEventListener('load', () => {
+  generarTest();
+});
+  // Scroll to top button functionality
+const scrollTopBtn = document.getElementById('scrollTopBtn');
+
+// Show/hide button based on scroll position
+window.addEventListener('scroll', () => {
+  if (window.pageYOffset > 300) {
+    scrollTopBtn.classList.add('visible');
+  } else {
+    scrollTopBtn.classList.remove('visible');
+  }
+});
+
+// Smooth scroll to top on click
+scrollTopBtn.addEventListener('click', () => {
+  window.scrollTo({
+    top: 0,
+    behavior: 'smooth'
+  });
+});
+</script>
+</body>
+</html>
