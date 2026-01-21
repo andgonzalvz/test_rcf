@@ -1,0 +1,576 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>EXAMEN - ASFA 01</title>
+<style>
+:root{--bg:#0b132b;--card:#1c2541;--accent:#5bc0be;--ok:#21c17a;--bad:#ff5d73;--text:#f5f7ff;--warning:#ffc107}
+*{box-sizing:border-box}
+body{margin:0;font-family:Segoe UI,system-ui,-apple-system,Roboto,Ubuntu,'Helvetica Neue',Arial,sans-serif;background:linear-gradient(135deg,var(--bg),#0f1a3a);color:var(--text);min-height:100vh;font-size:14px}
+.header{padding:12px 10px;text-align:center;border-bottom:1px solid rgba(255,255,255,.08);position:sticky;top:0;background:rgba(11,19,43,.98);backdrop-filter:blur(10px);z-index:100;position:relative}
+.header h1{margin:0 0 6px 0;font-size:1.2rem;font-weight:700}
+.back-btn{position:absolute;left:10px;top:50%;transform:translateY(-50%);width:36px;height:36px;padding:0;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.15);border-radius:50%;color:var(--text);text-decoration:none;font-size:18px;transition:all .2s;line-height:1;display:flex;align-items:center;justify-content:center}
+.back-btn:active{background:rgba(255,255,255,.15);transform:translateY(-50%) scale(.95)}
+.badge{display:inline-block;padding:3px 10px;border-radius:999px;background:rgba(255,255,255,.08);font-size:11px;margin-top:4px}
+.container{max-width:1000px;margin:0 auto;padding:10px 8px 100px}
+.progress-bar{background:rgba(255,255,255,.1);height:3px;border-radius:999px;margin:8px 0;overflow:hidden}
+.progress-fill{height:100%;background:linear-gradient(90deg,var(--accent),#3a9d9a);width:0%;transition:width .3s ease}
+.card{background:var(--card);border:1px solid rgba(255,255,255,.08);border-radius:12px;padding:12px;margin:8px 0;box-shadow:0 4px 12px rgba(0,0,0,.2)}
+.q-title{font-weight:600;margin-bottom:10px;line-height:1.4;font-size:14px}
+.q-number{color:var(--accent);font-size:11px;font-weight:700;margin-bottom:6px;display:block}
+.options{display:grid;grid-template-columns:1fr;gap:6px}
+.option{background:#121a34;border:2px solid rgba(255,255,255,.08);padding:8px;border-radius:8px;display:flex;align-items:flex-start;gap:8px;cursor:pointer;transition:all .2s;font-size:13px;line-height:1.3}
+.option:active{background:#1a2341;border-color:rgba(91,192,190,.3)}
+.option input{margin-top:2px;cursor:pointer;flex-shrink:0}
+.option div{flex:1}
+.answer-key{display:none;margin-top:8px;padding:8px;background:rgba(91,192,190,.1);border-radius:6px;font-size:12px}
+.answer-key b{color:var(--accent)}
+.show-answers .answer-key{display:block}
+.feedback{margin-top:6px;font-size:12px;font-weight:600;padding:6px;border-radius:4px}
+.correct{border-color:rgba(33,193,122,.6)!important;background:rgba(33,193,122,.05)!important}
+.incorrect{border-color:rgba(255,93,115,.75)!important;background:rgba(255,93,115,.05)!important}
+.actions{position:fixed;bottom:0;left:0;right:0;background:linear-gradient(180deg,rgba(15,26,58,0),rgba(15,26,58,.99));padding:10px 8px;padding-bottom:calc(10px + env(safe-area-inset-bottom));backdrop-filter:blur(10px);border-top:1px solid rgba(255,255,255,.08);z-index:99}
+.actions .bar{max-width:1000px;margin:0 auto;display:flex;gap:8px;align-items:center;justify-content:space-between;flex-wrap:wrap}
+button{background:var(--accent);border:none;color:#001018;font-weight:700;padding:10px 14px;border-radius:8px;cursor:pointer;transition:all .2s;font-size:13px;touch-action:manipulation}
+button:active{background:var(--accent);opacity:.9;transform:scale(.98)}
+button.secondary{background:transparent;border:1px solid rgba(255,255,255,.35);color:var(--text)}
+button.secondary:active{background:rgba(255,255,255,.05)}
+.score{font-weight:700;font-size:1rem}
+.score-details{font-size:11px;color:var(--text);opacity:.8;margin-top:2px}
+.footer{opacity:.8;font-size:11px;text-align:center;padding:15px;color:rgba(255,255,255,.5)}
+@media (min-width: 720px){
+  .options{grid-template-columns:1fr 1fr}
+  body{font-size:15px}
+  .card{padding:20px;margin:16px 0;border-radius:16px}
+  .q-title{font-size:15px;margin-bottom:12px}
+  .option{padding:12px;gap:10px;font-size:14px}
+  .header{padding:20px 16px}
+  .header h1{font-size:1.5rem;margin-bottom:8px}
+  .container{padding:20px 16px 120px}
+  button{padding:12px 18px;font-size:14px}
+}
+@media (max-width: 640px){
+  .actions .bar{flex-direction:column;gap:6px}
+  .score{text-align:center;width:100%;font-size:0.95rem}
+  .actions{padding:8px 6px;padding-bottom:calc(8px + env(safe-area-inset-bottom))}
+  button{width:100%;padding:11px 12px}
+}
+.scroll-top{position:fixed;bottom:20px;right:20px;width:40px;height:40px;background:var(--accent);color:#fff;border:none;border-radius:50%;cursor:pointer;box-shadow:0 4px 12px rgba(0,0,0,.2);display:flex;align-items:center;justify-content:center;font-size:20px;z-index:99;opacity:0;visibility:hidden;transition:all .3s;touch-action:manipulation}
+.scroll-top.visible{opacity:1;visibility:visible}
+.scroll-top:active{transform:scale(.95)}
+@media (max-width:640px){
+  .scroll-top{width:36px;height:36px;bottom:16px;right:16px;font-size:18px}
+}
+</style>
+</head>
+<body>
+  <div class="header">
+    <a href="index.html" class="back-btn">←</a>
+    <h1>EXAMEN - ASFA 01</h1>
+    <div class="badge">53 preguntas</div>
+    <div class="progress-bar">
+      <div class="progress-fill" id="progressBar"></div>
+    </div>
+  </div>
+  
+  <div class="container" id="questionsContainer">
+    <!-- Questions will be generated here -->
+  </div>
+
+  <div class="actions">
+    <div class="bar">
+      <div>
+        <div class="score">Puntuación: <span id="score">—</span></div>
+        <div class="score-details" id="scoreDetails"></div>
+      </div>
+      <div style="display:flex;gap:12px;flex-wrap:wrap">
+        <button onclick="calificar()">📊 Calificar</button>
+        <button class="secondary" onclick="reiniciar()">🔄 Reiniciar</button>
+        <button class="secondary" onclick="toggleRespuestas(this)">👁️ Ver respuestas</button>
+      </div>
+    </div>
+  </div>
+
+  <button id="scrollTopBtn" class="scroll-top">↑</button>
+
+<script>
+// Test data with questions and answers
+const testData = {
+  "1": {q: "¿Qué señales están relacionadas con el sistema ASFA?", a: "D", opts: [
+    {l: "A", t: "Las señales intermedias, de PN, avanzadas, de entrada y de salida."},
+    {l: "B", t: "Las de salida interior que puedan ordenar vía libre, de anuncio de velocidad limitada temporal, cuya cifra sea inferior a 60km/h y en algunos casos de entrada a contravía."},
+    {l: "C", t: "Las de anuncio de velocidad limitada temporal, sea igual o inferior a 100km/h, en los trayectos de velocidad máxima superior a 160 km/h."},
+    {l: "D", t: "Las tres respuestas son correctas."}
+  ]},
+  "2": {q: "¿En qué documento se indica, con el correspondiente signo, las líneas en que las señales están relacionadas con este sistema?", a: "B", opts: [
+    {l: "A", t: "Consigna B."},
+    {l: "B", t: "Horario de los trenes."},
+    {l: "C", t: "Orden B."},
+    {l: "D", t: "Consigna C."}
+  ]},
+  "3": {q: "El sistema ASFA, ¿De qué elementos básicos está constituido?", a: "D", opts: [
+    {l: "A", t: "Equipo de vía y equipo de máquina."},
+    {l: "B", t: "Equipo de vía, equipo de máquina y equipo del CTC."},
+    {l: "C", t: "Equipo de vía, equipo de máquina y equipo del PM."},
+    {l: "D", t: "Las respuestas 2ª y 3ª son correctas."}
+  ]},
+  "4": {q: "Referente al sistema ASFA, las balizas que transmiten la información sobre el aspecto de las señales. ¿De qué elemento básico del sistema forman parte?", a: "B", opts: [
+    {l: "A", t: "Equipo de máquina."},
+    {l: "B", t: "Equipo de vía."},
+    {l: "C", t: "Equipo del CTC."},
+    {l: "D", t: "Equipo del PM."}
+  ]},
+  "5": {q: "Referente al sistema ASFA, los elementos que transmiten por inducción y es recibida por el vehículo motor mediante un captador cuando pasa por su entorno. ¿Se denomina?", a: "C", opts: [
+    {l: "A", t: "Armario de control."},
+    {l: "B", t: "Captador."},
+    {l: "C", t: "Baliza."},
+    {l: "D", t: "Combinador general."}
+  ]},
+  "6": {q: "Referente al sistema ASFA, los elementos que se fijan en la caja de la vía, próximas al eje de la misma y al lado derecho en el sentido de la marcha. ¿Se denomina?", a: "C", opts: [
+    {l: "A", t: "Armario de control."},
+    {l: "B", t: "Captador."},
+    {l: "C", t: "Baliza."},
+    {l: "D", t: "Combinador gener"}
+  ]},
+  "7": {q: "Referente al sistema ASFA. ¿Cuáles son las clases de baliza que existen?", a: "D", opts: [
+    {l: "A", t: "Baliza previa y baliza avanzada."},
+    {l: "B", t: "Baliza de señal y baliza previa."},
+    {l: "C", t: "Baliza de señal y baliza de entrada."},
+    {l: "D", t: "Baliza de señal y baliza avanzada."}
+  ]},
+  "8": {q: "Referente al sistema ASFA, en cuanto al equipo de vía, la baliza conectada con las señales avanzadas cuando pueden ordenar parada, con las de entrada, con las de salida, con las intermedias y con las de PN. ¿Se denomina?", a: "D", opts: [
+    {l: "A", t: "Baliza avanzada."},
+    {l: "B", t: "Baliza de entrada."},
+    {l: "C", t: "Baliza previa."},
+    {l: "D", t: "Baliza de señal."}
+  ]},
+  "9": {q: "Referente al sistema ASFA, en cuanto al equipo de vía, la baliza conectada con las señales de anuncio de velocidad limitada temporal cuya cifra sea inferior a 60, las de contravía, las de anuncio de velocidad limitada temporal, cuando la limitación sea igual o inferior a 100km/h y las de preanuncio de velocidad limitada temporal, cuando la limitación sea igual o inferior a 60km/h. ¿Se denomina?", a: "B", opts: [
+    {l: "A", t: "Baliza avanzada."},
+    {l: "B", t: "Baliza de velocidad limitada."},
+    {l: "C", t: "Baliza previa."},
+    {l: "D", t: "Baliza de señal."}
+  ]},
+  "10": {q: "Referente al sistema ASFA, en cuanto al equipo de vía, las balizas de señal. ¿A qué distancia mínima están situadas antes de la junta de cada señal o de la misma?", a: "C", opts: [
+    {l: "A", t: "2 metros."},
+    {l: "B", t: "3 metros."},
+    {l: "C", t: "4 metros."},
+    {l: "D", t: "5 metros."}
+  ]},
+  "11": {q: "Referente al sistema ASFA, en cuanto al equipo de vía, las balizas conectadas con las señales avanzadas, con las de entrada y con las intermedias, situadas a unos 300 metros antes de cada señal. ¿Se denominan?", a: "C", opts: [
+    {l: "A", t: "Baliza avanzada."},
+    {l: "B", t: "Baliza de entrada."},
+    {l: "C", t: "Baliza previa."},
+    {l: "D", t: "Baliza de señal."}
+  ]},
+  "12": {q: "Referente al sistema ASFA, los aparatos que reciben y tratan la información de las balizas. ¿De qué elemento básico del sistema se trata?", a: "A", opts: [
+    {l: "A", t: "Equipo de máquinas."},
+    {l: "B", t: "Equipo de vía."},
+    {l: "C", t: "Equipo de CTC."},
+    {l: "D", t: "Equipo de PM."}
+  ]},
+  "13": {q: "Referente al sistema ASFA. ¿Qué aparatos forman parte del equipo de máquina", a: "C", opts: [
+    {l: "A", t: "Captador, armario de control, combinador general y pulsador de rearme de freno."},
+    {l: "B", t: "Panel de información y control, pulsador de reconocimiento y avisador acústico."},
+    {l: "C", t: "Las dos respuestas anteriores son correctas."},
+    {l: "D", t: "Ninguna de las tres respuestas es correcta."}
+  ]},
+  "14": {q: "Referente al sistema ASFA, en el equipo de máquina, el aparato que recoge la información emitida por la baliza y la transmite a la cabina de conducción. ¿Se denomin", a: "C", opts: [
+    {l: "A", t: "Combinador general."},
+    {l: "B", t: "Armario de control."},
+    {l: "C", t: "Captador."},
+    {l: "D", t: "Panel de información y control"}
+  ]},
+  "15": {q: "Referente al sistema ASFA, en el equipo de máquina, el aparato que cada vehículo motor tiene uno en la parte inferior de los extremos del bastidor, llevando únicamente en servicio el de la parte delantera en el sentido de la marcha. ¿Se denomina?", a: "C", opts: [
+    {l: "A", t: "Combinador general."},
+    {l: "B", t: "Armario de control."},
+    {l: "C", t: "Captador."},
+    {l: "D", t: "Panel de información y control."}
+  ]},
+  "16": {q: "Referente al sistema ASFA, en el equipo de máquina, los vehículos motores irreversibles, que son los que normalmente solo pueden ser conducidos en el sentido de la marcha. ¿Cuántos captadores lleva", a: "B", opts: [
+    {l: "A", t: "Ninguno."},
+    {l: "B", t: "Uno."},
+    {l: "C", t: "Dos."},
+    {l: "D", t: "Ninguna de las tres respuestas es correcta"}
+  ]},
+  "17": {q: "Referente al sistema ASFA, en el equipo de máquina, el aparato que recibe la información del captador y la analiza. ¿Se denomina?", a: "B", opts: [
+    {l: "A", t: "Combinador general."},
+    {l: "B", t: "Armario de control."},
+    {l: "C", t: "Captador."},
+    {l: "D", t: "Panel de información y control."}
+  ]},
+  "18": {q: "Referente al sistema ASFA, en el equipo de máquina, el aparato que conecta el equipo y selecciona el tipo de tren. ¿Se denomina?", a: "A", opts: [
+    {l: "A", t: "Combinador general."},
+    {l: "B", t: "Armario de control."},
+    {l: "C", t: "Captador."},
+    {l: "D", t: "Panel de información y control."}
+  ]},
+  "19": {q: "Referente al sistema ASFA, en el equipo de máquina, el combinador general está constituido por:", a: "C", opts: [
+    {l: "A", t: "Conmutador de conexión, con dos posiciones para poner y retirar del servicio el sistema."},
+    {l: "B", t: "Selector de tren, con tres posiciones, según el tipo de tren. El selector de tren lo llevan todas las locomotoras excepto las series 352 y 353."},
+    {l: "C", t: "Las dos respuestas anteriores son correctas."},
+    {l: "D", t: "Las respuestas 1ª y 2ª no son correctas por estar imcompletas."}
+  ]},
+  "20": {q: "Referente al sistema ASFA, en el equipo de máquina, el aparato que libera el equipo cuando se produce automáticamente el frenado del tren por la acción del sistema y se instalan dos en el exterior de cada vehículo motor, en lugar accesible en los largueros laterales del bastidor. ¿Se denomina?", a: "A", opts: [
+    {l: "A", t: "Pulsador de rearme."},
+    {l: "B", t: "Armario de control."},
+    {l: "C", t: "Captador."},
+    {l: "D", t: "Panel de información y control."}
+  ]},
+  "21": {q: "Referente al sistema ASFA, en el equipo de máquina, en los vehículos motores dotados de nuevos equipos, se ha instalado en el panel de información y control, un pulsador de rearme de freno, sobre el cual se puede actuar una vez iluminado cuando el tren circula a una velocidad igual o inferior a:", a: "A", opts: [
+    {l: "A", t: "5 km/h."},
+    {l: "B", t: "1 km/h."},
+    {l: "C", t: "10 km/h."},
+    {l: "D", t: "2 km/h."}
+  ]},
+  "22": {q: "Referente al sistema ASFA, en el equipo de máquina, el panel de información y control está constituido por:", a: "D", opts: [
+    {l: "A", t: "Visores, pulsador luminoso color amarillo, pulsador de rearme de freno, visor de color verde y conmutador con tres posiciones."},
+    {l: "B", t: "Visores, pulsador luminoso color rojo, pulsador de rearme de freno, visor de color verde y conmutador con tres posiciones."},
+    {l: "C", t: "Pulsador luminoso color amarillo, pulsador de rearme de freno, visor de color verde y conmutador con tres posiciones."},
+    {l: "D", t: "Visores, Pulsador luminoso color amarillo, pulsador de rearme de freno y visor de color verde."}
+  ]},
+  "23": {q: "Referente al sistema ASFA, en el equipo de máquina, en el panel de información y control se encuentran los visores, en los visores de color blanco. ¿Qué inscripción figura en los mismos?", a: "D", opts: [
+    {l: "A", t: "No figurará ninguna inscripción."},
+    {l: "B", t: "Frenar."},
+    {l: "C", t: "VL, en reserva o CV, en reserva."},
+    {l: "D", t: "Las dos respuestas anteriores son correctas."}
+  ]},
+  "24": {q: "Referente al sistema ASFA, en el equipo de máquina, en el panel de información y control se encuentran los visores, en el visor de color rojo. ¿Qué inscripción figura?", a: "D", opts: [
+    {l: "A", t: "No figurará ninguna inscripción."},
+    {l: "B", t: "Frenar."},
+    {l: "C", t: "VL, en reserva o CV, en reserva."},
+    {l: "D", t: "Las dos respuestas anteriores son correctas."}
+  ]},
+  "25": {q: "Referente al sistema ASFA, en el equipo de máquina, en el panel de información y control se encuentran los visores, en el visor de color verde intermitente (Solo en vehículos motores dotados de nuevos equipos ASFA 200). ¿Qué inscripción figura?", a: "D", opts: [
+    {l: "A", t: "No figurará ninguna inscripción."},
+    {l: "B", t: "Frenar."},
+    {l: "C", t: "VL, en reserva o CV, en reserva."},
+    {l: "D", t: "Las dos respuestas anteriores son correctas."}
+  ]},
+  "26": {q: "Referente al sistema ASFA, en el equipo de máquina, en el panel de de información y control, en los vehículos motores dotados de nuevos equipos los tres visores blancos han sido sustituidos por otros de color:", a: "C", opts: [
+    {l: "A", t: "Siguen siendo blancos."},
+    {l: "B", t: "Verdes."},
+    {l: "C", t: "Amarillos."},
+    {l: "D", t: "Ninguna de las tres respuestas es correcta."}
+  ]},
+  "27": {q: "Referente al sistema ASFA, en el equipo de máquina, en el panel de información y control se encuentran un pulsador de color rojo. ¿Qué indica dicho pulsador?", a: "D", opts: [
+    {l: "A", t: "Rearme de freno."},
+    {l: "B", t: "Frenar."},
+    {l: "C", t: "Está en reserva."},
+    {l: "D", t: "Alarma."}
+  ]},
+  "28": {q: "Referente al sistema ASFA, en el equipo de máquina, en el panel de información y control, además de un pulsador de color rojo, se encuentra otro pulsador. ¿Qué indica dicho pulsador?", a: "D", opts: [
+    {l: "A", t: "Rearme de freno."},
+    {l: "B", t: "Frenar."},
+    {l: "C", t: "Está en reserva."},
+    {l: "D", t: "Alarma."}
+  ]},
+  "29": {q: "Referente al sistema ASFA, en el equipo de máquina, en el panel de información y control, existe un visor de color verde. ¿Qué indica dicho visor?", a: "C", opts: [
+    {l: "A", t: "Rearme de freno."},
+    {l: "B", t: "Frenar."},
+    {l: "C", t: "Eficacia."},
+    {l: "D", t: "Alarma."}
+  ]},
+  "30": {q: "Referente al sistema ASFA, en el equipo de máquina, en el panel de información y control, existe un conmutador con tres posiciones. ¿Cuáles son dichas posiciones?", a: "C", opts: [
+    {l: "A", t: "Conectado, desconectado y movimiento autorizado."},
+    {l: "B", t: "Conectado, desconectado y rebase autorizado."},
+    {l: "C", t: "Las dos respuestas anteriores son correctas dependiendo de la indicación de la señal."},
+    {l: "D", t: "Ninguna de las tres respuestas es correcta."}
+  ]},
+  "31": {q: "Referente al sistema ASFA, en el equipo de máquina, en el panel de información y control, en los vehículos motores dotados de nuevos equipos, el conmutador ha sido sustituido por dos interruptores amarillos, que son:", a: "A", opts: [
+    {l: "A", t: "Uno de rebase autorizado y otro de conexión del panel de información y control."},
+    {l: "B", t: "Uno de movimiento autorizado y otro de conexión del panel de información y control."},
+    {l: "C", t: "Uno de rebase autorizado o movimiento autorizado (dependiendo de la indicación de la señal y otro de conexión del panel de información y control."},
+    {l: "D", t: "Ninguna de las tres respuestas es correcta."}
+  ]},
+  "32": {q: "Referente al sistema ASFA, en el equipo de máquina, existe un pulsador que se ilumina en blanco al paso por las balizas, en determinadas condiciones. ¿Cómo se denomina este pulsador?", a: "C", opts: [
+    {l: "A", t: "Pulsador de rearme."},
+    {l: "B", t: "Pulsador de eficacia."},
+    {l: "C", t: "Pulsador de reconocimiento."},
+    {l: "D", t: "Pulsador de alarma."}
+  ]},
+  "33": {q: "Referente al sistema ASFA, para efectuar la conexión, El Maquinista realizará la misma en cinco operaciones. ¿Qué operación realizará en primer lugar?", a: "A", opts: [
+    {l: "A", t: "Situará en posición desconectado el conmutador del panel de información y control de las cabinas sin servicio."},
+    {l: "B", t: "Situará en posición desconectado el conmutador de conexión de cada combinador general que lleva la Composición."},
+    {l: "C", t: "Situará el selector de tren cuando lo lleve, en la posición que corresponda según el tipo de tren."},
+    {l: "D", t: "Situará en posición conectado el conmutador del panel de información y control de la cabina de servicio."}
+  ]},
+  "34": {q: "Referente al sistema ASFA, para efectuar la conexión, El Maquinista realizará la misma en cinco operaciones. ¿Qué operación realizará en segundo lugar?", a: "B", opts: [
+    {l: "A", t: "Situará en posición desconectado el conmutador del panel de información y control de las cabinas sin servicio."},
+    {l: "B", t: "Situará en posición desconectado el conmutador de conexión de cada combinador general que lleva la posición."},
+    {l: "C", t: "Situará el selector de tren cuando lo lleve, en la posición que corresponda según el tipo de tren."},
+    {l: "D", t: "Situará en posición conectado el conmutador del panel de información y control de la cabina de servicio."}
+  ]},
+  "35": {q: "Referente al sistema ASFA, para efectuar la conexión, El Maquinista realizará la misma en cinco operaciones. ¿Qué operación realizará en tercer lugar?", a: "C", opts: [
+    {l: "A", t: "Situará en posición desconectado el conmutador del panel de información y control de las cabinas sin servicio."},
+    {l: "B", t: "Situará en posición desconectado el conmutador de conexión de cada combinador general que lleva la posición."},
+    {l: "C", t: "Situará el selector de tren cuando lo lleve, en la posición que corresponda según el tipo de tren."},
+    {l: "D", t: "Situará en posición conectado el conmutador del panel de información y control de la cabina de servicio."}
+  ]},
+  "36": {q: "Referente al sistema ASFA, para efectuar la conexión, El Maquinista realizará la misma en cinco operaciones. ¿Qué operación realizará en cuarto lugar?", a: "C", opts: [
+    {l: "A", t: "Situará en posición desconectado el conmutador del panel de información y control de las cabinas sin servicio."},
+    {l: "B", t: "Situará en posición desconectado el conmutador de conexión de cada combinador general que lleva la posición."},
+    {l: "C", t: "Situará el selector de tren cuando lo lleve, en la posición que corresponda según el tipo de tren."},
+    {l: "D", t: "Situará en posición conectado el conmutador del panel de información y control de la cabina de servicio."}
+  ]},
+  "37": {q: "Referente al sistema ASFA, para efectuar la conexión, El Maquinista realizará la misma en cinco operaciones. ¿Qué operación realizará en quinto lugar?", a: "B", opts: [
+    {l: "A", t: "Situará en posición desconectado el conmutador del panel de información y control de las cabinas sin servicio."},
+    {l: "B", t: "Situará en posición conectado el conmutador de conexión del combinador general, cuando lo lleve."},
+    {l: "C", t: "Situará el selector de tren cuando lo lleve, en la posición que corresponda según el tipo de tren."},
+    {l: "D", t: "Situará en posición conectado el conmutador del panel de información y control de la cabina de servicio."}
+  ]},
+  "38": {q: "Referente al sistema ASFA, para efectuar la desconexión, El Maquinista realizará la misma en dos operaciones. ¿Qué operación realizará en primer lugar?", a: "C", opts: [
+    {l: "A", t: "Situara en posición desconectado el conmutador del panel de información y control de la cabina en servicio."},
+    {l: "B", t: "Situará en posición desconectado el conmutador de conexión del combinador general, si lo lleva."},
+    {l: "C", t: "Las dos respuestas anteriores pueden ser correctas es indiferente el orden de desconexión."},
+    {l: "D", t: "Ninguna de las tres respuestas es correcta."}
+  ]},
+  "39": {q: "Referente al sistema ASFA, para efectuar la desconexión, El Maquinista realizará la misma en dos operaciones. ¿Qué operación realizará en segundo lugar?", a: "C", opts: [
+    {l: "A", t: "Situara en posición desconectado el conmutador del panel de información y control de la cabina en servicio."},
+    {l: "B", t: "Situará en posición desconectado el conmutador de conexión del combinador general, si lo lleva."},
+    {l: "C", t: "Las dos respuestas anteriores pueden ser correctas es indiferente el orden de desconexión."},
+    {l: "D", t: "Ninguna de las tres respuestas es correcta."}
+  ]},
+  "40": {q: "Referente al sistema ASFA, si al efectuar la desconexión del sistema si las operaciones no se realizan en el orden indicado, si el vehículo lleva combinador general, queda bloqueado el equipo de freno hasta que:", a: "C", opts: [
+    {l: "A", t: "Se accione el pulsador de rearme."},
+    {l: "B", t: "Se desconecte el combinador general."},
+    {l: "C", t: "Las dos respuestas anteriores, cualquiera de las dos puede ser válida."},
+    {l: "D", t: "Ninguna de las tres respuestas es correcta."}
+  ]},
+  "41": {q: "Referente al sistema ASFA, al poner en servicio el equipo, se producen automáticamente marcas en la cinta del tacógrafo que permiten el control del funcionamiento y manejo del sistema mediante unos registros:", a: "C", opts: [
+    {l: "A", t: "De la eficacia (cuando el sistema funcione), de la posición del selector del tren (cuando lo lleve) y del freno al conectar."},
+    {l: "B", t: "De la posición del selector del tren (cuando lo lleve) y del freno al conectar."},
+    {l: "C", t: "De la eficacia (cuando el sistema funcione) y de la posición del selector del tren (cuando lo lleve)."},
+    {l: "D", t: "Ninguna de las tres respuestas es correcta."}
+  ]},
+  "42": {q: "Referente al sistema ASFA, al poner en servicio el equipo, se producen automáticamente marcas en la cinta del tacógrafo que permiten el control del funcionamiento y manejo del sistema mediante unos registros determinados, además de estos registros, y cuando proceda, se producen también los siguientes:", a: "C", opts: [
+    {l: "A", t: "Del frenado automático del tren (por el sistema) y del paso a la posición de rebase autorizado del conmutador del panel."},
+    {l: "B", t: "De la información que transmiten las balizas y del cambio extemporáneo de posición del selector de tren."},
+    {l: "C", t: "Las dos respuestas anteriores son correctas."},
+    {l: "D", t: "Ninguna de las tres respuestas es correcta."}
+  ]},
+  "43": {q: "Referente al sistema ASFA, se producen unas indicaciones que, relacionadas con el aspecto de las señales, se producen en cabina del vehículo motor al paso por la baliza previa o de señal. ¿Qué indicación nos dará cuando el aspecto de la señal sea vía libre y PN protegido?", a: "D", opts: [
+    {l: "A", t: "Señal acústica de 0,2 segundos de duración."},
+    {l: "B", t: "Señal acústica de 0,3 segundos de duración."},
+    {l: "C", t: "Señal acústica de 0,4 segundos de duración."},
+    {l: "D", t: "Señal acústica de 0,5 segundos de duración."}
+  ]},
+  "44": {q: "Referente al sistema ASFA, se producen unas indicaciones que, relacionadas con el aspecto de las señales, se producen en cabina del vehículo motor al paso por la baliza previa o de señal. ¿Qué indicación nos dará cuando el aspecto de la señal sea vía libre condicional, en vehículos motores de Tipo 160 o inferiores?", a: "D", opts: [
+    {l: "A", t: "Señal acústica de 0,2 segundos de duración."},
+    {l: "B", t: "Señal acústica de 0,3 segundos de duración."},
+    {l: "C", t: "Señal acústica de 0,4 segundos de duración."},
+    {l: "D", t: "Señal acústica de 0,5 segundos de duración."}
+  ]},
+  "45": {q: "Referente al sistema ASFA, se producen unas indicaciones que, relacionadas con el aspecto de las señales, se producen en cabina del vehículo motor al paso por la baliza previa o de señal. ¿Qué indicación nos dará cuando el aspecto de la señal sea vía libre condicional en vehículos motores de tipo superior a 160?", a: "D", opts: [
+    {l: "A", t: "Acústica continua, óptica intermitente en el visor verde del panel y óptica continua en el pulsador de reconocimiento."},
+    {l: "B", t: "Acústica discontinua, óptica intermitente en el visor verde del panel y óptica continua en el pulsador de reconocimiento."},
+    {l: "C", t: "Acústica continua, óptica fija en el visor verde del panel y óptica continua en el pulsador de reconocimiento."},
+    {l: "D", t: "Acústica continua, óptica intermitente en el visor verde del panel y óptica discontinua en el pulsador de reconocimiento."}
+  ]},
+  "46": {q: "Referente al sistema ASFA, se producen unas indicaciones, en el caso de anuncio de precaución, preanuncio de parada, anuncio de parada inmediata y anuncio de parada. ¿Qué indicaciones nos dará?", a: "A", opts: [
+    {l: "A", t: "Acústica continua, óptica continua en el visor blanco frenar (en los vehículos de nueva creación el visor es de color amarillo) y óptica discontinua en el pulsador de reconocimiento."},
+    {l: "B", t: "Acústica continua, óptica continua en el visor blanco frenar (en los vehículos de nueva creación el visor es de color amarillo) y óptica continua en el pulsador de reconocimiento."},
+    {l: "C", t: "Acústica discontinua, óptica continua en el visor blanco frenar (en los vehículos de nueva creación el visor es de color amarillo) y óptica discontinua en el pulsador de reconocimiento."},
+    {l: "D", t: "Acústica continua, óptica discontinua en el visor blanco frenar (en los vehículos de nueva creación el visor es de color amarillo) y óptica discontinua en el pulsador de reconocimiento."}
+  ]},
+  "47": {q: "Referente al sistema ASFA, se producen unas indicaciones, en el caso de PN sin protección, parada diferida, anuncio de velocidad limitada temporal cuando su cifra sea inferior a 60 y algunos casos de entrada a contravía. ¿Qué indicaciones nos dará?", a: "D", opts: [
+    {l: "A", t: "Acústica continua, óptica continua en el visor blanco frenar (en los vehículos de nueva creación el visor es de color amarillo) y óptica discontinua en el pulsador de reconocimiento."},
+    {l: "B", t: "Acústica continua, óptica continua en el visor blanco frenar (en los vehículos de nueva creación el visor es de color amarillo) y óptica continua en el pulsador de reconocimiento."},
+    {l: "C", t: "Acústica discontinua, óptica continua en el visor blanco frenar (en los vehículos de nueva creación el visor es de color amarillo) y óptica discontinua en el pulsador de reconocimiento."},
+    {l: "D", t: "Acústica continua, óptica discontinua en el visor blanco frenar (en los vehículos de nueva creación el visor es de color amarillo) y óptica discontinua en el pulsador de reconocimiento."}
+  ]},
+  "48": {q: "Referente al sistema ASFA, se producen unas indicaciones, en caso de parada o rebase autorizado, al paso por la baliza previa si se cumplen las limitaciones establecidas. ¿Qué duración tendrá la señal acústica?", a: "B", opts: [
+    {l: "A", t: "2 segundos de duración."},
+    {l: "B", t: "3 segundos de duración."},
+    {l: "C", t: "4 segundos de duración."},
+    {l: "D", t: "5 segundos de duración."}
+  ]},
+  "49": {q: "Referente al sistema ASFA, se producen unas indicaciones, en caso de parada o rebase autorizado, al paso por la baliza previa si se cumplen las limitaciones establecidas. ¿Qué duración tendrá la señal óptica?", a: "C", opts: [
+    {l: "A", t: "5 segundos de duración en el visor rojo del panel."},
+    {l: "B", t: "10 segundos de duración en el visor rojo del panel."},
+    {l: "C", t: "15 segundos de duración en el visor rojo del panel."},
+    {l: "D", t: "20 segundos de duración en el visor rojo del panel."}
+  ]},
+  "50": {q: "Referente al sistema ASFA, se producen unas indicaciones, en caso de parada o rebase autorizado, al paso por la baliza previa si no se cumplen las limitaciones establecidas. ¿Qué indicaciones dará?", a: "D", opts: [
+    {l: "A", t: "Acústica discontinua y óptica discontinua en el visor rojo del panel."},
+    {l: "B", t: "Acústica continua y óptica discontinua en el visor rojo del panel."},
+    {l: "C", t: "Acústica discontinua y óptica continua en el visor rojo del panel."},
+    {l: "D", t: "Acústica continua y óptica continua en el visor rojo del panel."}
+  ]},
+  "51": {q: "Referente al sistema ASFA, se producen unas indicaciones, en caso de rebase no autorizado, al paso por la baliza de la señal. ¿Qué indicaciones dará?", a: "A", opts: [
+    {l: "A", t: "Acústica discontinua y óptica discontinua en el visor rojo del panel."},
+    {l: "B", t: "Acústica continua y óptica discontinua en el visor rojo del panel."},
+    {l: "C", t: "Acústica discontinua y óptica continua en el visor rojo del panel."},
+    {l: "D", t: "Acústica continua y óptica continua en el visor rojo del panel."}
+  ]},
+  "52": {q: "Referente al sistema ASFA, se producen unas indicaciones, en caso de rebase autorizado, al paso por la baliza de la señal. ¿Qué duración tendrá la señal acústica?", a: "A", opts: [
+    {l: "A", t: "2 segundos de duración."},
+    {l: "B", t: "3 segundos de duración."},
+    {l: "C", t: "4 segundos de duración."},
+    {l: "D", t: "5 segundos de duración."}
+  ]},
+  "53": {q: "Referente al sistema ASFA, se producen unas indicaciones, en caso de rebase autorizado, al paso por la baliza de la señal. ¿Qué duración tendrá la señal óptica?", a: "A", opts: [
+    {l: "A", t: "5 segundos de duración en el visor rojo del panel."},
+    {l: "B", t: "10 segundos de duración en el visor rojo del panel."},
+    {l: "C", t: "15 segundos de duración en el visor rojo del panel."},
+    {l: "D", t: "20 segundos de duración en el visor rojo del panel."}
+  ]}
+};
+
+let respuestasVisibles = false;
+let totalPreguntas = Object.keys(testData).length;
+
+// Generate all questions on page load
+function generarTest() {
+  const container = document.getElementById('questionsContainer');
+  
+  Object.keys(testData).forEach(qid => {
+    const q = testData[qid];
+    const card = document.createElement('div');
+    card.className = 'card question';
+    card.dataset.qid = qid;
+    
+    let opcionesHTML = '';
+    q.opts.forEach(opt => {
+      opcionesHTML += `
+        <label class="option">
+          <input type="radio" name="q${qid}" value="${opt.l}" onchange="updateProgress()" />
+          <div><b>${opt.l})</b> ${opt.t}</div>
+        </label>
+      `;
+    });
+
+    const imagenHTML = q.img
+  ? `<div style="margin:10px 0;text-align:center">
+       <img src="${q.img}" alt="Imagen pregunta ${qid}"
+            style="max-width:100%;border-radius:8px;border:1px solid rgba(255,255,255,.15)">
+     </div>`
+  : '';
+
+    card.innerHTML = `
+      <span class="q-number">Pregunta ${qid} de ${totalPreguntas}</span>
+      <div class="q-title">${q.q}</div>
+      ${imagenHTML}
+      <div class="options">${opcionesHTML}</div>
+      <div class="answer-key">✓ Respuesta correcta: <b>${q.a}</b></div>
+      <div class="feedback"></div>
+    `;
+    
+    container.appendChild(card);
+  });
+}
+
+// Update progress bar
+function updateProgress() {
+  const respondidas = document.querySelectorAll('input[type=radio]:checked').length;
+  const porcentaje = (respondidas / totalPreguntas) * 100;
+  document.getElementById('progressBar').style.width = porcentaje + '%';
+}
+
+// Grade the test
+function calificar() {
+  let correctas = 0;
+  let incorrectas = 0;
+  let sinResponder = 0;
+  
+  document.querySelectorAll('.question').forEach(card => {
+    const qid = card.dataset.qid;
+    const correcta = testData[qid].a;
+    const seleccionada = card.querySelector('input[type=radio]:checked');
+    
+    card.querySelectorAll('.option').forEach(o => o.classList.remove('correct','incorrect'));
+    
+    if (seleccionada) {
+      const letra = seleccionada.value;
+      if (letra === correcta) {
+        correctas++;
+        seleccionada.closest('.option').classList.add('correct');
+        card.querySelector('.feedback').textContent = '✔ ¡Correcto!';
+        card.querySelector('.feedback').style.color = 'var(--ok)';
+      } else {
+        incorrectas++;
+        seleccionada.closest('.option').classList.add('incorrect');
+        card.querySelector('.feedback').innerHTML = `✖ Incorrecto · La correcta es: <b>${correcta}</b>`;
+        card.querySelector('.feedback').style.color = 'var(--bad)';
+        const corr = card.querySelector(`input[value="${correcta}"]`);
+        if (corr) corr.closest('.option').classList.add('correct');
+      }
+    } else {
+      sinResponder++;
+      card.querySelector('.feedback').textContent = '⚠ Sin responder';
+      card.querySelector('.feedback').style.color = 'var(--warning)';
+    }
+  });
+  
+  const porcentaje = Math.round((correctas / totalPreguntas) * 100);
+  const aprobado = porcentaje >= 50;
+  
+  document.getElementById('score').textContent = `${correctas} / ${totalPreguntas} (${porcentaje}%)`;
+  document.getElementById('score').style.color = aprobado ? 'var(--ok)' : 'var(--bad)';
+  
+  document.getElementById('scoreDetails').innerHTML = `
+    ✔ ${correctas} correctas · ✖ ${incorrectas} incorrectas · ⚠ ${sinResponder} sin responder
+  `;
+  
+  // Scroll to top to see results
+  // window.scrollTo({top: 0, behavior: 'smooth'});
+}
+
+// Reset the test
+function reiniciar() {
+  document.querySelectorAll('input[type=radio]').forEach(r => r.checked = false);
+  document.querySelectorAll('.option').forEach(o => o.classList.remove('correct','incorrect'));
+  document.querySelectorAll('.feedback').forEach(f => {f.textContent=''; f.removeAttribute('style')});
+  document.getElementById('score').textContent = '—';
+  document.getElementById('score').removeAttribute('style');
+  document.getElementById('scoreDetails').textContent = '';
+  document.getElementById('progressBar').style.width = '0%';
+  window.scrollTo({top: 0, behavior: 'smooth'});
+}
+
+// Toggle answer visibility
+function toggleRespuestas(btn) {
+  respuestasVisibles = !respuestasVisibles;
+  document.body.classList.toggle('show-answers', respuestasVisibles);
+  btn.textContent = respuestasVisibles ? '🙈 Ocultar respuestas' : '👁️ Ver respuestas';
+  
+  if (respuestasVisibles) {
+    document.querySelectorAll('.question').forEach(card => {
+      const qid = card.dataset.qid;
+      const correcta = testData[qid].a;
+      card.querySelectorAll('.option').forEach(o => o.classList.remove('correct'));
+      const corr = card.querySelector(`input[value="${correcta}"]`);
+      if (corr) corr.closest('.option').classList.add('correct');
+    });
+  } else {
+    document.querySelectorAll('.option').forEach(o => o.classList.remove('correct'));
+  }
+}
+
+// Initialize test on page load
+window.addEventListener('load', () => {
+  generarTest();
+});
+
+  // Scroll to top button functionality
+const scrollTopBtn = document.getElementById('scrollTopBtn');
+
+// Show/hide button based on scroll position
+window.addEventListener('scroll', () => {
+  if (window.pageYOffset > 300) {
+    scrollTopBtn.classList.add('visible');
+  } else {
+    scrollTopBtn.classList.remove('visible');
+  }
+});
+
+// Smooth scroll to top on click
+scrollTopBtn.addEventListener('click', () => {
+  window.scrollTo({
+    top: 0,
+    behavior: 'smooth'
+  });
+});
+</script>
+</body>
+</html>
