@@ -459,40 +459,57 @@ body{
     <span>EXÁMENES</span>
   </button>
   <div class="accordion-content">
+    
     <button class="test-btn" onclick="openTest('et_examen_01.html')">
       <span class="test-icon">📋</span>
       <span>EXAMEN 1 (45)</span>
     </button>
-    <button class="test-btn" onclick="openTest('et_examen_02.html')">
-      <span class="test-icon">🚧</span>
-      <span>EXAMEN - PILOTO DE SEGURIDAD 01 (40)</span>
+
+    <button class="test-btn" onclick="openTest('et_examen_conceptos_01.html')">
+      <span class="test-icon">📋</span>
+      <span>EXAMEN - CONCEPTOS FERROVIARIOS (42)</span>
     </button>
-    <button class="test-btn" onclick="openTest('et_examen_03.html')">
-      <span class="test-icon">🚧</span>
-      <span>EXAMEN - PILOTO DE SEGURIDAD 02 (42)</span>
-    </button>
-    <button class="test-btn" onclick="openTest('et_examen_04.html')">
-      <span class="test-icon">🚧</span>
-      <span>EXAMEN - PILOTO DE SEGURIDAD 03 (42)</span>
-    </button>
-    <button class="test-btn" onclick="openTest('et_examen_05.html')">
-      <span class="test-icon">🚧</span>
-      <span>EXAMEN - PILOTO DE SEGURIDAD 04 (42)</span>
-    </button>
-    <button class="test-btn" onclick="openTest('et_examen_06.html')">
-      <span class="test-icon">🚧</span>
-      <span>EXAMEN - PILOTO DE SEGURIDAD 05 (43)</span>
-    </button>
-    <button class="test-btn" onclick="openTest('et_examen_07.html')">
-      <span class="test-icon">🚧</span>
-      <span>EXAMEN - PILOTO DE SEGURIDAD 06 (44)</span>
-    </button>
-    <button class="test-btn" onclick="openTest('et_examen_08.html')">
-      <span class="test-icon">🚧</span>
-      <span>EXAMEN - PILOTO DE SEGURIDAD 08 (40)</span>
-    </button>
+    
+
+    <!-- PILOTO DE SEGURIDAD (anidado) -->
+    <div class="card nested">
+      <button class="accordion-btn" onclick="toggle(this)">
+        <span>🚨</span>
+        <span>PILOTO DE SEGURIDAD</span>
+      </button>
+      <div class="accordion-content">
+        <button class="test-btn" onclick="openTest('et_examen_02.html')">
+          <span class="test-icon">📝</span>
+          <span>EXAMEN 01 (40)</span>
+        </button>
+        <button class="test-btn" onclick="openTest('et_examen_03.html')">
+          <span class="test-icon">📝</span>
+          <span>EXAMEN 02 (42)</span>
+        </button>
+        <button class="test-btn" onclick="openTest('et_examen_04.html')">
+          <span class="test-icon">📝</span>
+          <span>EXAMEN 03 (42)</span>
+        </button>
+        <button class="test-btn" onclick="openTest('et_examen_05.html')">
+          <span class="test-icon">📝</span>
+          <span>EXAMEN 04 (42)</span>
+        </button>
+        <button class="test-btn" onclick="openTest('et_examen_06.html')">
+          <span class="test-icon">📝</span>
+          <span>EXAMEN 05 (43)</span>
+        </button>
+        <button class="test-btn" onclick="openTest('et_examen_07.html')">
+          <span class="test-icon">📝</span>
+          <span>EXAMEN 06 (44)</span>
+        </button>
+        <button class="test-btn" onclick="openTest('et_examen_08.html')">
+          <span class="test-icon">📝</span>
+          <span>EXAMEN 08 (40)</span>
+        </button>
+      </div>
+    </div>
+
   </div>
-</div>
 </div>
 
 <div class="footer">
