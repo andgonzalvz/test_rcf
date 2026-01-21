@@ -1,0 +1,399 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>A12 - CONCEPTOS FERROVIARIOS</title>
+<style>
+:root{--bg:#0b132b;--card:#1c2541;--accent:#5bc0be;--ok:#21c17a;--bad:#ff5d73;--text:#f5f7ff;--warning:#ffc107}
+*{box-sizing:border-box}
+body{margin:0;font-family:Segoe UI,system-ui,-apple-system,Roboto,Ubuntu,'Helvetica Neue',Arial,sans-serif;background:linear-gradient(135deg,var(--bg),#0f1a3a);color:var(--text);min-height:100vh;font-size:14px}
+.header{padding:12px 10px;text-align:center;border-bottom:1px solid rgba(255,255,255,.08);position:sticky;top:0;background:rgba(11,19,43,.98);backdrop-filter:blur(10px);z-index:100;position:relative}
+.header h1{margin:0 0 6px 0;font-size:1.2rem;font-weight:700}
+.back-btn{position:absolute;left:10px;top:50%;transform:translateY(-50%);width:36px;height:36px;padding:0;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.15);border-radius:50%;color:var(--text);text-decoration:none;font-size:18px;transition:all .2s;line-height:1;display:flex;align-items:center;justify-content:center}
+.back-btn:active{background:rgba(255,255,255,.15);transform:translateY(-50%) scale(.95)}
+.badge{display:inline-block;padding:3px 10px;border-radius:999px;background:rgba(255,255,255,.08);font-size:11px;margin-top:4px}
+.container{max-width:1000px;margin:0 auto;padding:10px 8px 100px}
+.progress-bar{background:rgba(255,255,255,.1);height:3px;border-radius:999px;margin:8px 0;overflow:hidden}
+.progress-fill{height:100%;background:linear-gradient(90deg,var(--accent),#3a9d9a);width:0%;transition:width .3s ease}
+.card{background:var(--card);border:1px solid rgba(255,255,255,.08);border-radius:12px;padding:12px;margin:8px 0;box-shadow:0 4px 12px rgba(0,0,0,.2)}
+.q-title{font-weight:600;margin-bottom:10px;line-height:1.4;font-size:14px}
+.q-number{color:var(--accent);font-size:11px;font-weight:700;margin-bottom:6px;display:block}
+.options{display:grid;grid-template-columns:1fr;gap:6px}
+.option{background:#121a34;border:2px solid rgba(255,255,255,.08);padding:8px;border-radius:8px;display:flex;align-items:flex-start;gap:8px;cursor:pointer;transition:all .2s;font-size:13px;line-height:1.3}
+.option:active{background:#1a2341;border-color:rgba(91,192,190,.3)}
+.option input{margin-top:2px;cursor:pointer;flex-shrink:0}
+.option div{flex:1}
+.answer-key{display:none;margin-top:8px;padding:8px;background:rgba(91,192,190,.1);border-radius:6px;font-size:12px}
+.answer-key b{color:var(--accent)}
+.show-answers .answer-key{display:block}
+.feedback{margin-top:6px;font-size:12px;font-weight:600;padding:6px;border-radius:4px}
+.correct{border-color:rgba(33,193,122,.6)!important;background:rgba(33,193,122,.05)!important}
+.incorrect{border-color:rgba(255,93,115,.75)!important;background:rgba(255,93,115,.05)!important}
+.actions{position:fixed;bottom:0;left:0;right:0;background:linear-gradient(180deg,rgba(15,26,58,0),rgba(15,26,58,.99));padding:10px 8px;padding-bottom:calc(10px + env(safe-area-inset-bottom));backdrop-filter:blur(10px);border-top:1px solid rgba(255,255,255,.08);z-index:99}
+.actions .bar{max-width:1000px;margin:0 auto;display:flex;gap:8px;align-items:center;justify-content:space-between;flex-wrap:wrap}
+button{background:var(--accent);border:none;color:#001018;font-weight:700;padding:10px 14px;border-radius:8px;cursor:pointer;transition:all .2s;font-size:13px;touch-action:manipulation}
+button:active{background:var(--accent);opacity:.9;transform:scale(.98)}
+button.secondary{background:transparent;border:1px solid rgba(255,255,255,.35);color:var(--text)}
+button.secondary:active{background:rgba(255,255,255,.05)}
+.score{font-weight:700;font-size:1rem}
+.score-details{font-size:11px;color:var(--text);opacity:.8;margin-top:2px}
+.footer{opacity:.8;font-size:11px;text-align:center;padding:15px;color:rgba(255,255,255,.5)}
+@media (min-width: 720px){
+  .options{grid-template-columns:1fr 1fr}
+  body{font-size:15px}
+  .card{padding:20px;margin:16px 0;border-radius:16px}
+  .q-title{font-size:15px;margin-bottom:12px}
+  .option{padding:12px;gap:10px;font-size:14px}
+  .header{padding:20px 16px}
+  .header h1{font-size:1.5rem;margin-bottom:8px}
+  .container{padding:20px 16px 120px}
+  button{padding:12px 18px;font-size:14px}
+}
+@media (max-width: 640px){
+  .actions .bar{flex-direction:column;gap:6px}
+  .score{text-align:center;width:100%;font-size:0.95rem}
+  .actions{padding:8px 6px;padding-bottom:calc(8px + env(safe-area-inset-bottom))}
+  button{width:100%;padding:11px 12px}
+}
+.scroll-top{position:fixed;bottom:20px;right:20px;width:40px;height:40px;background:var(--accent);color:#fff;border:none;border-radius:50%;cursor:pointer;box-shadow:0 4px 12px rgba(0,0,0,.2);display:flex;align-items:center;justify-content:center;font-size:20px;z-index:99;opacity:0;visibility:hidden;transition:all .3s;touch-action:manipulation}
+.scroll-top.visible{opacity:1;visibility:visible}
+.scroll-top:active{transform:scale(.95)}
+@media (max-width:640px){
+  .scroll-top{width:36px;height:36px;bottom:16px;right:16px;font-size:18px}
+}
+</style>
+</head>
+<body>
+  <div class="header">
+    <a href="index.html" class="back-btn">←</a>
+    <h1>A12 - CONCEPTOS FERROVIARIOS</h1>
+    <div class="badge">25 preguntas</div>
+    <div class="progress-bar">
+      <div class="progress-fill" id="progressBar"></div>
+    </div>
+  </div>
+  
+  <div class="container" id="questionsContainer">
+    <!-- Questions will be generated here -->
+  </div>
+
+  <div class="actions">
+    <div class="bar">
+      <div>
+        <div class="score">Puntuación: <span id="score">—</span></div>
+        <div class="score-details" id="scoreDetails"></div>
+      </div>
+      <div style="display:flex;gap:12px;flex-wrap:wrap">
+        <button onclick="calificar()">📊 Calificar</button>
+        <button class="secondary" onclick="reiniciar()">🔄 Reiniciar</button>
+        <button class="secondary" onclick="toggleRespuestas(this)">👁️ Ver respuestas</button>
+      </div>
+    </div>
+  </div>
+
+  <button id="scrollTopBtn" class="scroll-top">↑</button>
+
+<script>
+// Test data with questions and answers
+const testData = {
+  "1": {q: "Esta inscripción en un vagón define:", a: "C", opts: [
+    {l: "A", t: "Su longitud entre topes."},
+    {l: "B", t: "La distancia entre ejes o pivotes."},
+    {l: "C", t: "La longitud del piso."},
+    {l: "D", t: "El radio de paso en curva."}
+  ]},
+  "2": {q: "La primera línea ferroviaria de España se inaugura en el año 1837 entre:", a: "C", opts: [
+    {l: "A", t: "Madrid y Aranjuez."},
+    {l: "B", t: "Barcelona y Mataró."},
+    {l: "C", t: "La Habana y Bejucal."},
+    {l: "D", t: "Santiago de Compostela y Padrón."}
+  ]},
+  "3": {q: "Al desnivel entre dos carriles de una vía en alineación curva se denomina:", a: "C", opts: [
+    {l: "A", t: "Alabeo."},
+    {l: "B", t: "Diferencia de curvatura."},
+    {l: "C", t: "Peralte."},
+    {l: "D", t: "Ninguna respuesta es correcta."}
+  ]},
+  "4": {q: "Cuando la cota de explanación es más baja que el terreno natural le llamamos:", a: "B", opts: [
+    {l: "A", t: "Terraplén."},
+    {l: "B", t: "Trinchera."},
+    {l: "C", t: "Cuneta."},
+    {l: "D", t: "Media ladera."}
+  ]},
+  "5": {q: "Los caños son:", a: "C", opts: [
+    {l: "A", t: "Obras de fábrica de diámetro inferior a 1 metro."},
+    {l: "B", t: "Obras de fábrica con una luz inferior a 2 metros."},
+    {l: "C", t: "Obras de fábrica de diámetro inferior a 2 metros."},
+    {l: "D", t: "Obras de fábrica con un diámetro comprendido entre 1 y 3 metros."}
+  ]},
+  "6": {q: "Los intercambiadores de ancho comenzaron a funcionar en España en el año:", a: "D", opts: [
+    {l: "A", t: "1963."},
+    {l: "B", t: "1965."},
+    {l: "C", t: "1967."},
+    {l: "D", t: "1969."}
+  ]},
+  "7": {q: "La construcción de la imagen se corresponde a:", a: "B", opts: [
+    {l: "A", t: "Muro de contención."},
+    {l: "B", t: "Muro de sostenimiento."},
+    {l: "C", t: "Muro de relleno."},
+    {l: "D", t: "Ninguna respuesta es correcta"}
+  ]},
+  "8": {q: "Parte del carril que está en contacto con las ruedas:", a: "A", opts: [
+    {l: "A", t: "Superficie de rodadura."},
+    {l: "B", t: "Plano de contacto."},
+    {l: "C", t: "Cabeza de rodadura."},
+    {l: "D", t: "Superficie de rozamiento."}
+  ]},
+  "9": {q: "Acción de consolidación del balasto bajo las traviesas:", a: "B", opts: [
+    {l: "A", t: "Compactación."},
+    {l: "B", t: "Bateo."},
+    {l: "C", t: "Alineación."},
+    {l: "D", t: "Nivelación."}
+  ]},
+  "10": {q: "La distancia entre ejes o pivotes de un vehículo ferroviario se denomina:", a: "A", opts: [
+    {l: "A", t: "Empate."},
+    {l: "B", t: "Garrote."},
+    {l: "C", t: "Alabeo."},
+    {l: "D", t: "Entreeje."}
+  ]},
+  "11": {q: "Distancia entre ejes de traviesas:", a: "C", opts: [
+    {l: "A", t: "600 mm con una tolerancia de ± 10 mm."},
+    {l: "B", t: "500 mm con una tolerancia de ± 20 mm."},
+    {l: "C", t: "600 mm con una tolerancia de ± 20 mm."},
+    {l: "D", t: "500 mm con una tolerancia de ± 10 mm."}
+  ]},
+  "12": {q: "Cuando se rompe un carril como medida general no se autoriza la circulación de trenes cuando la rotura sea:", a: "B", opts: [
+    {l: "A", t: "De 20 mm o superior."},
+    {l: "B", t: "Superior a 20 mm."},
+    {l: "C", t: "De 25 mm o superior."},
+    {l: "D", t: "Superior a 25 mm."}
+  ]},
+  "13": {q: "_____________ es un aparato de vía que permite el paso de las circulaciones de una vía a otra", a: "C", opts: [
+    {l: "A", t: "El escape."},
+    {l: "B", t: "El bretelle."},
+    {l: "C", t: "El desvío."},
+    {l: "D", t: "La travesía."}
+  ]},
+  "14": {q: "En la parte superior de los pantógrafos se monta una lámina de cobre o grafito llamada ____________, que es la que roza con el cable que lleva la corriente eléctrica.", a: "D", opts: [
+    {l: "A", t: "Rozador."},
+    {l: "B", t: "Pletina de contacto."},
+    {l: "C", t: "Pletina de rozamiento."},
+    {l: "D", t: "Frotador."}
+  ]},
+  "15": {q: "El _________________ se utiliza para conectar todos los postes de la catenaria a tierra con el fin de proteger a las personas y a las instalaciones.", a: "A", opts: [
+    {l: "A", t: "Cable de guarda."},
+    {l: "B", t: "Feeder."},
+    {l: "C", t: "Hilo de sustentación."},
+    {l: "D", t: "Brazo de atirantado."}
+  ]},
+  "16": {q: "Péndola:", a: "D", opts: [
+    {l: "A", t: "Se utilizan normalmente para independizar eléctricamente vías secundarias, grupos de vías o vías generales sin que afecte al resto de la estación."},
+    {l: "B", t: "Estructura metálica utilizada para suspender y atirantar la catenaria. Puede estar colocada sobre postes o bien sobre pórticos rígidos."},
+    {l: "C", t: "Cable conductor aéreo utilizado para establecer la conexión eléctrica de las subestaciones con la catenaria."},
+    {l: "D", t: "Cable conductor vertical de longitud variable utilizado para suspender el hilo o hilos de contacto del cable sustentador."}
+  ]},
+  "17": {q: "Tramo de vía comprendido entre dos señales que pueden ordenar parada en el que, en circunstancias normales, sólo debe haber un tren.", a: "B", opts: [
+    {l: "A", t: "Circuito de vía."},
+    {l: "B", t: "Cantón."},
+    {l: "C", t: "Bloqueo."},
+    {l: "D", t: "Enclavamiento."}
+  ]},
+  "18": {q: "Esta figura se corresponde a:", a: "B", opts: [
+    {l: "A", t: "Travesía sin unión"},
+    {l: "B", t: "Travesía de unión sencilla"},
+    {l: "C", t: "Travesía de unión doble"},
+    {l: "D", t: "Bretelle"}
+  ]},
+  "19": {q: "Si vemos esta inscripción en el costado de un vagón nos indica:", a: "C", opts: [
+    {l: "A", t: "La tara y el valor del freno de estacionamiento."},
+    {l: "B", t: "La carga máxima y el valor del freno de estacionamiento."},
+    {l: "C", t: "La tara y el valor del freno de estacionamiento accionable desde el suelo."},
+    {l: "D", t: "La tara y el valor del freno de estacionamiento accionable desde la plataforma."}
+  ]},
+  "20": {q: "El vagón de la imagen es:", a: "C", opts: [
+    {l: "A", t: "JJ5"},
+    {l: "B", t: "JPD1"},
+    {l: "C", t: "JJ2"},
+    {l: "D", t: "J2"}
+  ]},
+  "21": {q: "¿En qué año se inauguró el primer ferrocarril que unió las ciudades inglesas de Darlington y Stockton?", a: "C", opts: [
+    {l: "A", t: "1820."},
+    {l: "B", t: "1822."},
+    {l: "C", t: "1825."},
+    {l: "D", t: "1829."}
+  ]},
+  "22": {q: "Este símbolo se corresponde a:", a: "A", opts: [
+    {l: "A", t: "Baliza ASFA previa de señal."},
+    {l: "B", t: "Pedal eléctrico."},
+    {l: "C", t: "Baliza ASFA de pie de señal."},
+    {l: "D", t: "Baliza ERTMS."}
+  ]},
+  "23": {q: "Acción que realiza un tren cuando aborda una aguja por el talón y fuerza los espadines a la posición contraria a la que se hallan dispuestos:", a: "D", opts: [
+    {l: "A", t: "Toma de punta."},
+    {l: "B", t: "Toma de talón."},
+    {l: "C", t: "Encerrojamiento."},
+    {l: "D", t: "Talonamiento."}
+  ]},
+  "24": {q: "Se entiende por carril roto del que se ha despendido un trozo de metal provocando:", a: "B", opts: [
+    {l: "A", t: "Una laguna de más de 60 mm de longitud y 10 mm de profundidad."},
+    {l: "B", t: "Una laguna de más de 50 mm de longitud y 10 mm de profundidad."},
+    {l: "C", t: "Una laguna de más de 50 mm de longitud y 5 mm de profundidad."},
+    {l: "D", t: "Una laguna de más de 60 mm de longitud y 5 mm de profundidad."}
+  ]},
+  "25": {q: "La imagen representa:", a: "C", opts: [
+    {l: "A", t: "Paso inferior."},
+    {l: "B", t: "Paso superior."},
+    {l: "C", t: "Salto de carnero."},
+    {l: "D", t: "Cruce de vías."}
+  ]},
+};
+  
+let respuestasVisibles = false;
+let totalPreguntas = Object.keys(testData).length;
+
+// Generate all questions on page load
+function generarTest() {
+  const container = document.getElementById('questionsContainer');
+  
+  Object.keys(testData).forEach(qid => {
+    const q = testData[qid];
+    const card = document.createElement('div');
+    card.className = 'card question';
+    card.dataset.qid = qid;
+    
+    let opcionesHTML = '';
+    q.opts.forEach(opt => {
+      opcionesHTML += `
+        <label class="option">
+          <input type="radio" name="q${qid}" value="${opt.l}" onchange="updateProgress()" />
+          <div><b>${opt.l})</b> ${opt.t}</div>
+        </label>
+      `;
+    });
+
+    card.innerHTML = `
+      <span class="q-number">Pregunta ${qid} de ${totalPreguntas}</span>
+      <div class="q-title">${q.q}</div>
+      <div class="options">${opcionesHTML}</div>
+      <div class="answer-key">✓ Respuesta correcta: <b>${q.a}</b></div>
+      <div class="feedback"></div>
+    `;
+    
+    container.appendChild(card);
+  });
+}
+
+// Update progress bar
+function updateProgress() {
+  const respondidas = document.querySelectorAll('input[type=radio]:checked').length;
+  const porcentaje = (respondidas / totalPreguntas) * 100;
+  document.getElementById('progressBar').style.width = porcentaje + '%';
+}
+
+// Grade the test
+function calificar() {
+  let correctas = 0;
+  let incorrectas = 0;
+  let sinResponder = 0;
+  
+  document.querySelectorAll('.question').forEach(card => {
+    const qid = card.dataset.qid;
+    const correcta = testData[qid].a;
+    const seleccionada = card.querySelector('input[type=radio]:checked');
+    
+    card.querySelectorAll('.option').forEach(o => o.classList.remove('correct','incorrect'));
+    
+    if (seleccionada) {
+      const letra = seleccionada.value;
+      if (letra === correcta) {
+        correctas++;
+        seleccionada.closest('.option').classList.add('correct');
+        card.querySelector('.feedback').textContent = '✔ ¡Correcto!';
+        card.querySelector('.feedback').style.color = 'var(--ok)';
+      } else {
+        incorrectas++;
+        seleccionada.closest('.option').classList.add('incorrect');
+        card.querySelector('.feedback').innerHTML = `✖ Incorrecto · La correcta es: <b>${correcta}</b>`;
+        card.querySelector('.feedback').style.color = 'var(--bad)';
+        const corr = card.querySelector(`input[value="${correcta}"]`);
+        if (corr) corr.closest('.option').classList.add('correct');
+      }
+    } else {
+      sinResponder++;
+      card.querySelector('.feedback').textContent = '⚠ Sin responder';
+      card.querySelector('.feedback').style.color = 'var(--warning)';
+    }
+  });
+  
+  const porcentaje = Math.round((correctas / totalPreguntas) * 100);
+  const aprobado = porcentaje >= 50;
+  
+  document.getElementById('score').textContent = `${correctas} / ${totalPreguntas} (${porcentaje}%)`;
+  document.getElementById('score').style.color = aprobado ? 'var(--ok)' : 'var(--bad)';
+  
+  document.getElementById('scoreDetails').innerHTML = `
+    ✔ ${correctas} correctas · ✖ ${incorrectas} incorrectas · ⚠ ${sinResponder} sin responder
+  `;
+  
+  // Scroll to top to see results
+ // window.scrollTo({top: 0, behavior: 'smooth'});
+}
+
+// Reset the test
+function reiniciar() {
+  document.querySelectorAll('input[type=radio]').forEach(r => r.checked = false);
+  document.querySelectorAll('.option').forEach(o => o.classList.remove('correct','incorrect'));
+  document.querySelectorAll('.feedback').forEach(f => {f.textContent=''; f.removeAttribute('style')});
+  document.getElementById('score').textContent = '—';
+  document.getElementById('score').removeAttribute('style');
+  document.getElementById('scoreDetails').textContent = '';
+  document.getElementById('progressBar').style.width = '0%';
+  window.scrollTo({top: 0, behavior: 'smooth'});
+}
+
+// Toggle answer visibility
+function toggleRespuestas(btn) {
+  respuestasVisibles = !respuestasVisibles;
+  document.body.classList.toggle('show-answers', respuestasVisibles);
+  btn.textContent = respuestasVisibles ? '🙈 Ocultar respuestas' : '👁️ Ver respuestas';
+  
+  if (respuestasVisibles) {
+    document.querySelectorAll('.question').forEach(card => {
+      const qid = card.dataset.qid;
+      const correcta = testData[qid].a;
+      card.querySelectorAll('.option').forEach(o => o.classList.remove('correct'));
+      const corr = card.querySelector(`input[value="${correcta}"]`);
+      if (corr) corr.closest('.option').classList.add('correct');
+    });
+  } else {
+    document.querySelectorAll('.option').forEach(o => o.classList.remove('correct'));
+  }
+}
+
+// Initialize test on page load
+window.addEventListener('load', () => {
+  generarTest();
+});
+  // Scroll to top button functionality
+const scrollTopBtn = document.getElementById('scrollTopBtn');
+
+// Show/hide button based on scroll position
+window.addEventListener('scroll', () => {
+  if (window.pageYOffset > 300) {
+    scrollTopBtn.classList.add('visible');
+  } else {
+    scrollTopBtn.classList.remove('visible');
+  }
+});
+
+// Smooth scroll to top on click
+scrollTopBtn.addEventListener('click', () => {
+  window.scrollTo({
+    top: 0,
+    behavior: 'smooth'
+  });
+});
+</script>
+</body>
+</html>
