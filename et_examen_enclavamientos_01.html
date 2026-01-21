@@ -68,7 +68,7 @@ button.secondary:active{background:rgba(255,255,255,.05)}
   <div class="header">
     <a href="index.html" class="back-btn">←</a>
     <h1>EXAMEN - ENCLAVAMIENTOS 01</h1>
-    <div class="badge">28 preguntas</div>
+    <div class="badge">18 preguntas</div>
     <div class="progress-bar">
       <div class="progress-fill" id="progressBar"></div>
     </div>
@@ -97,137 +97,113 @@ button.secondary:active{background:rgba(255,255,255,.05)}
 <script>
 // Test data with questions and answers
 const testData = {
-  "1": {q: "La relación de dependencia que se establece entre dos estaciones para poder expedir circulaciones desde cada una de ellas hacia su colateral. ¿Se denomina?", a: "C", opts: [
-    {l: "A", t: "Bloqueo."},
-    {l: "B", t: "Bloqueo entre estaciones."},
-    {l: "C", t: "Bloqueo entre dos estaciones."},
-    {l: "D", t: "Bloqueo entre dos o más estaciones."}
+  "1": {q: "La relación de dependencia entre la posición de aparatos (agujas, agujas-calces, calces, escapes, barreras, semibarreras) y la indicación de las señales. ¿Se denominan?", a: "B", opts: [
+    {l: "A", t: "Dispositivos."},
+    {l: "B", t: "Enclavamientos."},
+    {l: "C", t: "Aparatos de seguridad."},
+    {l: "D", t: "Las respuestas 1ª y 3ª son correctas"}
   ]},
-  "2": {q: "La relación de dependencia en un bloqueo entre dos estaciones, cuando es en VÍA ÚNICA, ya que por dicha vía debe circularse en ambos sentidos. ¿Cómo será la DEPENDENCIA?", a: "C", opts: [
-    {l: "A", t: "Parcial."},
-    {l: "B", t: "Continua."},
-    {l: "C", t: "Total."},
-    {l: "D", t: "Intermitente."}
+  "2": {q: "Garantizar la seguridad de las circulaciones mediante la posición adecuada de los aparatos y las órdenes correspondientes de las señales. ¿Es el objeto de los?", a: "B", opts: [
+    {l: "A", t: "Dispositivos."},
+    {l: "B", t: "Enclavamientos."},
+    {l: "C", t: "Aparatos de seguridad."},
+    {l: "D", t: "Las respuestas 1ª y 3ª son correctas"}
   ]},
-  "3": {q: "La relación de dependencia en un bloqueo entre dos estaciones, cuando es en VÍA DOBLE, sin instalaciones auxiliares. ¿Cómo será la DEPENDENCIA?", a: "C", opts: [
-    {l: "A", t: "Parcial."},
-    {l: "B", t: "Continua."},
-    {l: "C", t: "Total."},
-    {l: "D", t: "Intermitente."}
+  "3": {q: "No se podrá efectuar la apertura de una señal para autorizar un movimiento, antes de haber puesto todos los aparatos de la RUTA en la posición correspondiente. ¿Es un principio básico de los?", a: "B", opts: [
+    {l: "A", t: "Dispositivos."},
+    {l: "B", t: "Enclavamientos."},
+    {l: "C", t: "Aparatos de seguridad."},
+    {l: "D", t: "Las respuestas 1ª y 3ª son correctas"}
   ]},
-  "4": {q: "La relación de dependencia en un bloqueo entre dos estaciones, cuando es en VÍA DOBLE, con instalaciones auxiliares y vías UNIDIRECCIONALES, para expedir trenes pares por la vía impar o trenes impares por la vía par. ¿Cómo será la DEPENDENCIA?", a: "C", opts: [
-    {l: "A", t: "Parcial."},
-    {l: "B", t: "Continua."},
-    {l: "C", t: "Total."},
-    {l: "D", t: "Intermitente."}
+  "4": {q: "No se podrá cambiar la posición de ningún aparato relacionado con la RUTA, estando abierta la señal que autoriza la misma. ¿Es un principio básico de los?", a: "B", opts: [
+    {l: "A", t: "Dispositivos."},
+    {l: "B", t: "Enclavamientos."},
+    {l: "C", t: "Aparatos de seguridad."},
+    {l: "D", t: "Las respuestas 1ª y 3ª son correctas"}
   ]},
-  "5": {q: "La relación de dependencia en un bloqueo entre dos estaciones, cuando es en VÍA DOBLE, con instalaciones auxiliares y vía doble banalizada, siendo necesario establecer en cada vía y en cada sentido, un tipo de ración de dependencia. ¿Cómo será la DEPENDENCIA?", a: "C", opts: [
-    {l: "A", t: "Parcial."},
-    {l: "B", t: "Continua."},
-    {l: "C", t: "Total."},
-    {l: "D", t: "Intermitente."}
+  "5": {q: "No se podrá realizar la apertura de una señal para autorizar un movimiento INCOMPATIBLE con otro ya autorizado. ¿Es un principio básico de los?", a: "B", opts: [
+    {l: "A", t: "Dispositivos."},
+    {l: "B", t: "Enclavamientos."},
+    {l: "C", t: "Aparatos de seguridad."},
+    {l: "D", t: "Las respuestas 1ª y 3ª son correctas."}
   ]},
-  "6": {q: "Referente a los principios de los bloqueos, por ejemplo, que los trenes que circulen por la misma vía y en el mismo sentido, lo hagan a la distancia que ofrezca la seguridad de que no se va a producir un alcance. ¿Se denomina?", a: "B", opts: [
-    {l: "A", t: "Principio Obligatorio."},
-    {l: "B", t: "Principio Básico."},
-    {l: "C", t: "Las respuestas 1ª y 2ª son correctas."},
-    {l: "D", t: "Ninguna de las tres respuestas es válida."}
-  ]},
-  "7": {q: "Referente a los principios de los bloqueos, por ejemplo, que cuando esté circulando un tren por una vía, no se expida otro en sentido contrario por la misma vía desde la estación colateral. ¿Se denomina?", a: "B", opts: [
-    {l: "A", t: "Principio Obligatorio."},
-    {l: "B", t: "Principio Básico."},
-    {l: "C", t: "Las respuestas 1ª y 2ª son correctas."},
-    {l: "D", t: "Ninguna de las tres respuestas es válida."}
-  ]},
-  "8": {q: "Referente a los principios de los bloqueos, por ejemplo, que las instalaciones ofrezcan la seguridad necesaria para que puedan ser compatibles las maniobras que se realicen por la banda de una estación con la llegada de un tren por esa banda procedente de su colateral. ¿Se denomina?", a: "B", opts: [
-    {l: "A", t: "Principio Obligatorio."},
-    {l: "B", t: "Principio Básico."},
-    {l: "C", t: "Las respuestas 1ª y 2ª son correctas."},
-    {l: "D", t: "Ninguna de las tres respuestas es válida."}
-  ]},
-  "9": {q: "Los bloqueos de Petición y Concesión de vía en vía Única, de Toma de vía en vía Única y de Toma de vía en vía Doble. ¿A que sistema de bloqueo pertenecen?", a: "B", opts: [
-    {l: "A", t: "Telefónico (BT)."},
-    {l: "B", t: "Eléctrico-Manual (BEM)."},
-    {l: "C", t: "Automático (BA)."},
-    {l: "D", t: "De Protección Automática (BPA)."}
-  ]},
-  "10": {q: "Los bloqueos en vía Doble con vías Unidireccionales, en vía Única y en vía Doble con vías Bidireccionales. ¿A que sistema de bloqueo pertenecen?", a: "C", opts: [
-    {l: "A", t: "Telefónico (BT)."},
-    {l: "B", t: "Eléctrico-Manual (BEM)."},
-    {l: "C", t: "Automático (BA)."},
-    {l: "D", t: "De Protección Automática (BPA)."}
-  ]},
-  "11": {q: "El sistema de bloqueo que tiene como objeto relacionar eléctricamente las señales de Salida de dos estaciones Colaterales para impedir el acceso simultáneo de dos circulaciones al cantón. ¿Se denomina?", a: "B", opts: [
-    {l: "A", t: "Telefónico (BT)."},
-    {l: "B", t: "Eléctrico-Manual (BEM)."},
-    {l: "C", t: "Automático (BA)."},
-    {l: "D", t: "De Protección Automática (BPA)."}
-  ]},
-  "12": {q: "Dentro de las operaciones que normalmente se realizan en las diferentes instalaciones, dentro de la preparación del bloqueo, la petición o toma de vía en la estación Expedidora, cuando no existe otro bloqueo establecido o prohibición de este. ¿Se refiere al sistema de bloqueo?", a: "B", opts: [
-    {l: "A", t: "Telefónico (BT)."},
-    {l: "B", t: "Eléctrico-Manual (BEM)."},
-    {l: "C", t: "Automático (BA)."},
-    {l: "D", t: "De Protección Automática (BPA)."}
-  ]},
-  "13": {q: "Dentro de las operaciones que normalmente se realizan en las diferentes instalaciones, dentro de la preparación del bloqueo, la Concesión de vía. ¿Se refiere al sistema de bloqueo?", a: "B", opts: [
-    {l: "A", t: "Telefónico (BT)."},
-    {l: "B", t: "Eléctrico-Manual (BEM)."},
-    {l: "C", t: "Automático (BA)."},
-    {l: "D", t: "De Protección Automática (BPA)."}
-  ]},
-  "14": {q: "Dentro de las operaciones que normalmente se realizan en las diferentes instalaciones, el establecimiento del bloqueo, con el mando de la señal de Salida. ¿Se refiere al sistema de bloqueo?", a: "B", opts: [
-    {l: "A", t: "Telefónico (BT)."},
-    {l: "B", t: "Eléctrico-Manual (BEM)."},
-    {l: "C", t: "Automático (BA)."},
-    {l: "D", t: "De Protección Automática (BPA)."}
-  ]},
-  "15": {q: "Dentro de las operaciones que normalmente se realizan en las diferentes instalaciones, la salida de la circulación, que comprende el cierre automático de la señal en la estación Expedidora. ¿Se refiere al sistema de bloqueo?", a: "B", opts: [
-    {l: "A", t: "Telefónico (BT)."},
-    {l: "B", t: "Eléctrico-Manual (BEM)."},
-    {l: "C", t: "Automático (BA)."},
-    {l: "D", t: "De Protección Automática (BPA)."}
-  ]},
-  "16": {q: "En el BEM, cuando por alguna circunstancia no se produzca la liberación normal del bloqueo, se recurrirá a otro tipo de liberación, para lo cual, generalmente, es preciso que los Jefes de Circulación de las estaciones Colaterales, puestos en comunicación telefónica, procedan al desbloqueo del trayecto, por medio de los pulsadores precintados. ¿Cómo se denomina esta liberación?", a: "C", opts: [
-    {l: "A", t: "Local."},
-    {l: "B", t: "Manual."},
-    {l: "C", t: "Artificial."},
-    {l: "D", t: "Centralizada."}
-  ]},
-  "17": {q: "Los bloqueos que pueden clasificarse en Unidireccionales y Bidireccionales. ¿Se denominan?", a: "C", opts: [
-    {l: "A", t: "Telefónicos (BT)."},
-    {l: "B", t: "Eléctrico-Manuales (BEM)."},
-    {l: "C", t: "Automáticos (BA)."},
-    {l: "D", t: "De Protección Automática (BPA)."}
-  ]},
-  "18": {q: "Los bloqueos Automáticos en los que por cada vía se circula en un solo sentido, como es el de algunas vías Dobles, y en los que la apertura de las señales de Salida de cada estación no está relacionada con las de su colateral ni con ninguna autorización de la misma. ¿Se denominan?", a: "A", opts: [
-    {l: "A", t: "Unidireccionales."},
-    {l: "B", t: "Bidireccionales."},
-    {l: "C", t: "Las respuestas 1ª y 2ª son correctas dependiendo de las circunstancias."},
+  "6": {q: "Referente a los enclavamientos la imposibilidad de poder autorizar un movimiento estando, previamente, autorizado otro. ¿Se denomina?", a: "A", opts: [
+    {l: "A", t: "Incompatibilidad."},
+    {l: "B", t: "Inseguridad."},
+    {l: "C", t: "No reglamentado."},
     {l: "D", t: "Ninguna de las tres respuestas es correcta."}
   ]},
-  "19": {q: "Los bloqueos Automáticos en los que la apertura de la señal de Salida solo está relacionada con los circuitos de vía que protege y con el aspecto de la señal que anuncia, por ello, no existen elementos de bloqueo, únicamente se instalan los elementos necesarios para suprimir el cierre en Stick de las señales. ¿Se denominan?", a: "A", opts: [
-    {l: "A", t: "Unidireccionales."},
-    {l: "B", t: "Bidireccionales."},
-    {l: "C", t: "Las respuestas 1ª y 2ª son correctas dependiendo de las circunstancias."},
+  "7": {q: "Referente a los enclavamientos, porque un movimiento exige que uno o varios aparatos estén en una determinada posición y, el otro, en la oposición opuesta. ¿Es una de las circunstancias que producen la?", a: "A", opts: [
+    {l: "A", t: "Incompatibilidad."},
+    {l: "B", t: "Inseguridad."},
+    {l: "C", t: "No reglamentado."},
     {l: "D", t: "Ninguna de las tres respuestas es correcta."}
   ]},
-  "20": {q: "Los bloqueos Automáticos en los que por cada vía pueden circularse en ambos sentidos y pueden ser: Automático de vía Única (BAU) y automático de vía Doble Banalizada (BAB). ¿Se denominan?", a: "B", opts: [
-    {l: "A", t: "Unidireccionales."},
-    {l: "B", t: "Bidireccionales."},
-    {l: "C", t: "Las respuestas 1ª y 2ª son correctas dependiendo de las circunstancias."},
+  "8": {q: "Referente a los enclavamientos, porque ambos movimientos, aun siendo de la misma paridad, tienen un destino común. ¿Es una de las circunstancias que producen la?", a: "A", opts: [
+    {l: "A", t: "Incompatibilidad."},
+    {l: "B", t: "Inseguridad."},
+    {l: "C", t: "No reglamentado."},
     {l: "D", t: "Ninguna de las tres respuestas es correcta."}
   ]},
-  "21": {q: "Los bloqueos Automáticos en los que pueden agruparse en instalaciones en las que el establecimiento de bloqueo y la apertura de la señal de Salida es una operación conjunta. ¿Se denominan?", a: "B", opts: [
-    {l: "A", t: "Unidireccionales."},
-    {l: "B", t: "Bidireccionales."},
-    {l: "C", t: "Las respuestas 1ª y 2ª son correctas dependiendo de las circunstancias."},
+  "9": {q: "Referente a los enclavamientos, porque ambos movimientos de sentido opuesto tienen un mismo destino. ¿Es una de las circunstancias que producen la?", a: "A", opts: [
+    {l: "A", t: "Incompatibilidad."},
+    {l: "B", t: "Inseguridad."},
+    {l: "C", t: "No reglamentado."},
     {l: "D", t: "Ninguna de las tres respuestas es correcta."}
   ]},
-  "22": {q: "Independientemente del número de señales que existan entre dos estaciones colaterales con BA, el trayecto que separa dichas estaciones, debe estar dotado en toda su longitud de:", a: "D", opts: [
-    {l: "A", t: "Sistema ASFA."},
-    {l: "B", t: "Comunicación telefónica."},
-    {l: "C", t: "Comunicación por radiotelefonía."},
-    {l: "D", t: "Circuitos de vía."}
+  "10": {q: "Referente a los enclavamientos, porque uno de los determinados movimientos INVADE la RUTA DE DESLIZAMIENTO del otro. ¿Es una de las circunstancias que producen la?", a: "A", opts: [
+    {l: "A", t: "Incompatibilidad."},
+    {l: "B", t: "Inseguridad."},
+    {l: "C", t: "No reglamentado."},
+    {l: "D", t: "Ninguna de las tres respuestas es correcta."}
+  ]},
+  "11": {q: "El sistema de enclavamientos cuyas palancas de aparatos están al pie del mismo. ¿Se denominan?", a: "A", opts: [
+    {l: "A", t: "Enclavamientos Bouré."},
+    {l: "B", t: "Enclavamientos con concentración total de mandos."},
+    {l: "C", t: "Enclavamientos Bouré, parcialmente concentrados."},
+    {l: "D", t: "Las respuestas 1ª y 3ª son correctas."}
+  ]},
+  "12": {q: "El sistema de enclavamientos en los que algunos de sus aparatos se accionan a distancia. ¿Se denominan?", a: "C", opts: [
+    {l: "A", t: "Enclavamientos Bouré."},
+    {l: "B", t: "Enclavamientos con concentración total de mandos."},
+    {l: "C", t: "Enclavamientos Bouré, parcialmente concentrados."},
+    {l: "D", t: "Las respuestas 1ª y 3ª son correctas."}
+  ]},
+  "13": {q: "Referente al enclavamiento Bouré, el aparato que inmoviliza, en una posición determinada, un aparato de vía (aguja, barrera, etc.) o la palanca con la que se maniobra el aparato de vía o una señal mecánica. ¿Se denomina?", a: "B", opts: [
+    {l: "A", t: "Cerradura de aparatos."},
+    {l: "B", t: "Cerradura de aparatos y señales."},
+    {l: "C", t: "Cerradura de señales."},
+    {l: "D", t: "Ninguna de las tres respuestas es correcta."}
+  ]},
+  "14": {q: "Referente al enclavamiento bouré la operación de inmovilizar, en una posición determinada, un aparato de vía (aguja, barrera, etc.) o la palanca con la que se maniobra el aparato de vía o una señal mecánica, se logra mediante unos elementos determinados. ¿Cuáles son estos elementos?", a: "D", opts: [
+    {l: "A", t: "Un elemento fijo que es solidario del propio aparato."},
+    {l: "B", t: "Un elemento móvil que está sujeto mediante una cadena a un punto fijo."},
+    {l: "C", t: "Un elemento fijo, un elemento basculante y un elemento móvil."},
+    {l: "D", t: "Las dos primeras respuestas son correctas."}
+  ]},
+  "15": {q: "Referente al enclavamiento bouré, el elemento fijo es solidario del propio aparato, el móvil está sujeto a un punto fijo mediante:", a: "B", opts: [
+    {l: "A", t: "Un candado."},
+    {l: "B", t: "Una cadena."},
+    {l: "C", t: "Las dos respuestas anteriores son correctas dependiendo de las circunstancias."},
+    {l: "D", t: "Ninguna de las tres respuestas es correcta."}
+  ]},
+  "16": {q: "¿Cuántas llaves puede tener la cerradura de un enclavamiento bouré?", a: "D", opts: [
+    {l: "A", t: "Una."},
+    {l: "B", t: "Dos."},
+    {l: "C", t: "Tres."},
+    {l: "D", t: "Dos o más."}
+  ]},
+  "17": {q: "La mesa de enclavamientos que está dotada de una cerradura, designándose así al dispositivo mediante el cual se realizan las relaciones de enclavamientos entre las palancas e itinerarios. ¿Pertenece a un?", a: "A", opts: [
+    {l: "A", t: "Enclavamiento mecánico."},
+    {l: "B", t: "Enclavamiento Hidráulico."},
+    {l: "C", t: "Enclavamiento Neumático."},
+    {l: "D", t: "Enclavamiento Eléctrico."}
+  ]},
+  "18": {q: "Los enclavamientos, que comparando con los mecánicos tiene la ventaja de lograr los mandos y comprobaciones con más rapidez que con los medios mecánicos. ¿Se denominan?", a: "C", opts: [
+    {l: "A", t: "Hidráulicos."},
+    {l: "B", t: "Neumáticos."},
+    {l: "C", t: "Eléctricos."},
+    {l: "D", t: "Magnéticos."}
   ]}
 };
 
